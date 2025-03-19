@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход и регистрация</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #f5f5f5;
+        }
+
+        .logo {
+            color: #007bff;
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .auth-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 320px;
+        }
+
+        /* Общие стили для всех кнопок */
+        .auth-button {
+            position: relative;
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            border: 3px solid #007bff;
+            border-radius: 10px;
+            background: transparent;
+            color: #007bff;
+            font-weight: bold;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            isolation: isolate;
+        }
+    
+        .auth-button::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: #007bff;
+            transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+    
+        .auth-button span {
+            position: relative;
+            transition: color 0.15s ease !important;
+        }
+    
+        .auth-button:hover {
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.3);
+        }
+    
+        .auth-button:hover::before {
+            height: 100%;
+        }
+    
+        /* Стили для кнопок в модальных окнах (старый стиль) */
+        .submit-btn {
+            width: 100%; /* Занимает всю ширину контейнера */
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            border: 3px solid #007bff;
+            border-radius: 10px;
+            background: transparent;
+            color: #007bff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 1.5rem;
+            box-sizing: border-box; /* Учитывает padding в ширине */
+        }
+        
+        .submit-btn:hover {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+    
+        .close-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+    
+        .close-btn::before,
+        .close-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 2px;
+            background: #007bff;
+            transform-origin: center;
+        }
+    
+        .close-btn::before {
+            transform: translate(-50%, -50%) rotate(45deg);
+        }
+    
+        .close-btn::after {
+            transform: translate(-50%, -50%) rotate(-45deg);
+        }
+    
+        .close-btn:hover::before,
+        .close-btn:hover::after {
+            background: #0056b3;
+        }
+    
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        /* Стили модальных окон */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+
+        .modal h2 {
+            color: #007bff;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            font-size: 1.8rem;
+        }
+
+        /* Остальные стили форм */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+    
+        .form-group:last-child {
+            margin-bottom: 2.5rem;
+        }
+
+        input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-top: 0.3rem;
+        }
+
+        .checkbox-group {
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin-right: 0.5rem;
+        }
+
+        .action-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            border: 3px solid #007bff;
+            border-radius: 8px;
+            background: transparent;
+            color: #007bff;
+            cursor: pointer;
+            transition: 
+                background-color 0.3s ease,
+                color 0.3s ease,
+                transform 0.3s ease,
+                box-shadow 0.3s ease;
+            height: 48px; /* Фиксированная высота */
+            box-sizing: border-box;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Стили при наведении */
+        .action-button:hover {
+            background-color: #007bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+        }
+
+        /* Активное состояние */
+        .action-button:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 2rem;
+            }
+            
+            .auth-button, .submit-btn {
+                padding: 1.2rem;
+                font-size: 1rem;
+            }
+            
+            .modal {
+                padding: 1.5rem;
+            }
+
+            .modal h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+                padding-bottom: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">МойСайт</div>
+    <div class="auth-container">
+        <button class="auth-button" onclick="openModal('login')">
+            <span>Вход</span>
+        </button>
+        <button class="auth-button" onclick="openModal('register')">
+            <span>Регистрация</span>
+        </button>
+    </div>
+
+    <!-- Модальное окно входа -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal('login')"></button>
+            <h2>Вход</h2>
+            <form>
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" required>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span>Войти</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Модальное окно регистрации -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="modal">
+            <button class="close-btn" onclick="closeModal('register')"></button>
+            <h2>Регистрация</h2>
+            <form>
+                <div class="form-group">
+                    <label>Имя</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Фамилия</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" required>
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" required>
+                </div>
+                <div class="checkbox-group">
+                    <input type="checkbox" id="teacher">
+                    <label for="teacher">Я преподаватель</label>
+                </div>
+                <button type="submit" class="submit-btn">
+                    <span>Зарегистрироваться</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        function openModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            modal.classList.add('active');
+        }
+
+        function closeModal(type) {
+            const modal = document.getElementById(type + 'Modal');
+            modal.classList.remove('active');
+        }
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal-overlay')) {
+                event.target.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

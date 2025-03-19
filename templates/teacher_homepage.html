@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - МойСайт</title>
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .user-menu {
+            color: #007bff;
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .user-menu:hover {
+            color: #0056b3;
+        }
+
+        /* Контейнер уроков */
+        .lessons-container {
+            max-width: 1200px;
+            margin: 6rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: flex-start;
+        }
+
+        /* Сообщение об отсутствии уроков */
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: #666;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .empty-state.visible {
+            display: block;
+        }
+
+        /* Карточка урока */
+        .lesson-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            width: 300px;
+            aspect-ratio: 1/1.414;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: calc(100% - 120px);
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            border-top: 3px solid #007bff;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .add-button {
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border: 3px solid #007bff;
+            border-radius: 8px;
+            background: transparent;
+            color: #007bff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+    
+        .add-button:hover {
+            background: #007bff;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 123, 255, 0.25);
+        }
+    
+        .add-button:active {
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 768px) {
+            .cards-wrapper {
+                justify-content: center;
+            }
+
+            .lesson-card {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <button class="add-button" onclick="openAddLessonForm()">
+            Добавить урок
+        </button>
+        <div class="user-menu" onclick="openProfile()">
+            Преподаватель123
+        </div>
+    </header>
+
+    <main class="lessons-container">
+        <div class="empty-state" id="emptyState">
+            Уроков еще нет. Дождитесь пока преподаватель добавит урок
+        </div>
+
+        <div class="cards-wrapper" id="cardsWrapper">
+            <div class="lesson-card" onclick="openLesson(1)">
+                <img src="https://picsum.photos/400/566?random=1" class="card-image" alt="">
+                <div class="card-content">
+                    <h3 class="card-title">Основы математики</h3>
+                </div>
+            </div>
+
+            <div class="lesson-card" onclick="openLesson(2)">
+                <img src="https://picsum.photos/400/566?random=2" class="card-image" alt="">
+                <div class="card-content">
+                    <h3 class="card-title">Физика для начинающих</h3>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function checkEmptyState() {
+            const cardsWrapper = document.getElementById('cardsWrapper');
+            const emptyState = document.getElementById('emptyState');
+            
+            if (cardsWrapper.children.length === 0) {
+                emptyState.classList.add('visible');
+                cardsWrapper.style.display = 'none';
+            } else {
+                emptyState.classList.remove('visible');
+                cardsWrapper.style.display = 'flex';
+            }
+        }
+
+        function openProfile() {
+            alert("Личный кабинет будет реализован позже");
+        }
+
+        function openLesson(id) {
+            alert(`Открытие урока #${id} (реализуем позже)`);
+        }
+
+        window.onload = checkEmptyState;
+    </script>
+    <script>
+        // Заглушка для функции добавления урока
+        function openAddLessonForm() {
+            alert("Форма добавления урока будет реализована позже");
+        }
+    </script>
+</body>
+</html>
