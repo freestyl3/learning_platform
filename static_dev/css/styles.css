@@ -141,6 +141,114 @@ body {
     aspect-ratio: 1/1.414;
 }
 
+/* Общий контейнер */
+.auth-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+.auth-title {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 2rem;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 6px;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.form-hint {
+    display: block;
+    margin-top: 0.4rem;
+    color: #718096;
+    font-size: 0.85rem;
+}
+
+.password-rules {
+    background: #f8f9fa;
+    padding: 1.2rem;
+    border-radius: 8px;
+    margin: 1.5rem 0;
+}
+
+.password-rules h4 {
+    color: #2d3748;
+    margin-bottom: 0.8rem;
+}
+
+.password-rules ul {
+    list-style: none;
+    padding-left: 1.2rem;
+    color: #4a5568;
+}
+
+.password-rules li {
+    position: relative;
+    margin-bottom: 0.5rem;
+}
+
+.password-rules li:before {
+    content: "•";
+    color: #007bff;
+    position: absolute;
+    left: -1.2rem;
+}
+
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    margin: 1.5rem 0;
+}
+
+.checkbox-group input {
+    width: 18px;
+    height: 18px;
+}
+
+.auth-links {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #4a5568;
+}
+
+.auth-links a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: 500;
+}
+
 /* Адаптивность */
 @media (max-width: 768px) {
     .logo {
@@ -153,5 +261,14 @@ body {
     
     .lesson-card {
         max-width: 100%;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .auth-container {
+        padding: 1.5rem;
+        margin: 1rem;
     }
 }
