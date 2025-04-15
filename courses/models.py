@@ -5,6 +5,13 @@ from users.models import MyUser
 
 class Test(models.Model):
     name = models.CharField('Имя теста', max_length=50, blank=True, null=False)
+    lesson_id = models.OneToOneField(
+        'Lesson',
+        on_delete=models.CASCADE,
+        verbose_name='ID Урока',
+        blank=False, 
+        null=False
+    )
     
 class QuestionType(models.TextChoices):
     INPUT = 'input'
@@ -58,8 +65,8 @@ class ChoiceQuestion(models.Model):
 class MatchLeft(models.Model):
     text = models.CharField('Текст варианта ответа', max_length=50, blank=False, null=False)
 
-class MatchRight(MatchLeft):
-    pass
+class MatchRight(models.Model):
+    text = models.CharField('Текст варианта ответа', max_length=50, blank=False, null=False)
 
 class MatchQuestion(models.Model):
     question_id = models.ForeignKey(
@@ -76,7 +83,7 @@ class MatchQuestion(models.Model):
         blank=False,
         null=False
     )
-    left_id = models.ForeignKey(
+    right_id = models.ForeignKey(
         MatchRight,
         verbose_name='ID правого варианта ответа',
         on_delete=models.CASCADE,
@@ -86,40 +93,12 @@ class MatchQuestion(models.Model):
 
 class Subject(models.Model):
     name = models.CharField('Название предмета', max_length=50, blank=False, null=False)
-    users = models.ManyToManyField(MyUser)
-
-class Theory(models.Model):
-    pass
-
-class Paragraph(models.Model):
-    text = models.TextField('Текст параграфа', max_length=500, blank=False, null=False)
-    theory_id = models.ForeignKey(
-        Theory,
-        on_delete=models.CASCADE, 
-        verbose_name='ID теории',
-        blank=True,
-        null=False
-    )
-    
+    users = models.ManyToManyField(MyUser)   
 
 class Lesson(models.Model):
-    icon = models.ImageField('Картинка урока')
+    icon = models.ImageField('Картинка урока', null=True, blank=True)
     lesson_number = models.IntegerField('Номер урока')
     name = models.CharField('Название', max_length=50)
-    theory_id = models.OneToOneField(
-        Theory, 
-        on_delete=models.CASCADE,
-        verbose_name='ID Теории',
-        blank=False, 
-        null=False
-    )
-    test_id = models.OneToOneField(
-        Test,
-        on_delete=models.CASCADE,
-        verbose_name='ID теста',
-        blank=False, 
-        null=False
-    )
     subject_id = models.ForeignKey(
         Subject,
         on_delete=models.CASCADE,
@@ -128,3 +107,15 @@ class Lesson(models.Model):
         null=False
     )
     hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
+
+
+class Paragraph(models.Model):
+    text = models.TextField('Текст параграфа', max_length=500, blank=False, null=False)
+    lesson_id = models.ForeignKey(
+        Lesson,
+        on_delete=models.CASCADE, 
+        verbose_name='ID Урока',
+        blank=True,
+        null=False
+    )
+    order = models.IntegerField('Порядок параграфов')

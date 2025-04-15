@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 
 class MyUser(AbstractUser):
-    is_teacher = models.BooleanField("Преподаватель", blank=False, null=False)
+    is_teacher = models.BooleanField("Преподаватель", blank=False, null=False, default=False)
 
     def __str__(self):
         return self.username
