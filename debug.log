@@ -1,0 +1,559 @@
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\users\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\learning_platform\settings.py changed, reloading.
+Watching for file changes with StatReloader
+Starting registration process
+User artemkondm created successfully
+Attempting to authenticate user artemkondm
+User artemkondm authenticated successfully
+User artemkondm logged in successfully
+Watching for file changes with StatReloader
+Starting registration process
+User gggg created successfully
+Attempting to authenticate user gggg
+User gggg authenticated successfully
+User gggg logged in successfully
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Not Found: /accounts/profile/
+Not Found: /accounts/profile/
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\users\views.py changed, reloading.
+Watching for file changes with StatReloader
+Not Found: /accounts/profile/
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\users\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\forms.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Internal Server Error: /courses/create/
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py", line 50, in create_course
+    return redirect('courses:course_detail', course_id=course.id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\shortcuts.py", line 41, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\shortcuts.py", line 130, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\resolvers.py", line 698, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'course_detail' with keyword arguments '{'course_id': 1}' not found. 1 pattern(s) tried: ['courses/course/(?P<pk>[0-9]+)/\\Z']
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\users\models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /courses/course/1/
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: courses_lesson.content
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\base.py", line 204, in _get_response
+    response = response.render()
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\response.py", line 105, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\response.py", line 83, in rendered_content
+    return template.render(context, self._request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 315, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 171, in render
+    len_values = len(values)
+                 ^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\query.py", line 262, in __len__
+    self._fetch_all()
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1175, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: courses_lesson.content
+Watching for file changes with StatReloader
+Internal Server Error: /courses/1/create-lesson/
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py", line 66, in create_lesson
+    return redirect('courses:course_detail', course_id=course.id)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\shortcuts.py", line 41, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\shortcuts.py", line 130, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\resolvers.py", line 698, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'course_detail' with keyword arguments '{'course_id': 1}' not found. 1 pattern(s) tried: ['courses/course/(?P<pk>[0-9]+)/\\Z']
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\homepage\views.py", line 7, in homepage
+    return render(request, template)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 315, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 449, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\resolvers.py", line 698, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'register' not found. 'register' is not a valid view function or pattern name.
+Not Found: /accounts/login/
+Internal Server Error: /courses/1/lesson/1/
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py", line 101, in lesson_detail
+    return render(request, 'courses/lesson_detail.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 315, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 449, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\base.py", line 86, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\urls\resolvers.py", line 698, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'lesson_detail' with keyword arguments '{'course_id': 1, 'pk': 2}' not found. 1 pattern(s) tried: ['courses/(?P<course_id>[0-9]+)/lesson/(?P<lesson_id>[0-9]+)/\\Z']
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\urls.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\urls.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /courses/1/lesson/3/delete/
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such column: courses_test.lesson_id_id
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py", line 148, in delete_lesson
+    lesson.delete()
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\base.py", line 966, in delete
+    collector.collect([self], keep_parents=keep_parents)
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\deletion.py", line 295, in collect
+    if sub_objs:
+       ^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\query.py", line 284, in __bool__
+    self._fetch_all()
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\query.py", line 1324, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\query.py", line 51, in __iter__
+    results = compiler.execute_sql(chunked_fetch=self.chunked_fetch, chunk_size=self.chunk_size)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1175, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such column: courses_test.lesson_id_id
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\models.py changed, reloading.
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\models.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\forms.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py changed, reloading.
+Watching for file changes with StatReloader
+C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\models.py changed, reloading.
+Watching for file changes with StatReloader
+Internal Server Error: /courses/1/lesson/1/
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+sqlite3.OperationalError: no such table: courses_lessonimage
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\exception.py", line 47, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\core\handlers\base.py", line 181, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 21, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\courses\views.py", line 110, in lesson_detail
+    return render(request, 'courses/lesson_detail.html', {
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\shortcuts.py", line 19, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 170, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 162, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\loader_tags.py", line 62, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 938, in render
+    bit = node.render_annotated(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 905, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 308, in render
+    match = condition.eval(context)
+            ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\defaulttags.py", line 892, in eval
+    return self.value.resolve(context, ignore_failures=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 671, in resolve
+    obj = self.var.resolve(context)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 796, in resolve
+    value = self._resolve_lookup(context)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\template\base.py", line 858, in _resolve_lookup
+    current = current()
+              ^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\query.py", line 808, in exists
+    return self.query.has_results(using=self.db)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\sql\query.py", line 561, in has_results
+    return compiler.has_results()
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1145, in has_results
+    return bool(self.execute_sql(SINGLE))
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1175, in execute_sql
+    cursor.execute(sql, params)
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 98, in execute
+    return super().execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 66, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 75, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 79, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\utils.py", line 90, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\xdin4\OneDrive\Рабочий стол\learning_platform-main\venv\Lib\site-packages\django\db\backends\sqlite3\base.py", line 423, in execute
+    return Database.Cursor.execute(self, query, params)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+django.db.utils.OperationalError: no such table: courses_lessonimage
+Watching for file changes with StatReloader

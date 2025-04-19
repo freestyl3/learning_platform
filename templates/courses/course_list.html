@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+
+{% block title %}Курсы{% endblock %}
+
+{% block extra_css %}
+<style>
+    .courses-container {
+        padding: 2rem 0;
+    }
+
+    .courses-header {
+        margin-bottom: 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .courses-title {
+        font-size: 2rem;
+        color: #333;
+        margin: 0;
+    }
+
+    .courses-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .course-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .course-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .course-title {
+        font-size: 1.25rem;
+        color: #333;
+        margin: 0;
+        font-weight: 600;
+    }
+
+    .course-content {
+        padding: 1.5rem;
+        flex-grow: 1;
+    }
+
+    .course-description {
+        color: #666;
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+    }
+
+    .course-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: #888;
+        font-size: 0.9rem;
+    }
+
+    .course-teacher {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .teacher-avatar {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        background: #e9ecef;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.8rem;
+        color: #666;
+    }
+
+    .course-footer {
+        padding: 1rem 1.5rem;
+        background: #f8f9fa;
+        border-top: 1px solid #eee;
+    }
+
+    .course-stats {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .empty-state {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .empty-state-icon {
+        font-size: 3rem;
+        color: #dee2e6;
+        margin-bottom: 1rem;
+    }
+
+    .empty-state-text {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .courses-header {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .courses-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="courses-container">
+    <div class="courses-header">
+        <h1 class="courses-title">Доступные курсы</h1>
+        {% if user.is_teacher %}
+            <a href="{% url 'courses:create_course' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Создать курс
+            </a>
+        {% endif %}
+    </div>
+
+    {% if courses %}
+        <div class="courses-grid">
+            {% for course in courses %}
+                <div class="course-card" onclick="location.href='{% url 'courses:course_detail' pk=course.id %}'">
+                    <div class="course-header">
+                        <h3 class="course-title">{{ course.name }}</h3>
+                    </div>
+                    <div class="course-content">
+                        <p class="course-description">
+                            {{ course.description|truncatechars:150|default:"Описание отсутствует" }}
+                        </p>
+                        <div class="course-meta">
+                            <div class="course-teacher">
+                                <div class="teacher-avatar">
+                                    {{ course.teacher.username|first|upper }}
+                                </div>
+                                <span>{{ course.teacher.username }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-stats">
+                            <span>
+                                <i class="fas fa-users"></i>
+                                {{ course.students.count }} студентов
+                            </span>
+                            <span>
+                                <i class="fas fa-book"></i>
+                                {{ course.lesson_set.count }} уроков
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="empty-state">
+            <div class="empty-state-icon">📚</div>
+            <p class="empty-state-text">
+                {% if user.is_teacher %}
+                    У вас пока нет созданных курсов. Создайте свой первый курс!
+                {% else %}
+                    Пока нет доступных курсов. Загляните позже!
+                {% endif %}
+            </p>
+            {% if user.is_teacher %}
+                <a href="{% url 'courses:create_course' %}" class="btn btn-primary">
+                    Создать курс
+                </a>
+            {% endif %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %} 

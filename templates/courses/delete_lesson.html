@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление урока{% endblock %}
+
+{% block extra_css %}
+<style>
+    .delete-lesson-container {
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .delete-lesson-card {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .delete-lesson-title {
+        font-size: 1.5rem;
+        color: #dc3545;
+        margin-bottom: 1rem;
+    }
+
+    .delete-lesson-icon {
+        font-size: 3rem;
+        color: #dc3545;
+        margin-bottom: 1.5rem;
+    }
+
+    .delete-lesson-text {
+        color: #666;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+
+    .lesson-info {
+        background: #f8f9fa;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        text-align: left;
+    }
+
+    .lesson-info p {
+        margin: 0.5rem 0;
+        color: #666;
+    }
+
+    .lesson-info strong {
+        color: #333;
+    }
+
+    .buttons-container {
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        text-decoration: none;
+        text-align: center;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-danger:hover {
+        background: #c82333;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+    }
+
+    @media (max-width: 768px) {
+        .delete-lesson-container {
+            margin: 1rem auto;
+        }
+
+        .delete-lesson-card {
+            padding: 1.5rem;
+        }
+
+        .buttons-container {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-lesson-container">
+    <div class="delete-lesson-card">
+        <div class="delete-lesson-icon">
+            <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <h1 class="delete-lesson-title">Удаление урока</h1>
+        <div class="lesson-info">
+            <p><strong>Курс:</strong> {{ course.name }}</p>
+            <p><strong>Урок:</strong> {{ lesson.name }}</p>
+            <p><strong>Номер урока:</strong> {{ lesson.lesson_number }}</p>
+        </div>
+        <p class="delete-lesson-text">
+            Вы уверены, что хотите удалить этот урок? Это действие нельзя будет отменить.
+            <br>
+            Все последующие уроки будут автоматически перенумерованы.
+        </p>
+        <div class="buttons-container">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Удалить урок</button>
+            </form>
+            <a href="{% url 'courses:lesson_detail' course_id=course.id lesson_id=lesson.id %}" class="btn btn-secondary">
+                Отмена
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %} 

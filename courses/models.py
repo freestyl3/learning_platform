@@ -5,14 +5,17 @@ from users.models import MyUser
 
 class Test(models.Model):
     name = models.CharField('Имя теста', max_length=50, blank=True, null=False)
-    lesson_id = models.OneToOneField(
+    lesson = models.OneToOneField(
         'Lesson',
         on_delete=models.CASCADE,
-        verbose_name='ID Урока',
+        verbose_name='Урок',
         blank=False, 
         null=False
     )
     
+    def __str__(self):
+        return f"Тест: {self.name} ({self.lesson.name})"
+
 class QuestionType(models.TextChoices):
     INPUT = 'input'
     SINGLE_CHOICE = 'single_choices'
@@ -91,31 +94,70 @@ class MatchQuestion(models.Model):
         null=False
     )
 
-class Subject(models.Model):
-    name = models.CharField('Название предмета', max_length=50, blank=False, null=False)
-    users = models.ManyToManyField(MyUser)   
-
 class Lesson(models.Model):
-    icon = models.ImageField('Картинка урока', null=True, blank=True)
-    lesson_number = models.IntegerField('Номер урока')
-    name = models.CharField('Название', max_length=50)
-    subject_id = models.ForeignKey(
-        Subject,
-        on_delete=models.CASCADE,
-        verbose_name='ID предмета',
-        blank=False, 
-        null=False
-    )
-    hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
+    course = models.ForeignKey('Course', on_delete=models.CASCADE)
+    name = models.CharField(max_length=200)
+    content = models.TextField()
+    lesson_number = models.PositiveIntegerField()
+    created_at = models.DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['lesson_number']
+
+    def __str__(self):
+        return f"{self.course.name} - Урок {self.lesson_number}: {self.name}"
 
 class Paragraph(models.Model):
     text = models.TextField('Текст параграфа', max_length=500, blank=False, null=False)
-    lesson_id = models.ForeignKey(
+    lesson = models.ForeignKey(
         Lesson,
         on_delete=models.CASCADE, 
-        verbose_name='ID Урока',
+        verbose_name='Урок',
         blank=True,
         null=False
     )
     order = models.IntegerField('Порядок параграфов')
+
+    def __str__(self):
+        return f"Параграф {self.order} урока {self.lesson.name}"
+
+class Course(models.Model):
+    name = models.CharField(max_length=200)
+    description = models.TextField()
+    teacher = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+class LessonImage(models.Model):
+    lesson = models.ForeignKey(
+        Lesson,
+        on_delete=models.CASCADE,
+        related_name='images',
+        verbose_name='Урок'
+    )
+    image = models.ImageField(
+        upload_to='lesson_images/%Y/%m/%d/',
+        verbose_name='Изображение'
+    )
+    caption = models.CharField(
+        max_length=200,
+        blank=True,
+        verbose_name='Подпись к изображению'
+    )
+    order = models.PositiveIntegerField(
+        default=0,
+        verbose_name='Порядок отображения'
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ['order', 'created_at']
+        verbose_name = 'Изображение урока'
+        verbose_name_plural = 'Изображения урока'
+
+    def __str__(self):
+        return f"Изображение {self.order} для урока {self.lesson.name}"

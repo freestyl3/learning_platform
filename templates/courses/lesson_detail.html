@@ -1,0 +1,189 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ lesson.name }}{% endblock %}
+
+{% block extra_css %}
+<style>
+    .lesson-container {
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem;
+    }
+
+    .lesson-header {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .lesson-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .lesson-content {
+        background: white;
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .lesson-text {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    .lesson-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+    }
+
+    .lesson-images {
+        margin-top: 2rem;
+    }
+
+    .lesson-images .card {
+        height: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .lesson-images .card:hover {
+        transform: translateY(-5px);
+    }
+
+    .lesson-images .card-img-top {
+        height: 200px;
+        object-fit: cover;
+    }
+
+    .lesson-images .card-body {
+        padding: 1rem;
+    }
+
+    .lesson-images .card-text {
+        color: #666;
+        font-size: 0.9rem;
+    }
+
+    .btn-edit {
+        background-color: #007bff;
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        transition: background-color 0.2s ease;
+    }
+
+    .btn-edit:hover {
+        background-color: #0056b3;
+        color: white;
+        text-decoration: none;
+    }
+
+    .course-title {
+        font-size: 1.2rem;
+        color: #007bff;
+        text-decoration: none;
+        margin-bottom: 1.5rem;
+        display: inline-block;
+        transition: color 0.2s ease;
+    }
+
+    .course-title:hover {
+        color: #0056b3;
+        text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+        .lesson-container {
+            margin: 1rem auto;
+            padding: 0 0.5rem;
+        }
+
+        .lesson-title {
+            font-size: 2rem;
+        }
+
+        .lesson-header,
+        .lesson-content {
+            padding: 1.5rem;
+        }
+
+        .lesson-navigation {
+            flex-direction: column;
+            gap: 1rem;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="lesson-container">
+    <a href="{% url 'courses:course_detail' pk=course.id %}" class="course-title">
+        {{ course.name }}
+    </a>
+
+    <div class="lesson-header">
+        <h1 class="lesson-title">{{ lesson.name }}</h1>
+        {% if user == course.teacher %}
+        <a href="{% url 'courses:edit_lesson' course_id=course.id lesson_id=lesson.id %}" class="btn-edit">
+            Редактировать урок
+        </a>
+        {% endif %}
+    </div>
+
+    <div class="lesson-content">
+        <div class="lesson-text">
+            {{ lesson.content|linebreaks }}
+        </div>
+
+        {% if lesson.images.exists %}
+        <div class="lesson-images">
+            <h3 class="mb-4">Изображения к уроку</h3>
+            <div class="row g-4">
+                {% for image in lesson.images.all %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <img src="{{ image.image.url }}" class="card-img-top" alt="Изображение к уроку">
+                        {% if image.caption %}
+                        <div class="card-body">
+                            <p class="card-text">{{ image.caption }}</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="lesson-navigation">
+            {% if prev_lesson %}
+            <a href="{% url 'courses:lesson_detail' course_id=course.id lesson_id=prev_lesson.id %}" class="btn btn-outline-primary">
+                &larr; Предыдущий урок
+            </a>
+            {% else %}
+            <div></div>
+            {% endif %}
+
+            {% if next_lesson %}
+            <a href="{% url 'courses:lesson_detail' course_id=course.id lesson_id=next_lesson.id %}" class="btn btn-primary">
+                Следующий урок &rarr;
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %} 

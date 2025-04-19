@@ -1,166 +1,362 @@
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная - МойСайт</title>
-    <style>
-        /* Общие стили */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
-        }
+{% extends 'base.html' %}
 
-        body {
-            background-color: #f5f5f5;
-            min-height: 100vh;
-        }
+{% block title %}{% if course %}{{ course.name }}{% else %}Курсы{% endif %}{% endblock %}
 
-        /* Шапка */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 2rem;
-            background: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-        }
-        .user-menu {
-            color: #007bff;
-            cursor: pointer;
-            font-weight: bold;
-            transition: color 0.3s ease;
-        }
+{% block extra_css %}
+<style>
+    /* Общие стили */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
 
-        .user-menu:hover {
-            color: #0056b3;
-        }
+    body {
+        background-color: #f5f5f5;
+        min-height: 100vh;
+    }
 
-        /* Контейнер уроков */
-        .lessons-container {
-            max-width: 1200px;
-            margin: 6rem auto 2rem;
-            padding: 0 1rem;
-        }
+    /* Шапка */
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+    }
 
+    .user-menu {
+        position: relative;
+        color: #007bff;
+        cursor: pointer;
+        font-weight: bold;
+        transition: color 0.3s ease;
+    }
+
+    .user-menu:hover {
+        color: #0056b3;
+    }
+
+    .dropdown-menu {
+        position: fixed;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 0.5rem 0;
+        min-width: 200px;
+        display: none;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+        z-index: 1001;
+        margin-top: 5px;
+    }
+
+    .dropdown-menu.show {
+        display: block;
+    }
+
+    .dropdown-item {
+        padding: 0.75rem 1.5rem;
+        color: #333;
+        text-decoration: none;
+        display: block;
+        transition: background-color 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+    }
+
+    .dropdown-divider {
+        height: 1px;
+        background-color: #e9ecef;
+        margin: 0.5rem 0;
+    }
+
+    /* Контейнер */
+    .container {
+        max-width: 1200px;
+        margin: 6rem auto 2rem;
+        padding: 0 1rem;
+    }
+
+    /* Список курсов */
+    .cards-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        justify-content: flex-start;
+    }
+
+    /* Сообщение об отсутствии контента */
+    .empty-state {
+        text-align: center;
+        padding: 4rem;
+        color: #666;
+        font-size: 1.2rem;
+        display: none;
+    }
+
+    .empty-state.visible {
+        display: block;
+    }
+
+    /* Карточка курса */
+    .course-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+        width: 300px;
+        min-height: 200px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .course-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+    }
+
+    .card-content {
+        padding: 1.5rem;
+        border-top: 3px solid #007bff;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .card-title {
+        color: #333;
+        font-size: 1.2rem;
+        font-weight: bold;
+    }
+
+    .card-description {
+        color: #666;
+        font-size: 0.9rem;
+        flex-grow: 1;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 1rem;
+        border-top: 1px solid #eee;
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    /* Детали курса */
+    .course-header {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .course-title {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 1rem;
+    }
+
+    .course-description {
+        color: #666;
+        font-size: 1.1rem;
+        margin-bottom: 2rem;
+    }
+
+    .course-teacher {
+        color: #007bff;
+        font-size: 1rem;
+    }
+
+    /* Список уроков */
+    .lessons-list {
+        background: white;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .lessons-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .lessons-title {
+        font-size: 1.5rem;
+        color: #333;
+    }
+
+    .add-lesson-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.75rem 1.5rem;
+        background: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        cursor: pointer;
+        text-decoration: none;
+        transition: all 0.3s ease;
+    }
+
+    .add-lesson-btn:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .lesson-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        border: 1px solid #eee;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .lesson-item:hover {
+        background: #f8f9fa;
+        transform: translateX(5px);
+    }
+
+    .lesson-number {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #007bff;
+        margin-right: 1rem;
+        min-width: 30px;
+    }
+
+    .lesson-name {
+        flex-grow: 1;
+        font-size: 1.1rem;
+        color: #333;
+    }
+
+    @media (max-width: 768px) {
         .cards-wrapper {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 2rem;
-            justify-content: flex-start;
-        }
-
-        /* Сообщение об отсутствии уроков */
-        .empty-state {
-            text-align: center;
-            padding: 4rem;
-            color: #666;
-            font-size: 1.2rem;
-            display: none;
-        }
-
-        .empty-state.visible {
-            display: block;
-        }
-
-        /* Карточка урока */
-        .lesson-card {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            cursor: pointer;
-            width: 300px;
-            aspect-ratio: 1/1.414;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .lesson-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
-        }
-
-        .card-image {
-            width: 100%;
-            height: calc(100% - 120px);
-            object-fit: cover;
-        }
-
-        .card-content {
-            padding: 1.5rem;
-            border-top: 3px solid #007bff;
-            height: 120px;
-            display: flex;
-            align-items: center;
             justify-content: center;
         }
 
-        .card-title {
-            color: #333;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-align: center;
+        .course-card {
+            width: 100%;
+            max-width: 400px;
         }
 
-        @media (max-width: 768px) {
-            .cards-wrapper {
-                justify-content: center;
-            }
-
-            .lesson-card {
-                width: 100%;
-                max-width: 400px;
-            }
-
-            .header {
-                padding: 1rem;
-            }
+        .header {
+            padding: 1rem;
         }
-    </style>
-</head>
-<body>
-    <header class="header">
-        <div class="user-menu" onclick="openProfile()">
-            Пользователь123
-        </div>
-    </header>
 
-    <main class="lessons-container">
-        <div class="empty-state" id="emptyState">
-            Уроков еще нет. Дождитесь пока преподаватель добавит урок
+        .dropdown-menu {
+            position: fixed;
+            top: auto;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            max-height: 50vh;
+            border-radius: 8px 8px 0 0;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            margin-top: 0;
+        }
+
+        .dropdown-menu.show {
+            transform: translateY(0);
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+{% if course %}
+    <!-- Детальная страница курса -->
+    <div class="course-header">
+        <h1 class="course-title">{{ course.name }}</h1>
+        <p class="course-description">{{ course.description }}</p>
+        <p class="course-teacher">Преподаватель: {{ course.teacher.username }}</p>
+    </div>
+
+    <div class="lessons-list">
+        <div class="lessons-header">
+            <h2 class="lessons-title">Уроки курса</h2>
+            {% if user == course.teacher %}
+                <a href="{% url 'courses:create_lesson' course.id %}" class="add-lesson-btn">
+                    + Добавить урок
+                </a>
+            {% endif %}
         </div>
 
-        <div class="cards-wrapper" id="cardsWrapper">
-            <div class="lesson-card" onclick="openLesson(1)">
-                <img src="https://picsum.photos/400/566?random=1" class="card-image" alt="">
+        <div id="lessonsList">
+            {% for lesson in course.lesson_set.all %}
+                <div class="lesson-item" onclick="location.href='{% url 'courses:lesson_detail' course.id lesson.id %}'">
+                    <span class="lesson-number">{{ lesson.lesson_number }}</span>
+                    <span class="lesson-name">{{ lesson.name }}</span>
+                </div>
+            {% empty %}
+                <div class="empty-state visible">
+                    {% if user == course.teacher %}
+                        В курсе пока нет уроков. Создайте первый урок!
+                    {% else %}
+                        В курсе пока нет уроков. Загляните позже!
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <!-- Список курсов -->
+    <div class="empty-state" id="emptyState">
+        {% if user.is_teacher %}
+            У вас пока нет созданных курсов. Создайте свой первый курс!
+        {% else %}
+            Курсов пока нет. Загляните позже!
+        {% endif %}
+    </div>
+
+    <div class="cards-wrapper" id="cardsWrapper">
+        {% for course in courses %}
+            <div class="course-card" onclick="location.href='{% url 'courses:course_detail' pk=course.id %}'">
                 <div class="card-content">
-                    <h3 class="card-title">Основы математики</h3>
+                    <h3 class="card-title">{{ course.name }}</h3>
+                    <p class="card-description">{{ course.description|truncatechars:100 }}</p>
+                    <div class="card-footer">
+                        <span>Преподаватель: {{ course.teacher.username }}</span>
+                    </div>
                 </div>
             </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock %}
 
-            <div class="lesson-card" onclick="openLesson(2)">
-                <img src="https://picsum.photos/400/566?random=2" class="card-image" alt="">
-                <div class="card-content">
-                    <h3 class="card-title">Физика для начинающих</h3>
-                </div>
-            </div>
-        </div>
-    </main>
-
-    <script>
-        function checkEmptyState() {
-            const cardsWrapper = document.getElementById('cardsWrapper');
-            const emptyState = document.getElementById('emptyState');
-            
+{% block extra_js %}
+<script>
+    function checkEmptyState() {
+        const cardsWrapper = document.getElementById('cardsWrapper');
+        const emptyState = document.getElementById('emptyState');
+        
+        if (cardsWrapper && emptyState) {
             if (cardsWrapper.children.length === 0) {
                 emptyState.classList.add('visible');
                 cardsWrapper.style.display = 'none';
@@ -169,16 +365,63 @@
                 cardsWrapper.style.display = 'flex';
             }
         }
+    }
 
-        function openProfile() {
-            alert("Личный кабинет будет реализован позже");
+    function toggleDropdown() {
+        const dropdown = document.getElementById('userDropdown');
+        const userMenu = document.querySelector('.user-menu');
+        const userMenuRect = userMenu.getBoundingClientRect();
+        
+        dropdown.classList.toggle('show');
+
+        if (dropdown.classList.contains('show')) {
+            const viewportWidth = window.innerWidth;
+            const menuWidth = 200;
+            
+            let left = userMenuRect.right - menuWidth;
+            if (left < 0) {
+                left = 0;
+            } else if (left + menuWidth > viewportWidth) {
+                left = viewportWidth - menuWidth;
+            }
+            
+            let top = userMenuRect.bottom + 5;
+            const viewportHeight = window.innerHeight;
+            const menuHeight = dropdown.offsetHeight;
+            
+            if (top + menuHeight > viewportHeight) {
+                top = userMenuRect.top - menuHeight - 5;
+            }
+            
+            dropdown.style.left = `${left}px`;
+            dropdown.style.top = `${top}px`;
         }
+    }
 
-        function openLesson(id) {
-            alert(`Открытие урока #${id} (реализуем позже)`);
+    function openProfile() {
+        alert("Личный кабинет будет реализован позже");
+    }
+
+    function logout() {
+        window.location.href = '/auth/logout/';
+    }
+
+    document.addEventListener('click', function(event) {
+        const dropdown = document.getElementById('userDropdown');
+        const userMenu = document.querySelector('.user-menu');
+        
+        if (!userMenu.contains(event.target)) {
+            dropdown.classList.remove('show');
         }
+    });
 
-        window.onload = checkEmptyState;
-    </script>
-</body>
-</html>
+    window.addEventListener('resize', function() {
+        const dropdown = document.getElementById('userDropdown');
+        if (dropdown.classList.contains('show')) {
+            toggleDropdown();
+        }
+    });
+
+    window.onload = checkEmptyState;
+</script>
+{% endblock %}

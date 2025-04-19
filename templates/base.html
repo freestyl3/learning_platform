@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - МойСайт</title>
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 2rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            height: 70px;
+        }
+
+        .header-logo {
+            font-size: 1.5rem;
+            color: #333;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .header-logo:hover {
+            color: #007bff;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .auth-button {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .auth-button.login {
+            background: transparent;
+            color: #007bff;
+            border: 1px solid #007bff;
+        }
+
+        .auth-button.login:hover {
+            background: #007bff;
+            color: white;
+        }
+
+        .auth-button.signup {
+            background: #007bff;
+            color: white;
+            border: 1px solid #007bff;
+        }
+
+        .auth-button.signup:hover {
+            background: #0056b3;
+            border-color: #0056b3;
+        }
+
+        .user-menu {
+            position: relative;
+            color: #007bff;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .user-menu:hover {
+            color: #0056b3;
+        }
+
+        .dropdown-menu {
+            position: fixed;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 0.5rem 0;
+            min-width: 200px;
+            display: none;
+            max-height: calc(100vh - 100px);
+            overflow-y: auto;
+            z-index: 1001;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            padding: 0.75rem 1.5rem;
+            color: #333;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background-color: #e9ecef;
+            margin: 0.5rem 0;
+        }
+
+        /* Контейнер */
+        .container {
+            max-width: 1200px;
+            margin: 6rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        /* Общие компоненты */
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #545b62;
+            transform: translateY(-2px);
+        }
+
+        /* Формы */
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* Сообщения */
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        {% block extra_css %}{% endblock %}
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'courses:course_list' %}" class="header-logo">
+            Образовательная платформа
+        </a>
+        {% if user.is_authenticated %}
+            <div class="user-menu" onclick="toggleDropdown()">
+                {{ user.username }}
+                <div class="dropdown-menu" id="userDropdown">
+                    <a href="#" class="dropdown-item" onclick="openProfile()">Личный кабинет</a>
+                    {% if user.is_teacher %}
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'courses:create_course' %}" class="dropdown-item">Создать курс</a>
+                    {% endif %}
+                    <div class="dropdown-divider"></div>
+                    <a href="{% url 'users:logout' %}" class="dropdown-item">Выйти</a>
+                </div>
+            </div>
+        {% else %}
+            <div class="auth-buttons">
+                <a href="{% url 'users:login' %}" class="auth-button login">Войти</a>
+                <a href="{% url 'users:signup' %}" class="auth-button signup">Зарегистрироваться</a>
+            </div>
+        {% endif %}
+    </header>
+
+    <main class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        
+        {% block content %}{% endblock %}
+    </main>
+
+    <script>
+        function toggleDropdown() {
+            const dropdown = document.getElementById('userDropdown');
+            const userMenu = document.querySelector('.user-menu');
+            const userMenuRect = userMenu.getBoundingClientRect();
+            
+            dropdown.classList.toggle('show');
+
+            if (dropdown.classList.contains('show')) {
+                const viewportWidth = window.innerWidth;
+                const menuWidth = 200;
+                
+                let left = userMenuRect.right - menuWidth;
+                if (left < 0) {
+                    left = 0;
+                } else if (left + menuWidth > viewportWidth) {
+                    left = viewportWidth - menuWidth;
+                }
+                
+                let top = userMenuRect.bottom + 5;
+                const viewportHeight = window.innerHeight;
+                const menuHeight = dropdown.offsetHeight;
+                
+                if (top + menuHeight > viewportHeight) {
+                    top = userMenuRect.top - menuHeight - 5;
+                }
+                
+                dropdown.style.left = `${left}px`;
+                dropdown.style.top = `${top}px`;
+            }
+        }
+
+        function openProfile() {
+            alert("Личный кабинет будет реализован позже");
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('userDropdown');
+            const userMenu = document.querySelector('.user-menu');
+            
+            if (!userMenu.contains(event.target)) {
+                dropdown.classList.remove('show');
+            }
+        });
+
+        window.addEventListener('resize', function() {
+            const dropdown = document.getElementById('userDropdown');
+            if (dropdown.classList.contains('show')) {
+                toggleDropdown();
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 
