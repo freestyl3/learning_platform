@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdVision - Образовательная платформа</title>
+    <style>
+        /* Базовые стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Контейнер страницы */
+        .main-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Левый блок (синий фон) */
+        .hero-section {
+            flex: 2;
+            background: #007bff;
+            padding: 4rem 3rem;
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Заголовок и лозунг */
+        .platform-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .platform-name {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .platform-slogan {
+            font-size: 1.4rem;
+            opacity: 0.9;
+        }
+
+        /* Сетка карточек (2 ряда по 2) */
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            flex-grow: 1;
+        }
+
+        /* Стили карточек как на промо-странице */
+        .benefit-card {
+            background: rgba(255,255,255,0.95);
+            color: #2c3e50;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            min-height: 250px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 123, 255, 0.25);
+        }
+
+        .card-title {
+            color: #007bff;
+            font-size: 1.6rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Правый блок (форма) */
+        .auth-section {
+            background:#007bff;
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        /* Форма */
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            color: #2d3748;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-group input {
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        .auth-button {
+            background: #007bff;
+            color: white;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .auth-button:hover {
+            background: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .switch-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .switch-link a {
+            color: #007bff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .switch-link a:hover {
+            color: #0056b3;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1200px) {
+            .main-container {
+                flex-direction: column;
+            }
+
+            .hero-section {
+                padding: 2rem;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .platform-name {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <!-- Левый блок -->
+        <section class="hero-section">
+            <div class="platform-header">
+                <h1 class="platform-name">EdVision</h1>
+                <p class="platform-slogan">Превращаем обучение в увлекательное путешествие</p>
+            </div>
+
+            <div class="benefits-grid">
+                <!-- Первый ряд -->
+                <div class="benefit-card">
+                    <h3 class="card-title">Интерактивные курсы</h3>
+                    <p>Практические задания с мгновенной проверкой</p>
+                </div>
+                <div class="benefit-card">
+                    <h3 class="card-title">Экспертные лекции</h3>
+                    <p>Обучение у практикующих специалистов</p>
+                </div>
+
+                <!-- Второй ряд -->
+                <div class="benefit-card">
+                    <h3 class="card-title">Персональный подход</h3>
+                    <p>Индивидуальная программа обучения</p>
+                </div>
+                <div class="benefit-card">
+                    <h3 class="card-title">Сертификация</h3>
+                    <p>Официальные документы об окончании</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Правый блок -->
+        <section class="auth-section">
+            <div class="auth-container">
+                <h2 style="color: #2d3748; margin-bottom: 2rem; text-align: center;">
+                    {% if form_title %}{{ form_title }}{% else %}Вход{% endif %}
+                </h2>
+                
+                <form class="auth-form" method="POST">
+                    {% csrf_token %}
+                    
+                    <!-- Вывод ошибок формы -->
+                    {% if form.non_field_errors %}
+                        <div class="errorlist">
+                            {% for error in form.non_field_errors %}
+                                <div>{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <!-- Автоматический рендеринг полей формы -->
+                    {% for field in form %}
+                        <div class="form-group">
+                            {{ field.label_tag }}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-help">{{ field.help_text }}</small>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="errorlist">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" class="auth-button">
+                        {% if submit_text %}{{ submit_text }}{% else %}Войти{% endif %}
+                    </button>
+                    
+                    <!-- Ссылка для переключения между формами -->
+                    {% if switch_text and switch_url %}
+                        <div class="switch-link">
+                            <a href="{{ switch_url }}">{{ switch_text }}</a>
+                        </div>
+                    {% endif %}
+                </form>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

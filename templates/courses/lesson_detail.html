@@ -206,6 +206,9 @@
             <a href="{% url 'courses:edit_test' course_id=course.id lesson_id=lesson.id test_id=lesson.test.id %}" class="btn-edit">
                 Редактировать тест
             </a>
+            <a href="{% url 'courses:test_results' test_id=lesson.test.id %}" class="btn-edit">
+                Результаты теста
+            </a>
             {% endif %}
         </div>
         {% endif %}

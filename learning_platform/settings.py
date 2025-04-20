@@ -137,6 +137,10 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGIN_REDIRECT_URL = 'courses:course_list'
+LOGIN_URL = 'users:login'
+LOGOUT_REDIRECT_URL = 'homepage:homepage'
+
 # Logging configuration
 LOGGING = {
     'version': 1,

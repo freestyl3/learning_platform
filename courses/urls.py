@@ -25,4 +25,6 @@ urlpatterns = [
     path('<int:course_id>/lesson/<int:lesson_id>/test/<int:test_id>/add-question/', views.add_question, name='add_question'),
     path('<int:course_id>/lesson/<int:lesson_id>/test/<int:test_id>/question/<int:question_id>/delete/', views.delete_question, name='delete_question'),
     path('courses/<int:course_id>/lessons/<int:lesson_id>/tests/<int:test_id>/take/', views.take_test, name='take_test'),
+
+    path('tests/<int:test_id>/', views.TestListView.as_view(), name='test_results')
 ] 

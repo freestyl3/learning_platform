@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.views.generic import CreateView
 from django.urls import reverse_lazy
 from django.contrib import messages
@@ -14,17 +14,10 @@ logger = logging.getLogger(__name__)
 class CustomLoginView(LoginView):
     template_name = 'users/login.html'
     redirect_authenticated_user = True
-    success_url = reverse_lazy('homepage:homepage')
-
-    def get_success_url(self):
-        return self.success_url
 
     def form_invalid(self, form):
         messages.error(self.request, 'Неверное имя пользователя или пароль')
         return super().form_invalid(form)
-
-class CustomLogoutView(LogoutView):
-    next_page = 'homepage:homepage'
 
 class SignUpView(CreateView):
     form_class = MyUserCreationForm

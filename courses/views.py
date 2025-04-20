@@ -9,8 +9,18 @@ from .forms import CourseCreateForm, CourseForm, LessonForm, TestForm, QuestionF
 from django.utils import timezone
 from django.http import JsonResponse
 from django.urls import reverse
+from django.contrib.auth import get_user_model
 
 # Create your views here.
+
+class TestListView(LoginRequiredMixin, ListView):
+    model = TestResult
+    template_name = 'courses/test_list.html'
+    context_object_name = 'results'
+
+    def get_queryset(self):
+        test_id = self.kwargs['test_id']
+        return TestResult.objects.filter(test_id=test_id)
 
 class CourseListView(LoginRequiredMixin, ListView):
     model = Course
