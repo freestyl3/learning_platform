@@ -1,15 +1,383 @@
 {% extends 'base.html' %}
 
-{% block title %}Создание урока{% endblock %}
+{% block title %}Создание урока | Образовательная платформа{% endblock %}
+
+{% block extra_css %}
+<style>
+    .create-lesson-page {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+
+    .lesson-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        margin-bottom: 30px;
+    }
+
+    .lesson-header {
+        background: white;
+        padding: 25px 30px;
+        color: #333;
+        border-bottom: 1px solid #eee;
+    }
+
+    .lesson-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0;
+        text-align: center;
+    }
+
+    .lesson-body {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 25px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        color: #666;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        border: 2px solid #e1e1e1;
+        padding: 12px 20px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    }
+
+    textarea.form-control {
+        min-height: 200px;
+        resize: vertical;
+    }
+
+    .btn {
+        height: 45px;
+        padding: 0 30px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: #007bff;
+        color: white;
+        border: none;
+    }
+
+    .btn-primary:hover {
+        background: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: #f8f9fa;
+        color: #666;
+        border: 1px solid #dee2e6;
+    }
+
+    .btn-secondary:hover {
+        background: #e9ecef;
+        transform: translateY(-2px);
+    }
+
+    .buttons-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        margin-top: 25px;
+    }
+
+    .image-upload-section {
+        margin-top: 20px;
+        padding: 25px;
+        background: #f8f9fa;
+        border-radius: 15px;
+        border: 2px dashed #e1e1e1;
+    }
+
+    .image-upload-section h3 {
+        color: #333;
+        font-size: 18px;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .image-upload-input {
+        margin: 15px 0;
+    }
+
+    .image-upload-hint {
+        color: #666;
+        font-size: 14px;
+        margin: 10px 0 20px;
+        line-height: 1.5;
+    }
+
+    .image-preview {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+    }
+
+    .preview-item {
+        position: relative;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .preview-item img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+    }
+
+    .preview-item .remove-btn {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .preview-item .remove-btn:hover {
+        background: #ff4444;
+        color: white;
+    }
+
+    .image-caption {
+        padding: 10px;
+        background: white;
+    }
+
+    .image-caption input {
+        width: 100%;
+        border: 1px solid #ddd;
+        padding: 5px;
+        border-radius: 5px;
+    }
+
+    .insert-image-btn {
+        background: none;
+        border: 2px dashed #007bff;
+        color: #007bff;
+        padding: 15px;
+        width: 100%;
+        border-radius: 10px;
+        margin: 10px 0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .insert-image-btn:hover {
+        background: rgba(0, 123, 255, 0.1);
+    }
+
+    .alert {
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+    }
+
+    .alert-error {
+        background-color: #fff2f2;
+        border: 1px solid #ffcdd2;
+        color: #d32f2f;
+    }
+
+    @media (max-width: 768px) {
+        .lesson-card {
+            margin: 15px;
+        }
+
+        .lesson-header {
+            padding: 20px;
+        }
+
+        .lesson-body {
+            padding: 20px;
+        }
+
+        .buttons-group {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('lessonForm');
+    const contentField = document.getElementById('id_content');
+    const imageInput = document.getElementById('imageInput');
+    const imagePreviewContainer = document.getElementById('imagePreview');
+    let imageCounter = 0;
+
+    // Функция для создания превью изображения
+    function createImagePreview(file) {
+        const reader = new FileReader();
+        const previewItem = document.createElement('div');
+        previewItem.className = 'preview-item';
+        const imageId = `image-${imageCounter++}`;
+
+        reader.onload = function(e) {
+            previewItem.innerHTML = `
+                <img src="${e.target.result}" alt="Preview">
+                <button type="button" class="remove-btn" data-id="${imageId}">&times;</button>
+                <div class="image-caption">
+                    <input type="text" placeholder="Подпись к изображению" name="captions[]">
+                </div>
+            `;
+            
+            // Добавляем обработчик для кнопки удаления
+            const removeBtn = previewItem.querySelector('.remove-btn');
+            removeBtn.addEventListener('click', function() {
+                previewItem.remove();
+            });
+
+            // Добавляем кнопку для вставки изображения в текст
+            const insertBtn = document.createElement('button');
+            insertBtn.type = 'button';
+            insertBtn.className = 'insert-image-btn';
+            insertBtn.textContent = 'Вставить изображение в текст';
+            insertBtn.addEventListener('click', function() {
+                const placeholder = `[IMAGE:${imageId}]`;
+                const cursorPos = contentField.selectionStart;
+                const textBefore = contentField.value.substring(0, cursorPos);
+                const textAfter = contentField.value.substring(cursorPos);
+                contentField.value = textBefore + placeholder + textAfter;
+            });
+            previewItem.appendChild(insertBtn);
+        };
+
+        reader.readAsDataURL(file);
+        return previewItem;
+    }
+
+    // Обработчик загрузки изображений
+    imageInput.addEventListener('change', function(e) {
+        const files = e.target.files;
+        for (let file of files) {
+            if (file.type.startsWith('image/')) {
+                const previewItem = createImagePreview(file);
+                imagePreviewContainer.appendChild(previewItem);
+            }
+        }
+        // Очищаем input для возможности повторной загрузки тех же файлов
+        imageInput.value = '';
+    });
+
+    // Обработчик отправки формы
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const formData = new FormData(form);
+        const imagePositions = {};
+        
+        // Добавляем загруженные изображения и их подписи
+        document.querySelectorAll('.preview-item').forEach((item, index) => {
+            const imageFile = item.querySelector('img').src;
+            const caption = item.querySelector('input[name="captions[]"]').value;
+            const imageId = `image-${index}`;
+            
+            // Конвертируем Data URL обратно в File объект
+            if (imageFile.startsWith('data:')) {
+                const arr = imageFile.split(',');
+                const mime = arr[0].match(/:(.*?);/)[1];
+                const bstr = atob(arr[1]);
+                let n = bstr.length;
+                const u8arr = new Uint8Array(n);
+                while(n--) {
+                    u8arr[n] = bstr.charCodeAt(n);
+                }
+                const file = new File([u8arr], `image-${index}.${mime.split('/')[1]}`, {type:mime});
+                formData.append('images', file);
+            }
+            
+            imagePositions[imageId] = caption;
+        });
+        
+        formData.append('image_positions', JSON.stringify(imagePositions));
+
+        fetch(form.action, {
+            method: 'POST',
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: formData
+        })
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => {
+                    throw new Error(data.error || data.errors || 'Произошла ошибка при сохранении урока');
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                window.location.href = data.redirect_url;
+            } else {
+                throw new Error(data.error || data.errors || 'Неизвестная ошибка');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(error.message || 'Произошла ошибка при сохранении урока');
+        });
+    });
+});
+</script>
+{% endblock %}
 
 {% block content %}
-<div class="card">
-    <h2 class="mb-4">Создать новый урок для курса "{{ course.name }}"</h2>
-    <form method="post">
+<div class="create-lesson-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="lesson-card">
+                    <div class="lesson-header">
+                        <h1 class="lesson-title">Создание урока для курса "{{ course.name }}"</h1>
+                    </div>
+                    <div class="lesson-body">
+                        <form id="lessonForm" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
             <div class="form-group">
-                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
                 {{ field }}
                 {% if field.help_text %}
                     <small class="form-text text-muted">{{ field.help_text }}</small>
@@ -21,10 +389,27 @@
                 {% endif %}
             </div>
         {% endfor %}
-        <div class="mt-4">
+
+                            <div class="image-upload-section">
+                                <h3>Изображения урока</h3>
+                                <p class="image-upload-hint">
+                                    Вы можете загрузить несколько изображений. Для каждого изображения можно добавить подпись и вставить его в нужное место в тексте урока.
+                                </p>
+                                <div class="image-upload-input">
+                                    <input type="file" id="imageInput" multiple accept="image/*" class="form-control">
+                                </div>
+                                <div id="imagePreview" class="image-preview"></div>
+                            </div>
+
+                            <div class="buttons-group">
             <button type="submit" class="btn btn-primary">Создать урок</button>
             <a href="{% url 'courses:course_detail' pk=course.id %}" class="btn btn-secondary">Назад к курсу</a>
         </div>
     </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %} 

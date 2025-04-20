@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load lesson_tags %}
 
 {% block title %}{{ lesson.name }}{% endblock %}
 
@@ -18,11 +19,17 @@
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     }
 
+    .test-section {
+        background: white;
+        border-radius: 8px;
+        padding: 1rem;
+        border-top: 1px solid #eee;
+    }
+
     .lesson-title {
         font-size: 2.5rem;
         font-weight: bold;
         color: #333;
-        margin-bottom: 1rem;
     }
 
     .lesson-content {
@@ -92,6 +99,17 @@
         text-decoration: none;
     }
 
+    .btn-primary {
+        margin-top: 2rem;
+    }
+    
+
+    .teacher-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
     .course-title {
         font-size: 1.2rem;
         color: #007bff;
@@ -103,6 +121,41 @@
 
     .course-title:hover {
         color: #0056b3;
+        text-decoration: none;
+    }
+
+    .lesson-image {
+        margin: 2rem 0;
+        text-align: center;
+    }
+
+    .lesson-image img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .lesson-image .image-caption {
+        margin-top: 1rem;
+        color: #666;
+        font-style: italic;
+        font-size: 0.9rem;
+    }
+
+    .btn-delete {
+        background-color: #dc3545;
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border-radius: 4px;
+        text-decoration: none;
+        display: inline-block;
+        transition: all 0.3s ease;
+    }
+
+    .btn-delete:hover {
+        background-color: #c82333;
+        color: white;
         text-decoration: none;
     }
 
@@ -138,40 +191,53 @@
     <div class="lesson-header">
         <h1 class="lesson-title">{{ lesson.name }}</h1>
         {% if user == course.teacher %}
-        <a href="{% url 'courses:edit_lesson' course_id=course.id lesson_id=lesson.id %}" class="btn-edit">
-            Редактировать урок
-        </a>
+        <div class="teacher-actions">
+            <a href="{% url 'courses:edit_lesson' course_id=course.id lesson_id=lesson.id %}" class="btn-edit">
+                Редактировать урок
+            </a>
+            <a href="{% url 'courses:delete_lesson' course_id=course.id lesson_id=lesson.id %}" class="btn-delete">
+                Удалить урок
+            </a>
+            {% if not lesson.test %}
+            <a href="{% url 'courses:create_test' course_id=course.id lesson_id=lesson.id %}" class="btn-edit">
+                Создать тест
+            </a>
+            {% else %}
+            <a href="{% url 'courses:edit_test' course_id=course.id lesson_id=lesson.id test_id=lesson.test.id %}" class="btn-edit">
+                Редактировать тест
+            </a>
+            {% endif %}
+        </div>
         {% endif %}
     </div>
 
     <div class="lesson-content">
         <div class="lesson-text">
-            {{ lesson.content|linebreaks }}
+            {{ lesson.content|process_lesson_content:lesson|linebreaks }}
         </div>
 
-        {% if lesson.images.exists %}
-        <div class="lesson-images">
-            <h3 class="mb-4">Изображения к уроку</h3>
-            <div class="row g-4">
-                {% for image in lesson.images.all %}
-                <div class="col-md-4">
-                    <div class="card">
-                        <img src="{{ image.image.url }}" class="card-img-top" alt="Изображение к уроку">
-                        {% if image.caption %}
-                        <div class="card-body">
-                            <p class="card-text">{{ image.caption }}</p>
+        {% if test %}
+            <div class="test-section">
+                <h3>Тест: {{ test.name }}</h3>
+                {% if user == course.teacher %}
+                {% else %}
+                    {% if test_result %}
+                        <div class="test-result">
+                            <p>Вы уже прошли этот тест</p>
+                            <p>Ваш результат: {{ test_result.score|floatformat:1 }}%</p>
+                            <p>Дата прохождения: {{ test_result.completed_at|date:"d.m.Y H:i" }}</p>
                         </div>
-                        {% endif %}
-                    </div>
-                </div>
-                {% endfor %}
+                    {% else %}
+                        <a href="{% url 'courses:take_test' course.id lesson.id test.id %}" class="btn btn-primary">
+                            Пройти тест
+                        </a>
+                    {% endif %}
+                {% endif %}
             </div>
-        </div>
         {% endif %}
-
         <div class="lesson-navigation">
             {% if prev_lesson %}
-            <a href="{% url 'courses:lesson_detail' course_id=course.id lesson_id=prev_lesson.id %}" class="btn btn-outline-primary">
+            <a href="{% url 'courses:lesson_detail' course_id=course.id lesson_id=prev_lesson.id %}" class="btn btn-primary">
                 &larr; Предыдущий урок
             </a>
             {% else %}

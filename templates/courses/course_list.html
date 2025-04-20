@@ -75,24 +75,6 @@
         font-size: 0.9rem;
     }
 
-    .course-teacher {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .teacher-avatar {
-        width: 24px;
-        height: 24px;
-        border-radius: 50%;
-        background: #e9ecef;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.8rem;
-        color: #666;
-    }
-
     .course-footer {
         padding: 1rem 1.5rem;
         background: #f8f9fa;
@@ -101,7 +83,7 @@
 
     .course-stats {
         display: flex;
-        justify-content: space-between;
+        justify-content: flex-end;
         align-items: center;
         color: #666;
         font-size: 0.9rem;
@@ -163,21 +145,9 @@
                         <p class="course-description">
                             {{ course.description|truncatechars:150|default:"Описание отсутствует" }}
                         </p>
-                        <div class="course-meta">
-                            <div class="course-teacher">
-                                <div class="teacher-avatar">
-                                    {{ course.teacher.username|first|upper }}
-                                </div>
-                                <span>{{ course.teacher.username }}</span>
-                            </div>
-                        </div>
                     </div>
                     <div class="course-footer">
                         <div class="course-stats">
-                            <span>
-                                <i class="fas fa-users"></i>
-                                {{ course.students.count }} студентов
-                            </span>
                             <span>
                                 <i class="fas fa-book"></i>
                                 {{ course.lesson_set.count }} уроков

@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import MyUser
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -17,10 +18,8 @@ class Test(models.Model):
         return f"Тест: {self.name} ({self.lesson.name})"
 
 class QuestionType(models.TextChoices):
-    INPUT = 'input'
-    SINGLE_CHOICE = 'single_choices'
-    MULTIPLE_CHOICE = 'multiple_choice'
-    MATCHING = 'mathcing'
+    INPUT = 'input', 'Ввод текста'
+    MULTIPLE_CHOICE = 'multiple_choice', 'Множественный выбор'
 
 class Question(models.Model):
     text = models.CharField('Текст вопроса', max_length=50, blank=True, null=False)
@@ -35,9 +34,13 @@ class Question(models.Model):
         'Тип вопроса',
         max_length=15,
         choices=QuestionType.choices,
+        default=QuestionType.INPUT,
         blank=False,
         null=False
     )
+    
+    def __str__(self):
+        return f"Вопрос: {self.text}"
 
 class InputQuestion(models.Model):
     right_answer = models.CharField(
@@ -46,12 +49,13 @@ class InputQuestion(models.Model):
         blank=False,
         null=False
     )
-    question_id = models.ForeignKey(
+    question_id = models.OneToOneField(
         Question,
         verbose_name='ID вопроса',
         on_delete=models.CASCADE,
         blank=False,
-        null=False
+        null=False,
+        related_name='inputquestion'
     )
 
 class ChoiceQuestion(models.Model):
@@ -62,7 +66,8 @@ class ChoiceQuestion(models.Model):
         verbose_name='ID вопроса',
         on_delete=models.CASCADE,
         blank=False,
-        null=False
+        null=False,
+        related_name='choicequestion_set'
     )
 
 class MatchLeft(models.Model):
@@ -97,7 +102,7 @@ class MatchQuestion(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey('Course', on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
-    content = models.TextField()
+    content = models.TextField(verbose_name='Содержание урока')
     lesson_number = models.PositiveIntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -161,3 +166,16 @@ class LessonImage(models.Model):
 
     def __str__(self):
         return f"Изображение {self.order} для урока {self.lesson.name}"
+
+class TestResult(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
+    test = models.ForeignKey(Test, on_delete=models.CASCADE)
+    score = models.FloatField()  # Процент правильных ответов
+    completed_at = models.DateTimeField()
+    
+    class Meta:
+        unique_together = ['user', 'test']  # Один пользователь может пройти тест только один раз
+        ordering = ['-completed_at']
+    
+    def __str__(self):
+        return f"{self.user.username} - {self.test.name} ({self.score}%)"

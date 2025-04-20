@@ -1,0 +1,528 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="question-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="form-card">
+                    <div class="form-card__header">
+                        <h1 class="form-card__title">Добавить вопрос к тесту "{{ test.name }}"</h1>
+                    </div>
+                    
+                    <div class="form-card__body">
+                        <form method="post" class="question-form" id="questionForm">
+                            {% csrf_token %}
+                            
+                            <div class="form-section">
+                                <div class="form-field">
+                                    <label class="form-field__label" for="id_text">Текст вопроса</label>
+                                    <textarea name="text" 
+                                              id="id_text" 
+                                              class="form-field__input" 
+                                              required 
+                                              placeholder="Введите текст вопроса">{{ question_form.text.value|default:'' }}</textarea>
+                                    {% if question_form.text.errors %}
+                                        <div class="form-field__error">
+                                            {{ question_form.text.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+
+                                <div class="form-field">
+                                    <label class="form-field__label" for="{{ question_form.type.id_for_label }}">Тип вопроса</label>
+                                    {{ question_form.type }}
+                                    {% if question_form.type.errors %}
+                                        <div class="form-field__error">
+                                            {{ question_form.type.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div id="input-question-fields" class="form-section" style="display: none;">
+                                <div class="form-field">
+                                    <label class="form-field__label" for="id_right_answer">Правильный ответ</label>
+                                    <input type="text" 
+                                           name="right_answer" 
+                                           id="id_right_answer" 
+                                           class="form-field__input"
+                                           required 
+                                           placeholder="Введите правильный ответ">
+                                    {% if input_form.right_answer.errors %}
+                                        <div class="form-field__error">
+                                            {{ input_form.right_answer.errors }}
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div id="choice-question-fields" class="form-section" style="display: none;">
+                                <div id="choices-container" class="choices-list">
+                                    <div class="choice-item">
+                                        <div class="choice-item__content">
+                                            <button type="button" 
+                                                    class="choice-item__remove" 
+                                                    onclick="removeChoice(this)" 
+                                                    title="Удалить вариант">×</button>
+                                            <div class="form-field">
+                                                <label class="form-field__label">Вариант ответа 1</label>
+                                                <input type="text" 
+                                                       name="choice_text_0" 
+                                                       class="form-field__input" 
+                                                       required
+                                                       placeholder="Введите вариант ответа">
+                                            </div>
+                                            <div class="choice-item__checkbox">
+                                                <input type="checkbox" 
+                                                       name="is_correct_0" 
+                                                       value="true" 
+                                                       id="choice-correct-0">
+                                                <label for="choice-correct-0">Правильный ответ</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <button type="button" 
+                                        class="btn btn-outline-primary btn-add-choice" 
+                                        onclick="addChoiceField()">
+                                    <i class="fas fa-plus"></i> Добавить вариант ответа
+                                </button>
+                            </div>
+
+                            <div class="form-actions">
+                                <a href="{% url 'courses:edit_test' course.id lesson.id test.id %}" 
+                                   class="btn btn-outline-secondary">
+                                    Назад
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    Сохранить
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.question-page {
+    min-height: calc(100vh - 70px);
+    background-color: #f5f5f5;
+    padding: 2rem 0;
+    margin-top: 70px;
+}
+
+.form-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.form-card__header {
+    padding: 1.5rem 2rem;
+    background-color: white;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.form-card__title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0;
+    text-align: center;
+}
+
+.form-card__body {
+    padding: 2rem;
+}
+
+.question-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 1.5rem;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px solid #e9ecef;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-field__label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #333;
+}
+
+.form-field__input,
+.form-field__select {
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    color: #333;
+    background-color: white;
+    transition: all 0.3s ease;
+}
+
+.form-field__input:focus,
+.form-field__select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+    outline: none;
+}
+
+.form-field__input::placeholder {
+    color: #6c757d;
+}
+
+.form-field__error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+}
+
+.choices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.choice-item {
+    background: white;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    padding: 1rem;
+}
+
+.choice-item__content {
+    position: relative;
+    padding-right: 2rem;
+}
+
+.choice-item__remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    color: #dc3545;
+    font-size: 1.5rem;
+    line-height: 1;
+    padding: 0;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.choice-item__remove:hover {
+    opacity: 1;
+}
+
+.choice-item__checkbox {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.choice-item__checkbox input[type="checkbox"] {
+    width: 1rem;
+    height: 1rem;
+}
+
+.choice-item__checkbox label {
+    font-size: 0.875rem;
+    color: #333;
+    user-select: none;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+    border-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border: 1px solid #6c757d;
+    background-color: white;
+}
+
+.btn-outline-secondary:hover {
+    background: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    color: #007bff;
+    border: 1px solid #007bff;
+    background-color: white;
+}
+
+.btn-outline-primary:hover {
+    background-color: #007bff;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-add-choice {
+    margin-top: 1rem;
+    width: 100%;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid #e9ecef;
+}
+</style>
+
+<script>
+function addChoiceField() {
+    const container = document.getElementById('choices-container');
+    const choiceCount = container.children.length;
+    const newChoice = document.createElement('div');
+    newChoice.className = 'choice-item';
+    newChoice.innerHTML = `
+        <div class="choice-item__content">
+            <button type="button" 
+                    class="choice-item__remove" 
+                    onclick="removeChoice(this)" 
+                    title="Удалить вариант">×</button>
+            <div class="form-field">
+                <label class="form-field__label">Вариант ответа ${choiceCount + 1}</label>
+                <input type="text" 
+                       name="choice_text_${choiceCount}" 
+                       class="form-field__input" 
+                       required
+                       placeholder="Введите вариант ответа">
+            </div>
+            <div class="choice-item__checkbox">
+                <input type="checkbox" 
+                       name="is_correct_${choiceCount}" 
+                       value="true" 
+                       id="choice-correct-${choiceCount}">
+                <label for="choice-correct-${choiceCount}">Правильный ответ</label>
+            </div>
+        </div>
+    `;
+    container.appendChild(newChoice);
+    updateChoiceNumbers();
+}
+
+function removeChoice(button) {
+    const choiceItem = button.closest('.choice-item');
+    choiceItem.remove();
+    updateChoiceNumbers();
+}
+
+function updateChoiceNumbers() {
+    const container = document.getElementById('choices-container');
+    const choices = container.getElementsByClassName('choice-item');
+    for (let i = 0; i < choices.length; i++) {
+        const label = choices[i].querySelector('.form-field__label');
+        const input = choices[i].querySelector('input[type="text"]');
+        const checkbox = choices[i].querySelector('input[type="checkbox"]');
+        const checkboxLabel = choices[i].querySelector('.choice-item__checkbox label');
+        
+        label.textContent = `Вариант ответа ${i + 1}`;
+        input.name = `choice_text_${i}`;
+        checkbox.name = `is_correct_${i}`;
+        checkbox.id = `choice-correct-${i}`;
+        checkboxLabel.setAttribute('for', `choice-correct-${i}`);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM Content Loaded');
+    
+    const typeSelect = document.querySelector('select[name="type"]');
+    const inputFields = document.getElementById('input-question-fields');
+    const choiceFields = document.getElementById('choice-question-fields');
+    const form = document.getElementById('questionForm');
+    
+    if (!form) {
+        console.error('Form not found!');
+        return;
+    }
+    
+    if (!typeSelect) {
+        console.error('Type select not found!');
+        return;
+    }
+
+    // Добавляем классы к полям формы
+    const formInputs = document.querySelectorAll('.form-field input, .form-field select');
+    formInputs.forEach(input => {
+        if (input.type === 'text' || input.type === 'select-one') {
+            input.classList.add('form-field__input');
+        }
+    });
+
+    function updateFields() {
+        const selectedType = typeSelect.value;
+        console.log('Selected type:', selectedType);
+        
+        // Безопасное получение элементов
+        const rightAnswerInput = document.getElementById('id_right_answer');
+        const choiceInputs = document.querySelectorAll('#choices-container input[type="text"]');
+        
+        if (selectedType === 'input') {
+            if (inputFields) inputFields.style.display = 'block';
+            if (choiceFields) choiceFields.style.display = 'none';
+            
+            // Безопасная установка required для правильного ответа
+            if (rightAnswerInput) {
+                rightAnswerInput.required = true;
+            }
+            
+            // Безопасная установка required для полей выбора
+            choiceInputs.forEach(input => {
+                input.required = false;
+            });
+        } else if (selectedType === 'multiple_choice') {
+            if (inputFields) inputFields.style.display = 'none';
+            if (choiceFields) choiceFields.style.display = 'block';
+            
+            // Безопасная установка required для правильного ответа
+            if (rightAnswerInput) {
+                rightAnswerInput.required = false;
+            }
+            
+            // Безопасная установка required для полей выбора
+            choiceInputs.forEach(input => {
+                input.required = true;
+            });
+        }
+    }
+
+    typeSelect.addEventListener('change', updateFields);
+    updateFields();
+
+    // Добавляем валидацию перед отправкой формы
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('Form submission started');
+
+        const formData = new FormData(form);
+        const questionType = typeSelect.value;
+
+        // Validate form based on question type
+        if (questionType === 'multiple_choice') {
+            const choices = document.querySelectorAll('#choices-container .choice-item');
+            if (choices.length === 0) {
+                alert('Добавьте хотя бы один вариант ответа');
+                return;
+            }
+
+            const hasCorrectAnswer = Array.from(choices).some(choice => {
+                const checkbox = choice.querySelector('input[type="checkbox"]');
+                return checkbox && checkbox.checked;
+            });
+
+            if (!hasCorrectAnswer) {
+                alert('Выберите хотя бы один правильный ответ');
+                return;
+            }
+
+            // Convert choice fields to arrays
+            const choiceTexts = [];
+            const isCorrect = [];
+            
+            choices.forEach((choice, index) => {
+                const textInput = choice.querySelector('input[type="text"]');
+                const checkbox = choice.querySelector('input[type="checkbox"]');
+                if (textInput && textInput.value.trim()) {
+                    choiceTexts.push(textInput.value.trim());
+                    isCorrect.push(checkbox.checked ? index.toString() : '');
+                }
+            });
+            
+            // Remove old choice fields
+            for (const pair of formData.entries()) {
+                if (pair[0].startsWith('choice_text_') || pair[0].startsWith('is_correct_')) {
+                    formData.delete(pair[0]);
+                }
+            }
+            
+            // Add new array-style fields
+            choiceTexts.forEach(text => formData.append('choice_text[]', text));
+            isCorrect.filter(Boolean).forEach(index => formData.append('is_correct[]', index));
+        } else if (questionType === 'input') {
+            const rightAnswer = document.getElementById('id_right_answer').value;
+            if (!rightAnswer.trim()) {
+                alert('Введите правильный ответ');
+                return;
+            }
+        }
+
+        // Submit form
+        fetch(window.location.href, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = data.redirect;
+            } else if (data.errors) {
+                const errorMessages = [];
+                for (const field in data.errors) {
+                    errorMessages.push(`${field}: ${data.errors[field].join(', ')}`);
+                }
+                alert(errorMessages.join('\n'));
+            } else {
+                alert('Произошла ошибка при сохранении вопроса');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Произошла ошибка при отправке формы');
+        });
+    });
+});
+</script>
+{% endblock %} 

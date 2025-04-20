@@ -184,6 +184,29 @@
         font-size: 1rem;
     }
 
+    .course-actions {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .btn-delete-course {
+        background-color: #dc3545;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-delete-course:hover {
+        background-color: #c82333;
+        transform: translateY(-2px);
+        color: white;
+        text-decoration: none;
+    }
+
     /* Список уроков */
     .lessons-list {
         background: white;
@@ -294,7 +317,13 @@
     <div class="course-header">
         <h1 class="course-title">{{ course.name }}</h1>
         <p class="course-description">{{ course.description }}</p>
-        <p class="course-teacher">Преподаватель: {{ course.teacher.username }}</p>
+        {% if user == course.teacher %}
+            <div class="course-actions">
+                <a href="{% url 'courses:delete_course' course_id=course.id %}" class="btn-delete-course">
+                    Удалить курс
+                </a>
+            </div>
+        {% endif %}
     </div>
 
     <div class="lessons-list">

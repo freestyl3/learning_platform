@@ -18,26 +18,49 @@ class ParagraphForm(forms.ModelForm):
 class TestForm(forms.ModelForm):
     class Meta:
         model = Test
-        fields = ('lesson', 'name')
-        labels = {
-            'lesson': 'Урок',
-            'name': 'Название теста'
+        fields = ['name']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
         }
 
 class QuestionForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ('test_id', 'text', 'type')
+        fields = ['text', 'type']
+        widgets = {
+            'text': forms.TextInput(attrs={
+                'class': 'form-field__input',
+                'placeholder': 'Введите текст вопроса'
+            }),
+            'type': forms.Select(attrs={
+                'class': 'form-field__input',
+            }),
+        }
 
 class InputQuestionForm(forms.ModelForm):
     class Meta:
         model = InputQuestion
-        fields = ('question_id', 'right_answer')
+        fields = ['right_answer']
+        widgets = {
+            'right_answer': forms.TextInput(attrs={
+                'class': 'form-field__input',
+                'placeholder': 'Введите правильный ответ'
+            }),
+        }
 
 class ChoiceQuestionForm(forms.ModelForm):
     class Meta:
         model = ChoiceQuestion
-        fields = ('question_id', 'text', 'is_correct') 
+        fields = ['text', 'is_correct']
+        widgets = {
+            'text': forms.TextInput(attrs={
+                'class': 'form-field__input',
+                'placeholder': 'Введите вариант ответа'
+            }),
+            'is_correct': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+        }
 
 class MatchLeftForm(forms.ModelForm):
     class Meta:
@@ -88,19 +111,9 @@ class LessonImageForm(forms.ModelForm):
         }
 
 class LessonForm(forms.ModelForm):
-    images = forms.FileField(
-        widget=forms.ClearableFileInput(attrs={
-            'class': 'form-control',
-            'multiple': True,
-            'accept': 'image/*'
-        }),
-        required=False,
-        label='Добавить изображения'
-    )
-
     class Meta:
         model = Lesson
-        fields = ['name', 'content', 'images']
+        fields = ['name', 'content']
         widgets = {
             'name': forms.TextInput(attrs={'class': 'form-control'}),
             'content': forms.Textarea(attrs={'class': 'form-control', 'rows': 10}),

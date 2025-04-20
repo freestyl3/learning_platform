@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="test-page">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="test-card">
+                    <div class="test-card__header">
+                        <h1 class="test-card__title">{{ test.name }}</h1>
+                        <p class="test-card__description">{{ test.description }}</p>
+                    </div>
+                    
+                    <div class="test-card__body">
+                        <form method="post" class="test-form" id="testForm">
+                            {% csrf_token %}
+                            
+                            {% for question in questions %}
+                            <div class="question-block">
+                                <h3 class="question-block__title">Вопрос {{ forloop.counter }}</h3>
+                                <p class="question-block__text">{{ question.text }}</p>
+                                
+                                {% if question.type == 'input' %}
+                                <div class="answer-field">
+                                    <input type="text" 
+                                           name="answer_{{ question.id }}" 
+                                           class="form-control" 
+                                           required 
+                                           placeholder="Введите ваш ответ">
+                                </div>
+                                {% else %}
+                                <div class="choices-list">
+                                    {% for choice in question.choicequestion_set.all %}
+                                    <div class="choice-item">
+                                        <input type="checkbox" 
+                                               name="answer_{{ question.id }}" 
+                                               value="{{ choice.id }}" 
+                                               id="choice_{{ choice.id }}">
+                                        <label for="choice_{{ choice.id }}">{{ choice.text }}</label>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                            
+                            <div class="form-actions">
+                                <a href="{% url 'courses:lesson_detail' course.id lesson.id %}" 
+                                   class="btn btn-outline-secondary">
+                                    Назад к уроку
+                                </a>
+                                <button type="submit" class="btn btn-primary">
+                                    Завершить тест
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.test-page {
+    min-height: calc(100vh - 70px);
+    background-color: #f5f5f5;
+    padding: 2rem 0;
+    margin-top: 70px;
+}
+
+.test-card {
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.test-card__header {
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.test-card__title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #333;
+    margin: 0 0 1rem;
+}
+
+.test-card__description {
+    color: #666;
+    margin: 0;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.test-card__body {
+    padding: 2rem;
+}
+
+.question-block {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.question-block__title {
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: #333;
+    margin: 0 0 1rem;
+}
+
+.question-block__text {
+    font-size: 1.1rem;
+    color: #444;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.answer-field {
+    margin-bottom: 1rem;
+}
+
+.answer-field input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+}
+
+.choices-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.choice-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.choice-item:hover {
+    border-color: #007bff;
+    background-color: #f8f9fa;
+}
+
+.choice-item input[type="checkbox"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+}
+
+.choice-item label {
+    font-size: 1rem;
+    color: #333;
+    margin: 0;
+    cursor: pointer;
+    flex: 1;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #dee2e6;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.btn-outline-secondary {
+    color: #6c757d;
+    border: 1px solid #6c757d;
+    background-color: transparent;
+}
+
+.btn-outline-secondary:hover {
+    background: #6c757d;
+    color: white;
+    transform: translateY(-2px);
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('testForm');
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Проверяем, что на все вопросы даны ответы
+        let allAnswered = true;
+        const questions = document.querySelectorAll('.question-block');
+        
+        questions.forEach(question => {
+            const inputAnswer = question.querySelector('input[type="text"]');
+            const choiceAnswers = question.querySelectorAll('input[type="checkbox"]:checked');
+            
+            if (inputAnswer && !inputAnswer.value.trim()) {
+                allAnswered = false;
+            } else if (!inputAnswer && choiceAnswers.length === 0) {
+                allAnswered = false;
+            }
+        });
+        
+        if (!allAnswered) {
+            alert('Пожалуйста, ответьте на все вопросы');
+            return;
+        }
+        
+        // Если все вопросы отвечены, подтверждаем отправку
+        if (confirm('Вы уверены, что хотите завершить тест? После отправки изменить ответы будет невозможно.')) {
+            form.submit();
+        }
+    });
+});
+</script>
+{% endblock %} 
