@@ -473,6 +473,9 @@ def add_question(request, course_id, lesson_id, test_id):
                             })
                         messages.success(request, 'Вопрос успешно добавлен')
                         return redirect('courses:edit_test', course_id=course_id, lesson_id=lesson_id, test_id=test_id)
+                elif question.type == 'matching':
+                    '''ДОБАВИТЬ'''
+                    pass
             else:
                 if is_ajax:
                     return JsonResponse({
