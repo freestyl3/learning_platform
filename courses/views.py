@@ -338,7 +338,7 @@ def add_question(request, course_id, lesson_id, test_id):
                 if question.type == 'input':
                     if input_form.is_valid():
                         input_question = input_form.save(commit=False)
-                        input_question.question = question
+                        input_question.question_id = question
                         input_question.save()
                         if is_ajax:
                             return JsonResponse({
