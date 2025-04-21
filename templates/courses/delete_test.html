@@ -1,0 +1,149 @@
+{% extends 'base.html' %}
+
+{% block title %}Удаление урока | Образовательная платформа{% endblock %}
+
+{% block extra_css %}
+<style>
+    .delete-lesson-page {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+
+    .delete-card {
+        background: white;
+        border-radius: 20px;
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .delete-header {
+        background: #dc3545;
+        padding: 25px 30px;
+        color: white;
+    }
+
+    .delete-title {
+        font-size: 24px;
+        font-weight: 600;
+        margin: 0;
+        text-align: center;
+    }
+
+    .delete-body {
+        padding: 30px;
+    }
+
+    .delete-message {
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+        margin-bottom: 25px;
+        text-align: center;
+    }
+
+    .lesson-info {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 25px;
+    }
+
+    .lesson-name {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 10px;
+    }
+
+    .course-name {
+        color: #666;
+        font-size: 14px;
+    }
+
+    .buttons-group {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        border-radius: 10px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-danger {
+        background: #dc3545;
+        color: white;
+    }
+
+    .btn-danger:hover {
+        background: #c82333;
+        transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+        background: #6c757d;
+        color: white;
+    }
+
+    .btn-secondary:hover {
+        background: #5a6268;
+        transform: translateY(-2px);
+    }
+
+    @media (max-width: 768px) {
+        .delete-card {
+            margin: 15px;
+        }
+
+        .buttons-group {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="delete-lesson-page">
+    <div class="container">
+        <div class="delete-card">
+            <div class="delete-header">
+                <h1 class="delete-title">Удаление теста</h1>
+            </div>
+            <div class="delete-body">
+                <div class="delete-message">
+                    Вы уверены, что хотите удалить этот тест? Это действие нельзя будет отменить.
+                </div>
+                
+                <div class="lesson-info">
+                    <div class="lesson-name">{{ test.name }}</div>
+                    <div class="course-name">Курс: {{ course.name }}</div>
+                </div>
+
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="buttons-group">
+                        <button type="submit" class="btn btn-danger">Удалить тест</button>
+                        <a href="{% url 'courses:lesson_detail' course_id=course.id lesson_id=lesson.id %}" class="btn btn-secondary">
+                            Отмена
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

@@ -166,6 +166,9 @@ def lesson_detail(request, course_id, lesson_id):
     
     # Получаем тест для урока, если он есть
     test = Test.objects.filter(lesson=lesson).first()
+    questions = []
+    if test:
+        questions = Question.objects.filter(test_id_id=test.id)
     test_result = None
     
     # Если есть тест и пользователь не преподаватель, получаем результат теста
@@ -174,15 +177,19 @@ def lesson_detail(request, course_id, lesson_id):
             user=request.user,
             test=test
         ).first()
-    
-    return render(request, 'courses/lesson_detail.html', {
+
+    context = {
         'lesson': lesson,
         'course': course,
         'prev_lesson': prev_lesson,
         'next_lesson': next_lesson,
-        'test': test,
         'test_result': test_result
-    })
+    }
+
+    if questions:
+        context['test'] = test
+    
+    return render(request, 'courses/lesson_detail.html', context=context)
 
 @login_required
 def edit_lesson(request, course_id, lesson_id):
@@ -316,6 +323,44 @@ def edit_test(request, course_id, lesson_id, test_id):
         'lesson': lesson,
         'test': test,
         'questions': questions
+    })
+
+@login_required
+def delete_test(request, course_id, lesson_id, test_id):
+    course = get_object_or_404(Course, id=course_id)
+    lesson = get_object_or_404(Lesson, id=lesson_id, course=course)
+    test = get_object_or_404(Test, id=test_id)
+    
+    # Проверяем, является ли пользователь преподавателем курса
+    if request.user != course.teacher:
+        messages.error(request, 'У вас нет прав для удаления тестов в этом курсе')
+        return redirect('courses:lesson_detail', course_id=course_id, lesson_id=lesson_id)
+    
+    if request.method == 'POST':
+        try:
+            # Сохраняем номер удаляемого урока
+            deleted_number = test.id
+
+            questions = Question.objects.filter(test_id_id=deleted_number)
+            if questions:
+                questions.delete()
+            test_results = TestResult.objects.filter(test_id=deleted_number)
+            if test_results:
+                test_results.delete()
+            
+            # Удаляем урок
+            test.delete()
+
+            messages.success(request, 'Тест успешно удален')
+            return redirect('courses:course_detail', pk=course_id)
+        except Exception as e:
+            messages.error(request, f'Ошибка при удалении теста: {str(e)}')
+            return redirect('courses:course_detail', course_id=course_id, lesson_id=lesson_id)
+    
+    return render(request, 'courses/delete_test.html', {
+        'course': course,
+        'lesson': lesson,
+        'test': test
     })
 
 @login_required

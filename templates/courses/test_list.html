@@ -133,13 +133,13 @@
         <div class="courses-grid">
             <table>
                 <tr>
-                    <td> User_id </td>
+                    <td> Username </td>
                     <td> Score </td>
                     <td> Completed At </td>
                 <tr>
             {% for t in results %}
                 <tr>
-                    <td> {{ t.user_id }} </td>
+                    <td> {{ t.user.username }} </td>
                     <td> {{ t.score }} </td>
                     <td> {{ t.completed_at }} </td>
                 <tr>

@@ -22,6 +22,7 @@ urlpatterns = [
     # Test views
     path('<int:course_id>/lesson/<int:lesson_id>/create-test/', views.create_test, name='create_test'),
     path('<int:course_id>/lesson/<int:lesson_id>/test/<int:test_id>/edit/', views.edit_test, name='edit_test'),
+    path('<int:course_id>/lesson/<int:lesson_id>/test/<int:test_id>/delete/', views.delete_test, name='delete_test'),
     path('<int:course_id>/lesson/<int:lesson_id>/test/<int:test_id>/add-question/', views.add_question, name='add_question'),
     path('<int:course_id>/lesson/<int:lesson_id>/test/<int:test_id>/question/<int:question_id>/delete/', views.delete_question, name='delete_question'),
     path('courses/<int:course_id>/lessons/<int:lesson_id>/tests/<int:test_id>/take/', views.take_test, name='take_test'),

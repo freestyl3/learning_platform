@@ -275,6 +275,7 @@
                             {% endfor %}
                             <div class="buttons-group">
                                 <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                                <a href="{% url 'courses:delete_test' course_id=course.id lesson_id=lesson.id test_id=test.id%}" class="btn btn-delete">Удалить тест</a>
                                 <a href="{% url 'courses:course_detail' pk=course.id %}" class="btn btn-secondary">Отмена</a>
                             </div>
                         </form>
