@@ -22,6 +22,12 @@ class TestListView(LoginRequiredMixin, ListView):
         test_id = self.kwargs['test_id']
         return TestResult.objects.filter(test_id=test_id)
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        test_id = self.kwargs['test_id']
+        context['test'] = Test.objects.get(id=test_id)
+        return context
+
 class CourseListView(LoginRequiredMixin, ListView):
     model = Course
     template_name = 'example.html'
