@@ -1,10 +1,17 @@
 from django.db import models
-from users.models import MyUser
+from django.contrib.auth import get_user_model
 
 # Create your models here.
 
 class Test(models.Model):
     name = models.CharField('Имя теста', max_length=50, blank=True, null=False)
+    lesson_id = models.OneToOneField(
+        'Lesson',
+        on_delete=models.CASCADE,
+        verbose_name='ID урока',
+        blank=False, 
+        null=False
+    )
     
 class QuestionType(models.TextChoices):
     INPUT = 'input'
@@ -55,12 +62,6 @@ class ChoiceQuestion(models.Model):
         null=False
     )
 
-class MatchLeft(models.Model):
-    text = models.CharField('Текст варианта ответа', max_length=50, blank=False, null=False)
-
-class MatchRight(MatchLeft):
-    pass
-
 class MatchQuestion(models.Model):
     question_id = models.ForeignKey(
         Question,
@@ -69,32 +70,29 @@ class MatchQuestion(models.Model):
         blank=False,
         null=False
     )
-    left_id = models.ForeignKey(
-        MatchLeft,
-        verbose_name='ID левого варианта ответа',
-        on_delete=models.CASCADE,
-        blank=False,
-        null=False
-    )
-    left_id = models.ForeignKey(
-        MatchRight,
-        verbose_name='ID правого варианта ответа',
-        on_delete=models.CASCADE,
-        blank=False,
-        null=False
-    )
+    left = models.CharField('Текст левого варианта ответа', max_length=50, blank=False, null=False)
+    right = models.CharField('Текст правого варианта ответа', max_length=50, blank=False, null=False)
 
-class Subject(models.Model):
+class Course(models.Model):
     name = models.CharField('Название предмета', max_length=50, blank=False, null=False)
-    users = models.ManyToManyField(MyUser)
-
-class Theory(models.Model):
-    pass
+    description = models.CharField('Описание предмета', max_length=200, blank=False, null=False)
+    author = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        verbose_name='ID Автора',
+        blank=False,
+        null=False
+    )
+    users = models.ManyToManyField(
+        get_user_model(), 
+        related_name='users', 
+        through='UsersCourses'
+    )
 
 class Paragraph(models.Model):
     text = models.TextField('Текст параграфа', max_length=500, blank=False, null=False)
-    theory_id = models.ForeignKey(
-        Theory,
+    course_id = models.ForeignKey(
+        Course,
         on_delete=models.CASCADE, 
         verbose_name='ID теории',
         blank=True,
@@ -106,25 +104,28 @@ class Lesson(models.Model):
     icon = models.ImageField('Картинка урока')
     lesson_number = models.IntegerField('Номер урока')
     name = models.CharField('Название', max_length=50)
-    theory_id = models.OneToOneField(
-        Theory, 
-        on_delete=models.CASCADE,
-        verbose_name='ID Теории',
-        blank=False, 
-        null=False
-    )
-    test_id = models.OneToOneField(
-        Test,
-        on_delete=models.CASCADE,
-        verbose_name='ID теста',
-        blank=False, 
-        null=False
-    )
-    subject_id = models.ForeignKey(
-        Subject,
+    course_id = models.ForeignKey(
+        Course,
         on_delete=models.CASCADE,
         verbose_name='ID предмета',
         blank=False, 
         null=False
     )
     hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
+
+
+class UsersCourses(models.Model):
+    user_id = models.ForeignKey(
+        get_user_model(),
+        on_delete=models.CASCADE,
+        verbose_name='ID пользователя',
+        blank=False,
+        null=False
+    )
+    course_id = models.ForeignKey(
+        Course,
+        on_delete=models.CASCADE,
+        verbose_name='ID курса',
+        blank=False,
+        null=False
+    )

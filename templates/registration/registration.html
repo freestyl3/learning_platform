@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="auth-container">
+    <h2 class="auth-title">Регистрация</h2>
+    
+    <form method="POST" class="registration-form">
+        {% csrf_token %}
+        
+        <div class="form-grid">
+            <!-- Имя и Фамилия -->
+            <div class="form-group">
+                <label for="id_first_name">Имя</label>
+                <input type="text" name="first_name" id="id_first_name" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_last_name">Фамилия</label>
+                <input type="text" name="last_name" id="id_last_name" required>
+            </div>
+
+            <!-- Логин и Email -->
+            <div class="form-group">
+                <label for="id_username">Логин</label>
+                <input type="text" name="username" id="id_username" required>
+                <small class="form-hint">Допустимые символы: буквы, цифры, @/./+/-/_</small>
+            </div>
+
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <input type="email" name="email" id="id_email" required>
+            </div>
+
+            <!-- Пароли -->
+            <div class="form-group">
+                <label for="id_password1">Пароль</label>
+                <input type="password" name="password1" id="id_password1" required>
+            </div>
+
+            <div class="form-group">
+                <label for="id_password2">Подтверждение пароля</label>
+                <input type="password" name="password2" id="id_password2" required>
+            </div>
+        </div>
+
+        <!-- Требования к паролю -->
+        <div class="password-rules">
+            <h4>Требования к паролю:</h4>
+            <ul>
+                <li>Минимум 8 символов</li>
+                <li>Не должен быть слишком простым</li>
+                <li>Не может состоять только из цифр</li>
+                <li>Не должен совпадать с личной информацией</li>
+            </ul>
+        </div>
+
+        <!-- Чекбокс преподавателя -->
+        <div class="form-group checkbox-group">
+            <input type="checkbox" name="is_teacher" id="id_is_teacher">
+            <label for="id_is_teacher">Я преподаватель</label>
+        </div>
+
+        <button type="submit" class="auth-button">Создать аккаунт</button>
+        
+        <div class="auth-links">
+            Уже зарегистрированы? <a href="{% url 'login' %}">Войти в аккаунт</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

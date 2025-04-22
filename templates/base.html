@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная - МойСайт</title>
+    <style>
+        /* Общие стили */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* Шапка */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        .user-menu {
+            color: #007bff;
+            cursor: pointer;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .user-menu:hover {
+            color: #0056b3;
+        }
+
+        /* Контейнер уроков */
+        .lessons-container {
+            max-width: 1200px;
+            margin: 6rem auto 2rem;
+            padding: 0 1rem;
+        }
+
+        .cards-wrapper {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: flex-start;
+        }
+
+        /* Сообщение об отсутствии уроков */
+        .empty-state {
+            text-align: center;
+            padding: 4rem;
+            color: #666;
+            font-size: 1.2rem;
+            display: none;
+        }
+
+        .empty-state.visible {
+            display: block;
+        }
+
+        /* Карточка урока */
+        .lesson-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            width: 300px;
+            aspect-ratio: 1/1.414;
+            flex-shrink: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+        }
+
+        .card-image {
+            width: 100%;
+            height: calc(100% - 120px);
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 1.5rem;
+            border-top: 3px solid #007bff;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .card-title {
+            color: #333;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .cards-wrapper {
+                justify-content: center;
+            }
+
+            .lesson-card {
+                width: 100%;
+                max-width: 400px;
+            }
+
+            .header {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+  <header>
+    <a href={% url "courses:add_course" %}>Добавить курс</a>
+    <a href={% url "courses:list_courses" %}>Записаться на курс</a>
+    <div class="user-menu" onclick="openProfile()">
+      {{ user.username }}
+    </div>
+</header>
+  {% block content %}{% endblock %}
+<script>
+  function openProfile() {
+    alert("Личный кабинет будет реализован позже");
+}
+</script>
+</body>
+</html>

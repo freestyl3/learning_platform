@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="ru">
+  <body>
+    <div class="auth-container">
+      <h2>Вход</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <div class="form-group">
+          <label>Логин</label>
+          <input type="text" name="username" required>
+        </div>
+        <div class="form-group">
+          <label>Пароль</label>
+          <input type="password" name="password" required>
+        </div>
+        <button type="submit" class="auth-button">Войти</button>
+        {% comment %} <a href="{% url 'registration' %}" class="switch-button">Нет аккаунта? Зарегистрироваться</a> {% endcomment %}
+      </form>
+    </div>
+  <body>
+</html>

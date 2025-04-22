@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+{% if course_list %}
+  {% for course in course_list %}
+    <p>{{ course.name }} - {{ course.description }}</p>
+  {% endfor %}
+  {% else %}
+    <p>Курсов пока нет</p>
+{% endif %}
+{% endblock %}
