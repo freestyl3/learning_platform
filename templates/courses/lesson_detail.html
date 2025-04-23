@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if request.user == lesson.course_id.author %}
+    <p><a href={% url 'courses:update_lesson' lesson_id=lesson.id %}>Изменить урок</a> 
+        <a href={% url 'courses:delete_lesson' lesson_id=lesson.id %}>Удалить урок</a></p>
+  {% endif %}
+  <h3>{{ lesson.name }}</h3>
+  <p>{{ lesson.content|linebreaks }}</p>
+{% endblock %}

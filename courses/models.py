@@ -88,22 +88,12 @@ class Course(models.Model):
         related_name='users', 
         through='UsersCourses'
     )
-
-class Paragraph(models.Model):
-    text = models.TextField('Текст параграфа', max_length=500, blank=False, null=False)
-    course_id = models.ForeignKey(
-        Course,
-        on_delete=models.CASCADE, 
-        verbose_name='ID теории',
-        blank=True,
-        null=False
-    )
     
 
 class Lesson(models.Model):
-    icon = models.ImageField('Картинка урока')
-    lesson_number = models.IntegerField('Номер урока')
+    lesson_number = models.PositiveIntegerField('Номер урока')
     name = models.CharField('Название', max_length=50)
+    content = models.TextField('Содержание урока', blank=True, null=False)
     course_id = models.ForeignKey(
         Course,
         on_delete=models.CASCADE,
@@ -112,6 +102,9 @@ class Lesson(models.Model):
         null=False
     )
     hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
+
+    class Meta:
+        ordering = ('lesson_number', )
 
 
 class UsersCourses(models.Model):
