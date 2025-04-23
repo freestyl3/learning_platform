@@ -2,6 +2,8 @@
 {% block content %}
   {% if request.user == course.author %}
     <p><a href={% url 'courses:list_courses' %}>Добавить урок</a></p> <!-- todo: Add Comment Form -->
+    <p><a href={% url 'courses:update_course' course_id=course.id %}>Изменить курс</a></p>
+    <p><a href={% url 'courses:delete_course' course_id=course.id %}>Удалить курс</a></p>
   {% endif %}
   <p>{{ course.name }} - {{ course.description }}</p>
   {% if lessons %}
