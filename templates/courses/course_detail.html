@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if request.user == course.author %}
+    <p><a href={% url 'courses:list_courses' %}>Добавить урок</a></p> <!-- todo: Add Comment Form -->
+  {% endif %}
+  <p>{{ course.name }} - {{ course.description }}</p>
+  {% if lessons %}
+    {% for lesson in lessons %}
+      <p><a href={% url 'courses:list_courses' %}>{{ lesson.name }}</a></p> <!-- todo: Add Lesson Detail View -->
+    {% endfor %}
+  {% else %}
+    <p>В этом курсе пока нет уроков</p>
+  {% endif %}
+{% endblock %}

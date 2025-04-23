@@ -2,7 +2,7 @@
 {% block content %}
 {% if course_list %}
   {% for course in course_list %}
-    <p>{{ course.name }} - {{ course.description }}</p>
+    <p><a href={% url "courses:course_detail" course_id=course.id %}>{{ course.name }} - {{ course.description }}</a></p>
   {% endfor %}
   {% else %}
     <p>Курсов пока нет</p>
