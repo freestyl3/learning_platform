@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <h3>Вы действительно хотите удалить {{ model }}?</h3>
+  <form method='post'>
+    {% csrf_token %}
+    {% for field in form %}
+    <p>{{ field.label }} - {{ field.initial }}</p>
+    {% endfor %}
+    <button type='submit'>Удалить</button>
+  </form>
+{% endblock %}

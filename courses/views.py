@@ -101,7 +101,7 @@ class LessonDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['tests'] = models.Test.objects.filter(lesson_id=self.kwargs.get('lesson_id'))
+        context['tests'] = models.Test.objects.filter(lesson_id=self.kwargs.get('lesson_id'), hidden=False)
         return context
     
 
@@ -115,6 +115,8 @@ class LessonUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
     def get_object(self):
         return get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
     
+    # UPDATE
+    
 
 class LessonUpdateView(LessonUpdateDeleteMixin, UpdateView):
     form_class = forms.LessonForm
@@ -127,6 +129,8 @@ class LessonUpdateView(LessonUpdateDeleteMixin, UpdateView):
 class LessonDeleteView(LessonUpdateDeleteMixin, DeleteView):
     template_name = 'courses/lesson/delete_lesson.html'
     success_url = reverse_lazy('courses:list_courses')
+
+    # UPDATE
 
 
 class HiddenLessonListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -169,5 +173,73 @@ class TestCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     
     def get_success_url(self):
         kwargs = {'lesson_id': self.kwargs.get('lesson_id')}
+        return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
+    
+
+class HiddenTestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = models.Test
+    template_name = 'courses/test/hidden_test_list.html'
+
+    def test_func(self):
+        author = get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id')).course_id.author
+        return self.request.user == author
+
+    def get_queryset(self):
+        return models.Test.objects.filter(lesson_id=self.kwargs.get('lesson_id'), hidden=True)
+    
+
+class TestDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = models.Test
+    template_name = 'courses/test/test_detail.html'
+    
+    def get_object(self):
+        return get_object_or_404(models.Test, pk=self.kwargs.get('test_id'))
+    
+    def test_func(self):
+        test = self.get_object()
+        if test.hidden:
+            return self.request.user == test.lesson_id.course_id.author
+        return True
+    
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     context['questions'] = models.Question.objects.filter(lesson_id=self.kwargs.get('lesson_id'))
+    #     return context
+
+
+class TestUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
+    model = models.Test
+
+    def test_func(self):
+        author = get_object_or_404(models.Test, pk=self.kwargs.get('test_id')).lesson_id.course_id.author
+        return self.request.user == author
+    
+    def get_object(self):
+        return get_object_or_404(models.Test, pk=self.kwargs.get('test_id'))
+    
+
+class TestUpdateView(TestUpdateDeleteMixin, UpdateView):
+    form_class = forms.TestForm
+    template_name = 'courses/create_update_form.html'
+
+    def get_success_url(self):
+        kwargs = {'test_id': self.kwargs.get('test_id')}
+        return reverse_lazy('courses:test_detail', kwargs=kwargs)
+    
+
+class TestDeleteView(TestUpdateDeleteMixin, DeleteView):
+    template_name = 'courses/test/delete_test.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        instance = get_object_or_404(models.Test, pk=self.kwargs.get('test_id'))
+        form = forms.TestForm(instance=instance)
+        context['form'] = form
+        context['model'] = models.Test._meta.verbose_name
+        return context
+
+    def get_success_url(self):
+        lesson = get_object_or_404(models.Test, pk=self.kwargs.get('test_id')).lesson_id
+        kwargs = {'lesson_id': lesson.pk}
         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
     

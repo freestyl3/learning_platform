@@ -16,6 +16,7 @@ class Test(models.Model):
     hidden = models.BooleanField('Скрытый', null=False, blank=False, default=True)
 
     class Meta:
+        verbose_name = 'Тест'
         ordering = ('test_number', )
     
 class QuestionType(models.TextChoices):

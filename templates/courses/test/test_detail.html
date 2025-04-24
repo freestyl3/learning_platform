@@ -1,19 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-  {% if request.user == lesson.course_id.author %}
-    <p><a href={% url 'courses:update_lesson' lesson_id=lesson.id %}>Изменить урок</a> 
-        <a href={% url 'courses:delete_lesson' lesson_id=lesson.id %}>Удалить урок</a></p>
-    <p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a></p>
+  {% if request.user == test.lesson_id.course_id.author %}
+    <p><a href={% url 'courses:update_test' test_id=test.id %}>Изменить тест</a> 
+        <a href={% url 'courses:delete_test' test_id=test.id %}>Удалить тест</a></p>
+    {% comment %}<p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a></p> {% endcomment %}
   {% endif %}
-  {% if lesson.hidden %}
+  {% if test.hidden %}
     <i>Этот тест скрыт</i>
+    {% comment %} <a href={% url 'courses:toggle_test' test_id=test.id %}>Опубликовать</a>
+  {% else %}
+    <a href={% url 'courses:toggle_test' test_id=test.id %}>Скрыть</a> {% endcomment %}
   {% endif %}
-  <h3>{{ lesson.name }}</h3>
-  <p>{{ lesson.content|linebreaks }}</p>
-  {% if tests %}
-    <h4>Тесты</h4>
-    {% for test in tests %}
-      <p>{{ test.name }}</p>
-    {% endfor %}
-  {% endif %}
+  <!-- TODO: Add toggle test hidden status -->
+  <h3>{{ test.name }}</h3>
+  <!-- TODO take test -->
 {% endblock %}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+{% if test_list %}
+  {% for test in test_list %}
+    <p><a href={% url "courses:test_detail" test_id=test.id %}>{{ test.name }}</a></p>
+  {% endfor %}
+  {% else %}
+    <p>Скрытых тестов нет</p>
+{% endif %}
+{% endblock %}
