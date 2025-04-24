@@ -16,7 +16,7 @@ class Test(models.Model):
     hidden = models.BooleanField('Скрытый', null=False, blank=False, default=True)
 
     class Meta:
-        verbose_name = 'Тест'
+        verbose_name = 'тест'
         ordering = ('test_number', )
     
 class QuestionType(models.TextChoices):
@@ -94,6 +94,9 @@ class Course(models.Model):
         related_name='users', 
         through='UsersCourses'
     )
+
+    class Meta:
+        verbose_name = 'курс'
     
 
 class Lesson(models.Model):
@@ -110,6 +113,7 @@ class Lesson(models.Model):
     hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
 
     class Meta:
+        verbose_name = 'урок'
         ordering = ('lesson_number', )
 
 

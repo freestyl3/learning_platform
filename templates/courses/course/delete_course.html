@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-  <h3>Вы действительно хотите удалить курс?</h3>
-  <p>{{ course.name }} - {{ course.description }}</p>
-  <form method='post'>
-    {% csrf_token %}
-    <button type='submit'>Удалить</button>
-  </form>
-{% endblock %}
