@@ -4,7 +4,7 @@
     <p><a href={% url 'courses:update_course' course_id=course.id %}>Изменить курс</a> 
       <a href={% url 'courses:delete_course' course_id=course.id %}>Удалить курс</a></p>
     <p><a href={% url 'courses:add_lesson' course_id=course.id %}>Добавить урок</a> 
-      <a href={% url 'courses:list_courses' %}>Скрытые уроки</a></p> <!-- TODO: Add hidden lessons view -->
+      <a href={% url 'courses:hidden_lessons' course_id=course.id %}>Скрытые уроки</a></p>
   {% endif %}
   <h3>{{ course.name }}</h3>
   <p>{{ course.description }}</p>

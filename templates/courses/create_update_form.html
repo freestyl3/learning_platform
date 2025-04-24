@@ -16,12 +16,12 @@
         {% endif %}
       </div>
     {% endfor %}
-    <button type="submit">
-      {% if request.resolver_match.url_name == 'add_course' %}
-        Добавить
-      {% else %}
-        Изменить
-      {% endif %}
-    </button>
+      <button type="submit">
+        {% if 'add' in request.resolver_match.url_name %}
+          Добавить
+        {% else %}
+          Изменить
+        {% endif %}
+      </button>
   </form>
 {% endblock %}

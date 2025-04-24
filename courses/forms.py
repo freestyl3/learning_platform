@@ -14,3 +14,9 @@ class LessonForm(forms.ModelForm):
         widgets = {
             'content': forms.Textarea()
         }
+
+
+class TestForm(forms.ModelForm):
+    class Meta:
+        model = models.Test
+        fields = ('name', 'test_number', 'hidden')

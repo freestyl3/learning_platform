@@ -3,7 +3,17 @@
   {% if request.user == lesson.course_id.author %}
     <p><a href={% url 'courses:update_lesson' lesson_id=lesson.id %}>Изменить урок</a> 
         <a href={% url 'courses:delete_lesson' lesson_id=lesson.id %}>Удалить урок</a></p>
+    <p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a></p>
+  {% endif %}
+  {% if lesson.hidden %}
+    <i>Этот тест скрыт</i>
   {% endif %}
   <h3>{{ lesson.name }}</h3>
   <p>{{ lesson.content|linebreaks }}</p>
+  {% if tests %}
+    <h4>Тесты</h4>
+    {% for test in tests %}
+      <p>{{ test.name }}</p>
+    {% endfor %}
+  {% endif %}
 {% endblock %}

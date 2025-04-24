@@ -5,13 +5,18 @@ from django.contrib.auth import get_user_model
 
 class Test(models.Model):
     name = models.CharField('Имя теста', max_length=50, blank=True, null=False)
-    lesson_id = models.OneToOneField(
+    test_number = models.PositiveIntegerField('Номер теста')
+    lesson_id = models.ForeignKey(
         'Lesson',
         on_delete=models.CASCADE,
         verbose_name='ID урока',
         blank=False, 
         null=False
     )
+    hidden = models.BooleanField('Скрытый', null=False, blank=False, default=True)
+
+    class Meta:
+        ordering = ('test_number', )
     
 class QuestionType(models.TextChoices):
     INPUT = 'input'

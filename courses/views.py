@@ -1,7 +1,9 @@
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, get_list_or_404
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import ListView, CreateView, DetailView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.contrib.auth.decorators import login_required
 from . import models, forms
 
 
@@ -10,13 +12,13 @@ from . import models, forms
 
 class CoursesList(ListView):
     model = models.Course
-    template_name = 'courses/list_courses.html'
+    template_name = 'courses/course/list_courses.html'
 
 
 class CourseCreateView(LoginRequiredMixin, CreateView):
     form_class = forms.CourseForm
     model = models.Course
-    template_name = 'courses/add_course.html'
+    template_name = 'courses/create_update_form.html'
     success_url = reverse_lazy('courses:list_courses')
 
     def form_valid(self, form):
@@ -37,7 +39,7 @@ class CourseUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
 
 class CourseDetailView(LoginRequiredMixin, DetailView):
     model = models.Course
-    template_name = 'courses/course_detail.html'
+    template_name = 'courses/course/course_detail.html'
     
     def get_object(self):
         return get_object_or_404(models.Course, pk=self.kwargs.get('course_id'))
@@ -50,7 +52,7 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
 
 class CourseUpdateView(CourseUpdateDeleteMixin, UpdateView):
     form_class = forms.CourseForm
-    template_name = 'courses/add_course.html'
+    template_name = 'courses/create_update_form.html'
     
     def get_success_url(self):
         kwargs = {'course_id': self.kwargs.get('course_id')}
@@ -58,17 +60,21 @@ class CourseUpdateView(CourseUpdateDeleteMixin, UpdateView):
     
 
 class CourseDeleteView(CourseUpdateDeleteMixin, DeleteView):
-    template_name = 'courses/delete_course.html'
+    template_name = 'courses/course/delete_course.html'
     success_url = reverse_lazy('courses:list_courses')
 
 
 # LESSON
 
 
-class LessonCreateView(LoginRequiredMixin, CreateView):
+class LessonCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = models.Lesson
     form_class = forms.LessonForm
-    template_name = 'courses/add_lesson.html'
+    template_name = 'courses/create_update_form.html'
+
+    def test_func(self):
+        author = get_object_or_404(models.Course, pk=self.kwargs.get('course_id')).author
+        return self.request.user == author
 
     def get_success_url(self):
         kwargs = {'course_id': self.kwargs.get('course_id')}
@@ -80,12 +86,23 @@ class LessonCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
     
 
-class LessonDetailView(LoginRequiredMixin, DetailView):
+class LessonDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = models.Lesson
-    template_name = 'courses/lesson_detail.html'
+    template_name = 'courses/lesson/lesson_detail.html'
+
+    def test_func(self):
+        lesson = get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
+        if lesson.hidden:
+            return self.request.user == lesson.course_id.author
+        return True
 
     def get_object(self):
         return get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tests'] = models.Test.objects.filter(lesson_id=self.kwargs.get('lesson_id'))
+        return context
     
 
 class LessonUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
@@ -101,12 +118,56 @@ class LessonUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
 
 class LessonUpdateView(LessonUpdateDeleteMixin, UpdateView):
     form_class = forms.LessonForm
-    template_name = 'courses/add_lesson.html'    
+    template_name = 'courses/create_update_form.html'   
 
     def get_success_url(self):
         kwargs = {'lesson_id': self.kwargs.get('lesson_id')}
         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
 
 class LessonDeleteView(LessonUpdateDeleteMixin, DeleteView):
-    template_name = 'courses/delete_lesson.html'
+    template_name = 'courses/lesson/delete_lesson.html'
     success_url = reverse_lazy('courses:list_courses')
+
+
+class HiddenLessonListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+    model = models.Lesson
+    template_name = 'courses/lesson/hidden_lesson_list.html'
+
+    def test_func(self):
+        author = get_object_or_404(models.Course, pk=self.kwargs.get('course_id')).author
+        return self.request.user == author
+
+    def get_queryset(self):
+        return models.Lesson.objects.filter(course_id=self.kwargs.get('course_id'), hidden=True)
+
+
+@login_required
+def toggle_lesson(request, lesson_id):
+    lesson = get_object_or_404(models.Lesson, pk=lesson_id)
+    if lesson.course_id.author == request.user:
+        lesson.hidden = not lesson.hidden
+        lesson.save()
+
+    return redirect('courses:lesson_detail', lesson_id=lesson_id)
+
+
+# TEST
+
+
+class TestCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+    model = models.Test
+    form_class = forms.TestForm
+    template_name = 'courses/create_update_form.html'
+
+    def test_func(self):
+        author = get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id')).course_id.author
+        return self.request.user == author
+    
+    def form_valid(self, form):
+        form.instance.lesson_id = models.Lesson.objects.get(pk=self.kwargs.get('lesson_id'))
+        return super().form_valid(form)
+    
+    def get_success_url(self):
+        kwargs = {'lesson_id': self.kwargs.get('lesson_id')}
+        return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
+    
