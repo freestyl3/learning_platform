@@ -2,7 +2,11 @@ from django.db import models
 from . import Course
 
 class Module(models.Model):
-    module_number = models.PositiveIntegerField('Номер урока')
+    module_number = models.PositiveIntegerField(
+        'Номер урока', 
+        blank=False, 
+        null=False
+    )
     name = models.CharField('Название', max_length=50)
     course = models.ForeignKey(
         Course,
@@ -11,7 +15,12 @@ class Module(models.Model):
         blank=False, 
         null=False
     )
-    hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
+    hidden = models.BooleanField(
+        'Скрытый', 
+        blank=False, 
+        null=False, 
+        default=False
+    )
 
     class Meta:
         verbose_name = 'модуль'

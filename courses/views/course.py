@@ -34,7 +34,7 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['modules'] = Module.objects.filter(
-            course=self.kwargs.get('course_id'), hidden=False
+            course=self.get_object(), hidden=False
         )
         return context
 
@@ -50,7 +50,7 @@ class CourseUpdateView(CourseUpdateDeleteMixin, UpdateView):
 
 class CourseDeleteView(CourseUpdateDeleteMixin, BaseDeleteMixin):
     # form_class = CourseForm
-    success_url = reverse_lazy('courses:list_courses')
+    success_url = reverse_lazy('courses:list_all_courses')
 
     def get_delete_name(self):
         return self.get_object().name

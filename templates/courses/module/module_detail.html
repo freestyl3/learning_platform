@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  {% if request.user == module.course.author %}
+    <p><a href={% url 'courses:update_module' module_id=module.id %}>Изменить модуль</a> 
+        <a href={% url 'courses:delete_module' module_id=module.id %}>Удалить модуль</a></p>
+    {% comment %} <p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a>
+      <a href={% url 'courses:hidden_tests' lesson_id=lesson.id %}>Скрытые тесты</a></p> {% endcomment %}
+    {% if module.hidden %}
+      <i>Этот урок скрыт</i>
+      <a href={% url 'courses:toggle_module' module_id=module.id %}>Опубликовать</a>
+    {% else %}
+      <a href={% url 'courses:toggle_module' module_id=module.id %}>Скрыть</a>
+    {% endif %}
+  {% endif %}
+  <h3>{{ module.name }}</h3>
+  {% comment %} <p>{{ lesson.content|linebreaks }}</p> {% endcomment %}
+  {% comment %} {% if tests %}
+    <h4>Тесты</h4>
+    {% for test in tests %}
+      <p><a href={% url 'courses:test_detail' test_id=test.id %}>{{ test.name }}</a></p>
+    {% endfor %}
+  {% endif %} {% endcomment %}
+{% endblock %}

@@ -8,81 +8,81 @@ from django.http import HttpResponseRedirect
 from . import models, forms
 
 
-class DeleteMixin(DeleteView):
-    template_name = 'courses/delete_form.html'
+# class DeleteMixin(DeleteView):
+    # template_name = 'courses/delete_form.html'
 
-    def post(self, request, *args, **kwargs):
-        return self.delete(request, *args, **kwargs)
+#     def post(self, request, *args, **kwargs):
+#         return self.delete(request, *args, **kwargs)
     
-    def get_delete_name(self):
-        return self.get_object().pk
+#     def get_delete_name(self):
+#         return self.get_object().pk
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # instance = self.get_object()
-        # form = self.form_class(instance=instance)
-        # context['form'] = form
-        context['delete_name'] = self.get_delete_name()
-        context['model'] = self.model._meta.verbose_name
-        return context
-
-
-# COURSE
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         # instance = self.get_object()
+#         # form = self.form_class(instance=instance)
+#         # context['form'] = form
+#         context['delete_name'] = self.get_delete_name()
+#         context['model'] = self.model._meta.verbose_name
+#         return context
 
 
-class CoursesList(ListView):
-    model = models.Course
-    template_name = 'courses/course/list_courses.html'
+# # COURSE
 
 
-class CourseCreateView(LoginRequiredMixin, CreateView):
-    form_class = forms.CourseForm
-    model = models.Course
-    template_name = 'courses/create_update_form.html'
+# class CoursesList(ListView):
+#     model = models.Course
+#     template_name = 'courses/course/list_courses.html'
 
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        self.object = form.save()
-        kwargs = {'course_id': self.object.pk}
-        redirect = reverse_lazy('courses:course_detail', kwargs=kwargs)
-        return HttpResponseRedirect(redirect)
-    
 
-class CourseDetailView(LoginRequiredMixin, DetailView):
-    model = models.Course
-    template_name = 'courses/course/course_detail.html'
-    pk_url_kwarg = 'course_id'
-    
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['lessons'] = models.Lesson.objects.filter(course_id=self.kwargs.get('course_id'), hidden=False)
-        return context
+# class CourseCreateView(LoginRequiredMixin, CreateView):
+#     form_class = forms.CourseForm
+#     model = models.Course
+#     template_name = 'courses/create_update_form.html'
+
+#     def form_valid(self, form):
+#         form.instance.author = self.request.user
+#         self.object = form.save()
+#         kwargs = {'course_id': self.object.pk}
+#         redirect = reverse_lazy('courses:course_detail', kwargs=kwargs)
+#         return HttpResponseRedirect(redirect)
     
 
-class CourseUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
-    model = models.Course
-    pk_url_kwarg = 'course_id'
-
-    def test_func(self):
-        author = self.get_object().author
-        return self.request.user == author
+# class CourseDetailView(LoginRequiredMixin, DetailView):
+#     model = models.Course
+#     template_name = 'courses/course/course_detail.html'
+#     pk_url_kwarg = 'course_id'
+    
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['lessons'] = models.Lesson.objects.filter(course_id=self.kwargs.get('course_id'), hidden=False)
+#         return context
     
 
-class CourseUpdateView(CourseUpdateDeleteMixin, UpdateView):
-    form_class = forms.CourseForm
-    template_name = 'courses/create_update_form.html'
-    
-    def get_success_url(self):
-        kwargs = {'course_id': self.kwargs.get('course_id')}
-        return reverse_lazy('courses:course_detail', kwargs=kwargs)
+# class CourseUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
+#     model = models.Course
+#     pk_url_kwarg = 'course_id'
+
+#     def test_func(self):
+#         author = self.get_object().author
+#         return self.request.user == author
     
 
-class CourseDeleteView(CourseUpdateDeleteMixin, DeleteMixin):
-    # form_class = forms.CourseForm
-    success_url = reverse_lazy('courses:list_courses')
+# class CourseUpdateView(CourseUpdateDeleteMixin, UpdateView):
+#     form_class = forms.CourseForm
+#     template_name = 'courses/create_update_form.html'
+    
+#     def get_success_url(self):
+#         kwargs = {'course_id': self.kwargs.get('course_id')}
+#         return reverse_lazy('courses:course_detail', kwargs=kwargs)
+    
 
-    def get_delete_name(self):
-        return self.get_object().name
+# class CourseDeleteView(CourseUpdateDeleteMixin, DeleteMixin):
+#     # form_class = forms.CourseForm
+#     success_url = reverse_lazy('courses:list_courses')
+
+#     def get_delete_name(self):
+#         return self.get_object().name
 
 
 # LESSON

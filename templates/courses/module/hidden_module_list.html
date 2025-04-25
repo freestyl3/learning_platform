@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block content %}
+{% if module_list %}
+  {% for module in module_list %}
+    <p><a href={% url "courses:module_detail" module_id=module.id %}>{{ module.name }}</a></p>
+  {% endfor %}
+  {% else %}
+    <p>Скрытых модулей нет</p>
+{% endif %}
+{% endblock %}
