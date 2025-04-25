@@ -129,7 +129,7 @@
 </head>
 <body>
   <header>
-    <a href={% url "courses:list_courses" %}>Доступные курсы</a>
+    <a href={% url "courses:list_all_courses" %}>Доступные курсы</a>
     {% if user.is_authenticated %}
       <a href={% url "courses:add_course" %}>Добавить курс</a>
       <div class="user-menu" onclick="openProfile()">
