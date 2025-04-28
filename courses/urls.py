@@ -20,10 +20,16 @@ urlpatterns = [
     path('module/<int:module_id>/', ModuleDetailView.as_view(), name='module_detail'),
     path('module/<int:module_id>/update/', ModuleUpdateView.as_view(), name='update_module'),
     path('module/<int:module_id>/delete/', ModuleDeleteView.as_view(), name='delete_module'),
+    path('module/<int:module_id>/toggle_module/', toggle_module, name='toggle_module'),
+    path('module/<int:module_id>/add_lesson/', LessonCreateView.as_view(), name='add_lesson'),
+    path('module/<int:module_id>/hidden', HiddenLessonListView.as_view(), name='hidden_lessons'),
+
+    path('lesson/<int:lesson_id>/', LessonDetailView.as_view(), name='lesson_detail'),
+    path('lesson/<int:lesson_id>/update/', LessonUpdateView.as_view(), name='update_lesson'),
+    path('lesson/<int:lesson_id>/delete/', LessonDeleteView.as_view(), name='delete_lesson'),
+    path('lesson/<int:lesson_id>/toggle_lesson/', toggle_lesson, name='toggle_lesson'),
     # path('lesson/<int:lesson_id>/add_test/', views.TestCreateView.as_view(), name='add_test'),
     # path('lesson/<int:lesson_id>/hidden/', views.HiddenTestListView.as_view(), name='hidden_tests'),
-    path('module/<int:module_id>/toggle/', toggle_module, name='toggle_module'),
-
     # path('test/<int:test_id>/', views.TestDetailView.as_view(), name='test_detail'),
     # path('test/<int:test_id>/update/', views.TestUpdateView.as_view(), name='update_test'),
     # path('test/<int:test_id>/delete/', views.TestDeleteView.as_view(), name='delete_test')

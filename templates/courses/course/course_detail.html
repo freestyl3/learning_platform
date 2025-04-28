@@ -17,7 +17,7 @@
   {% if modules %}
     <h4>Модули</h4>
     {% for module in modules %}
-      <p><a href={% url 'courses:module_detail' module_id=module.id %}>{{ module.name }}</a></p>
+      <p><a href={% url 'courses:module_detail' module_id=module.id %}>{{module.module_number}}. {{ module.name }}</a></p>
     {% endfor %}
   {% else %}
     <p>В этом курсе пока нет модулей</p>
