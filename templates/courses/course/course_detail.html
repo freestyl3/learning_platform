@@ -5,6 +5,12 @@
       <a href={% url 'courses:delete_course' course_id=course.id %}>Удалить курс</a></p>
     <p><a href={% url 'courses:add_module' course_id=course.id %}>Добавить модуль</a> 
       <a href={% url 'courses:hidden_modules' course_id=course.id %}>Скрытые модули</a></p>
+  {% else %}
+    {% if is_subscribed %}
+      <p><a href={% url 'courses:toggle_subscribe' course_id=course.id  %}>Отписаться от курса</a></p>
+    {% else %}
+      <p><a href={% url 'courses:toggle_subscribe' course_id=course.id  %}>Подписаться на курс</a></p>
+    {% endif %}
   {% endif %}
   <h3>{{ course.name }}</h3>
   <p>{{ course.description }}</p>

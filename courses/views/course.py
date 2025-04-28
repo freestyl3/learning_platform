@@ -1,11 +1,13 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseForbidden
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, DetailView, UpdateView
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import redirect
 
 from ..forms import CourseForm
 from ..mixins import BaseDeleteMixin, CourseUpdateDeleteMixin
-from ..models import Course, Module
+from ..models import Course, Module, UsersCourses
 
 
 class AllCourseListView(ListView):
@@ -36,6 +38,10 @@ class CourseDetailView(LoginRequiredMixin, DetailView):
         context['modules'] = Module.objects.filter(
             course=self.get_object(), hidden=False
         )
+        context['is_subscribed'] = UsersCourses.objects.filter(
+            user=self.request.user,
+            course=self.get_object()
+        ).exists()
         return context
 
 
@@ -54,3 +60,37 @@ class CourseDeleteView(CourseUpdateDeleteMixin, BaseDeleteMixin):
 
     def get_delete_name(self):
         return self.get_object().name
+    
+
+class MySubscribeListView(LoginRequiredMixin, AllCourseListView):
+    def get_queryset(self):
+        courses = Course.objects.filter(
+            users=self.request.user
+        )
+        return courses
+    
+
+class CreatedCourseListView(LoginRequiredMixin, AllCourseListView):
+    def get_queryset(self):
+        courses = Course.objects.filter(
+            author=self.request.user
+        )
+        return courses
+
+@login_required
+def toggle_subscribe(request, course_id):
+    course = Course.objects.get(pk=course_id)
+    subcribe = UsersCourses.objects.filter(
+        course=course,
+        user=request.user
+    )
+    if request.user != course.author:
+        if not(subcribe.exists()):
+            UsersCourses.objects.create(
+                user=request.user,
+                course=course
+            )
+        else:
+            subcribe.delete()
+        return redirect('courses:course_detail', course_id=course_id)
+    return HttpResponseForbidden()

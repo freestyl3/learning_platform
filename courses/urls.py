@@ -13,6 +13,9 @@ urlpatterns = [
     path('<int:course_id>/delete/', CourseDeleteView.as_view(), name='delete_course'),
     path('<int:course_id>/add_module/', ModuleCreateView.as_view(), name='add_module'),
     path('<int:course_id>/hidden/', HiddenModuleListView.as_view(), name='hidden_modules'),
+    path('<int:course_id>/toggle_subscribe/', toggle_subscribe, name='toggle_subscribe'),
+    path('my_subscribes/', MySubscribeListView.as_view(), name='my_subscribes'),
+    path('created_courses/', CreatedCourseListView.as_view(), name='created_courses'),
 
     path('module/<int:module_id>/', ModuleDetailView.as_view(), name='module_detail'),
     path('module/<int:module_id>/update/', ModuleUpdateView.as_view(), name='update_module'),
