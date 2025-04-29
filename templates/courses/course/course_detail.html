@@ -13,7 +13,7 @@
     {% endif %}
   {% endif %}
   <h3>{{ course.name }}</h3>
-  <p>{{ course.description }}</p>
+  <p>{{ course.description|linebreaks }}</p>
   {% if modules %}
     <h4>Модули</h4>
     {% for module in modules %}

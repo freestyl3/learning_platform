@@ -3,21 +3,21 @@ from django.contrib.auth import get_user_model
 
 # Create your models here.
 
-class Test(models.Model):
-    name = models.CharField('Имя теста', max_length=50, blank=True, null=False)
-    test_number = models.PositiveIntegerField('Номер теста')
-    lesson_id = models.ForeignKey(
-        'Lesson',
-        on_delete=models.CASCADE,
-        verbose_name='ID урока',
-        blank=False, 
-        null=False
-    )
-    hidden = models.BooleanField('Скрытый', null=False, blank=False, default=True)
+# class Test(models.Model):
+#     name = models.CharField('Имя теста', max_length=50, blank=True, null=False)
+#     test_number = models.PositiveIntegerField('Номер теста')
+#     lesson_id = models.ForeignKey(
+#         'Lesson',
+#         on_delete=models.CASCADE,
+#         verbose_name='ID урока',
+#         blank=False, 
+#         null=False
+#     )
+#     hidden = models.BooleanField('Скрытый', null=False, blank=False, default=True)
 
-    class Meta:
-        verbose_name = 'тест'
-        ordering = ('test_number', )
+#     class Meta:
+#         verbose_name = 'тест'
+#         ordering = ('test_number', )
     
 class QuestionType(models.TextChoices):
     INPUT = 'input'
@@ -79,56 +79,56 @@ class MatchQuestion(models.Model):
     left = models.CharField('Текст левого варианта ответа', max_length=50, blank=False, null=False)
     right = models.CharField('Текст правого варианта ответа', max_length=50, blank=False, null=False)
 
-class Course(models.Model):
-    name = models.CharField('Название предмета', max_length=50, blank=False, null=False)
-    description = models.CharField('Описание предмета', max_length=200, blank=False, null=False)
-    author = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        verbose_name='ID Автора',
-        blank=False,
-        null=False
-    )
-    users = models.ManyToManyField(
-        get_user_model(), 
-        related_name='users', 
-        through='UsersCourses'
-    )
+# class Course(models.Model):
+#     name = models.CharField('Название предмета', max_length=50, blank=False, null=False)
+#     description = models.CharField('Описание предмета', max_length=200, blank=False, null=False)
+#     author = models.ForeignKey(
+#         get_user_model(),
+#         on_delete=models.CASCADE,
+#         verbose_name='ID Автора',
+#         blank=False,
+#         null=False
+#     )
+#     users = models.ManyToManyField(
+#         get_user_model(), 
+#         related_name='users', 
+#         through='UsersCourses'
+#     )
 
-    class Meta:
-        verbose_name = 'курс'
+#     class Meta:
+#         verbose_name = 'курс'
     
 
-class Lesson(models.Model):
-    lesson_number = models.PositiveIntegerField('Номер урока')
-    name = models.CharField('Название', max_length=50)
-    content = models.TextField('Содержание урока', blank=True, null=False)
-    course_id = models.ForeignKey(
-        Course,
-        on_delete=models.CASCADE,
-        verbose_name='ID предмета',
-        blank=False, 
-        null=False
-    )
-    hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
+# class Lesson(models.Model):
+#     lesson_number = models.PositiveIntegerField('Номер урока')
+#     name = models.CharField('Название', max_length=50)
+#     content = models.TextField('Содержание урока', blank=True, null=False)
+#     course_id = models.ForeignKey(
+#         Course,
+#         on_delete=models.CASCADE,
+#         verbose_name='ID предмета',
+#         blank=False, 
+#         null=False
+#     )
+#     hidden = models.BooleanField('Скрытый', blank=False, null=False, default=False)
 
-    class Meta:
-        verbose_name = 'урок'
-        ordering = ('lesson_number', )
+#     class Meta:
+#         verbose_name = 'урок'
+#         ordering = ('lesson_number', )
 
 
-class UsersCourses(models.Model):
-    user_id = models.ForeignKey(
-        get_user_model(),
-        on_delete=models.CASCADE,
-        verbose_name='ID пользователя',
-        blank=False,
-        null=False
-    )
-    course_id = models.ForeignKey(
-        Course,
-        on_delete=models.CASCADE,
-        verbose_name='ID курса',
-        blank=False,
-        null=False
-    )
+# class UsersCourses(models.Model):
+#     user_id = models.ForeignKey(
+#         get_user_model(),
+#         on_delete=models.CASCADE,
+#         verbose_name='ID пользователя',
+#         blank=False,
+#         null=False
+#     )
+#     course_id = models.ForeignKey(
+#         Course,
+#         on_delete=models.CASCADE,
+#         verbose_name='ID курса',
+#         blank=False,
+#         null=False
+#     )

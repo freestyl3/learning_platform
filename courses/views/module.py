@@ -60,7 +60,7 @@ class ModuleUpdateView(ModuleUpdateDeleteMixin, UpdateView):
 
 
 class ModuleDeleteView(ModuleUpdateDeleteMixin, BaseDeleteMixin):
-    form_class = ModuleForm
+    # form_class = ModuleForm
 
     def get_delete_name(self):
         return self.get_object().name

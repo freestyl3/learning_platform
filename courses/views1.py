@@ -88,102 +88,102 @@ from . import models, forms
 # LESSON
 
 
-class LessonCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
-    model = models.Lesson
-    form_class = forms.LessonForm
-    template_name = 'courses/create_update_form.html'
+# class LessonCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
+#     model = models.Lesson
+#     form_class = forms.LessonForm
+#     template_name = 'courses/create_update_form.html'
 
-    def test_func(self):
-        author = get_object_or_404(models.Course, pk=self.kwargs.get('course_id')).author
-        return self.request.user == author
+#     def test_func(self):
+#         author = get_object_or_404(models.Course, pk=self.kwargs.get('course_id')).author
+#         return self.request.user == author
 
-    def get_success_url(self):
-        kwargs = {'course_id': self.kwargs.get('course_id')}
-        return reverse_lazy('courses:course_detail', kwargs=kwargs)
+#     def get_success_url(self):
+#         kwargs = {'course_id': self.kwargs.get('course_id')}
+#         return reverse_lazy('courses:course_detail', kwargs=kwargs)
 
-    def form_valid(self, form):
-        course = get_object_or_404(models.Course, pk=self.kwargs.get('course_id'))
-        form.instance.course_id = course
-        return super().form_valid(form)
+#     def form_valid(self, form):
+#         course = get_object_or_404(models.Course, pk=self.kwargs.get('course_id'))
+#         form.instance.course_id = course
+#         return super().form_valid(form)
     
 
-class LessonDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    model = models.Lesson
-    template_name = 'courses/lesson/lesson_detail.html'
+# class LessonDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+#     model = models.Lesson
+#     template_name = 'courses/lesson/lesson_detail.html'
 
-    def test_func(self):
-        lesson = get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
-        if lesson.hidden:
-            return self.request.user == lesson.course_id.author
-        return True
+#     def test_func(self):
+#         lesson = get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
+#         if lesson.hidden:
+#             return self.request.user == lesson.course_id.author
+#         return True
 
-    def get_object(self):
-        return get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
+#     def get_object(self):
+#         return get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['tests'] = models.Test.objects.filter(lesson_id=self.kwargs.get('lesson_id'), hidden=False)
-        return context
-    
-
-class LessonUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
-    model = models.Lesson
-
-    def test_func(self):
-        author = get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id')).course_id.author
-        return self.request.user == author
-    
-    def get_object(self):
-        return get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
-    
-    # UPDATE
+#     def get_context_data(self, **kwargs):
+#         context = super().get_context_data(**kwargs)
+#         context['tests'] = models.Test.objects.filter(lesson_id=self.kwargs.get('lesson_id'), hidden=False)
+#         return context
     
 
-class LessonUpdateView(LessonUpdateDeleteMixin, UpdateView):
-    form_class = forms.LessonForm
-    template_name = 'courses/create_update_form.html'   
+# class LessonUpdateDeleteMixin(LoginRequiredMixin, UserPassesTestMixin):
+#     model = models.Lesson
 
-    def get_success_url(self):
-        kwargs = {'lesson_id': self.kwargs.get('lesson_id')}
-        return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
-
-class LessonDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteMixin):
-    model = models.Lesson
-    form_class = forms.LessonForm
-    success_url = reverse_lazy('courses:list_courses') # переписать
-    pk_url_kwarg = 'lesson_id'
-
-    def test_func(self):
-        author = self.get_object().course_id.author
-        return self.request.user == author
+#     def test_func(self):
+#         author = get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id')).course_id.author
+#         return self.request.user == author
     
-    def get_success_url(self):
-        kwargs = {'course_id': self.get_object().course_id.pk}
-        return reverse_lazy('courses:course_detail', kwargs=kwargs)
+#     def get_object(self):
+#         return get_object_or_404(models.Lesson, pk=self.kwargs.get('lesson_id'))
+    
+#     # UPDATE
+    
 
-    # UPDATE
+# class LessonUpdateView(LessonUpdateDeleteMixin, UpdateView):
+#     form_class = forms.LessonForm
+#     template_name = 'courses/create_update_form.html'   
+
+#     def get_success_url(self):
+#         kwargs = {'lesson_id': self.kwargs.get('lesson_id')}
+#         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
+
+# class LessonDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteMixin):
+#     model = models.Lesson
+#     form_class = forms.LessonForm
+#     success_url = reverse_lazy('courses:list_courses') # переписать
+#     pk_url_kwarg = 'lesson_id'
+
+#     def test_func(self):
+#         author = self.get_object().course_id.author
+#         return self.request.user == author
+    
+#     def get_success_url(self):
+#         kwargs = {'course_id': self.get_object().course_id.pk}
+#         return reverse_lazy('courses:course_detail', kwargs=kwargs)
+
+#     # UPDATE
 
 
-class HiddenLessonListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
-    model = models.Lesson
-    template_name = 'courses/lesson/hidden_lesson_list.html'
+# class HiddenLessonListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
+#     model = models.Lesson
+#     template_name = 'courses/lesson/hidden_lesson_list.html'
 
-    def test_func(self):
-        author = get_object_or_404(models.Course, pk=self.kwargs.get('course_id')).author
-        return self.request.user == author
+#     def test_func(self):
+#         author = get_object_or_404(models.Course, pk=self.kwargs.get('course_id')).author
+#         return self.request.user == author
 
-    def get_queryset(self):
-        return models.Lesson.objects.filter(course_id=self.kwargs.get('course_id'), hidden=True)
+#     def get_queryset(self):
+#         return models.Lesson.objects.filter(course_id=self.kwargs.get('course_id'), hidden=True)
 
 
-@login_required
-def toggle_lesson(request, lesson_id):
-    lesson = get_object_or_404(models.Lesson, pk=lesson_id)
-    if lesson.course_id.author == request.user:
-        lesson.hidden = not lesson.hidden
-        lesson.save()
+# @login_required
+# def toggle_lesson(request, lesson_id):
+#     lesson = get_object_or_404(models.Lesson, pk=lesson_id)
+#     if lesson.course_id.author == request.user:
+#         lesson.hidden = not lesson.hidden
+#         lesson.save()
 
-    return redirect('courses:lesson_detail', lesson_id=lesson_id)
+#     return redirect('courses:lesson_detail', lesson_id=lesson_id)
 
 
 # TEST
