@@ -5,7 +5,7 @@ from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, redirect
 
-from ..models import Lesson, Module
+from ..models import Lesson, Module, Test
 from ..forms import LessonForm
 from ..mixins import LessonUpdateDeleteMixin, BaseDeleteMixin
 
@@ -42,10 +42,10 @@ class LessonDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
         return True
 
     ### TODO ###
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['tests'] = models.Test.objects.filter(lesson_id=self.kwargs.get('lesson_id'), hidden=False)
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tests'] = Test.objects.filter(lesson=self.kwargs.get('lesson_id'), hidden=False)
+        return context
     
 
 class LessonUpdateView(LessonUpdateDeleteMixin, UpdateView):

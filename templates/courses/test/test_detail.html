@@ -1,17 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
-  {% if request.user == test.lesson_id.course_id.author %}
+  {% if request.user == test.lesson.module.course.author %}
     <p><a href={% url 'courses:update_test' test_id=test.id %}>Изменить тест</a> 
         <a href={% url 'courses:delete_test' test_id=test.id %}>Удалить тест</a></p>
     {% comment %}<p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a></p> {% endcomment %}
   {% endif %}
   {% if test.hidden %}
     <i>Этот тест скрыт</i>
-    {% comment %} <a href={% url 'courses:toggle_test' test_id=test.id %}>Опубликовать</a>
+    {% comment %} <a href={% url 'courses:toggle_test' test_id=test.id %}>Опубликовать</a> <!-- TODO: add toggle test function -->
   {% else %}
     <a href={% url 'courses:toggle_test' test_id=test.id %}>Скрыть</a> {% endcomment %}
   {% endif %}
-  <!-- TODO: Add toggle test hidden status -->
   <h3>{{ test.name }}</h3>
   <!-- TODO take test -->
 {% endblock %}

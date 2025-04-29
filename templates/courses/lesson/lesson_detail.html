@@ -3,8 +3,8 @@
   {% if request.user == lesson.module.course.author %}
      <p><a href={% url 'courses:update_lesson' lesson_id=lesson.id %}>Изменить урок</a> 
         <a href={% url 'courses:delete_lesson' lesson_id=lesson.id %}>Удалить урок</a></p>
-    {% comment %} <p><a href={% url 'courses:add_lesson' module_id=module.id %}>Добавить урок</a> {% endcomment %}
-      {% comment %} <a href={% url 'courses:hidden_tests' lesson_id=lesson.id %}>Скрытые тесты</a></p> {% endcomment %}
+    <p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a>
+      <a href={% url 'courses:hidden_tests' lesson_id=lesson.id %}>Скрытые тесты</a></p>
     {% if lesson.hidden %}
       <i>Этот урок скрыт</i>
       <a href={% url 'courses:toggle_lesson' lesson_id=lesson.id %}>Опубликовать</a>
@@ -14,10 +14,10 @@
   {% endif %}
   <h3>{{ lesson.name }}</h3>
   <p>{{ lesson.content|linebreaks }}</p>
-  {% comment %} {% if lessons %}
-    <h4>Уроки</h4>
-    {% for lesson in lessons %}
+  {% if tests %}
+    <h4>Тесты</h4>
+    {% for test in tests %}
       <p><a href={% url 'courses:test_detail' test_id=test.id %}>{{ test.name }}</a></p>
     {% endfor %}
-  {% endif %} {% endcomment %}
+  {% endif %}
 {% endblock %}
