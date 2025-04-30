@@ -7,10 +7,19 @@
   {% endif %}
   {% if test.hidden %}
     <i>Этот тест скрыт</i>
-    {% comment %} <a href={% url 'courses:toggle_test' test_id=test.id %}>Опубликовать</a> <!-- TODO: add toggle test function -->
+    <a href={% url 'courses:toggle_test' test_id=test.id %}>Опубликовать</a>
   {% else %}
-    <a href={% url 'courses:toggle_test' test_id=test.id %}>Скрыть</a> {% endcomment %}
+    <a href={% url 'courses:toggle_test' test_id=test.id %}>Скрыть</a>
   {% endif %}
   <h3>{{ test.name }}</h3>
-  <!-- TODO take test -->
+  {% if request.user == test.lesson.module.course.author %}
+    {% if questions %}
+      {% for question in questions %}
+        <p>{{ question.text }}</p>
+      {% endfor %}
+    {% endif %}
+  {% else %}
+    <p>Take test</p>
+    <!-- TODO take test -->
+  {% endif %}
 {% endblock %}

@@ -34,5 +34,6 @@ urlpatterns = [
 
     path('test/<int:test_id>/', TestDetailView.as_view(), name='test_detail'),
     path('test/<int:test_id>/update/', TestUpdateView.as_view(), name='update_test'),
-    path('test/<int:test_id>/delete/', TestDeleteView.as_view(), name='delete_test')
+    path('test/<int:test_id>/delete/', TestDeleteView.as_view(), name='delete_test'),
+    path('test/<int:test_id>/toggle_test/', toggle_test, name='toggle_test')
 ]

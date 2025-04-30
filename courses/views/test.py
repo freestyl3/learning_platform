@@ -1,8 +1,9 @@
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
 
 from ..models import Test, Lesson
 from ..forms import TestForm
@@ -85,3 +86,13 @@ class TestDeleteView(TestUpdateDeleteMixin, BaseDeleteMixin):
     def get_success_url(self):
         kwargs = {'lesson_id': self.get_object().lesson.pk}
         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
+    
+
+@login_required
+def toggle_test(request, test_id):
+    test = get_object_or_404(Test, pk=test_id)
+    if request.user == test.lesson.module.course.author:
+        test.hidden = not test.hidden
+        test.save()
+
+    return redirect('courses:test_detail', test_id=test_id)
