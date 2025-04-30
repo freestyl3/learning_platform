@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+{% with request.resolver_match.url_name as url_name %}
+  <h2>
+    {% if url_name == 'list_all_courses' %}
+      Доступные курсы
+    {% elif url_name == 'created_courses' %}
+      Созданные курсы
+    {% else %}
+      Мои подписки
+    {% endif %}
+  </h2>
+{% endwith %}
 {% if course_list %}
   {% for course in course_list %}
     <p><a href={% url "courses:course_detail" course_id=course.id %}>{{ course.name }} - {{ course.description }}</a></p>

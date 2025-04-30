@@ -3,17 +3,23 @@
   {% if request.user == course.author %}
     <p><a href={% url 'courses:update_course' course_id=course.id %}>Изменить курс</a> 
       <a href={% url 'courses:delete_course' course_id=course.id %}>Удалить курс</a></p>
-    <p><a href={% url 'courses:add_lesson' course_id=course.id %}>Добавить урок</a> 
-      <a href={% url 'courses:hidden_lessons' course_id=course.id %}>Скрытые уроки</a></p>
+    <p><a href={% url 'courses:add_module' course_id=course.id %}>Добавить модуль</a> 
+      <a href={% url 'courses:hidden_modules' course_id=course.id %}>Скрытые модули</a></p>
+  {% else %}
+    {% if is_subscribed %}
+      <p><a href={% url 'courses:toggle_subscribe' course_id=course.id  %}>Отписаться от курса</a></p>
+    {% else %}
+      <p><a href={% url 'courses:toggle_subscribe' course_id=course.id  %}>Подписаться на курс</a></p>
+    {% endif %}
   {% endif %}
   <h3>{{ course.name }}</h3>
-  <p>{{ course.description }}</p>
-  {% if lessons %}
-    <h4>Уроки</h4>
-    {% for lesson in lessons %}
-      <p><a href={% url 'courses:lesson_detail' lesson_id=lesson.id %}>{{ lesson.name }}</a></p>
+  <p>{{ course.description|linebreaks }}</p>
+  {% if modules %}
+    <h4>Модули</h4>
+    {% for module in modules %}
+      <p><a href={% url 'courses:module_detail' module_id=module.id %}>{{module.module_number}}. {{ module.name }}</a></p>
     {% endfor %}
   {% else %}
-    <p>В этом курсе пока нет уроков</p>
+    <p>В этом курсе пока нет модулей</p>
   {% endif %}
 {% endblock %}

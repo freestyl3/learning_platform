@@ -2,7 +2,7 @@
 {% block content %}
 {% if lesson_list %}
   {% for lesson in lesson_list %}
-    <p><a href={% url "courses:lesson_detail" lesson_id=lesson.id %}>{{ lesson.name }} - {{ lesson.content }}</a></p>
+    <p><a href={% url "courses:lesson_detail" lesson_id=lesson.id %}>{{ lesson.lesson_number }}. {{ lesson.name }}</a></p>
   {% endfor %}
   {% else %}
     <p>Скрытых уроков нет</p>

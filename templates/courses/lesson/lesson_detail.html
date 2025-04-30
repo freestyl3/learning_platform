@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
-  {% if request.user == lesson.course_id.author %}
-    <p><a href={% url 'courses:update_lesson' lesson_id=lesson.id %}>Изменить урок</a> 
+  {% if request.user == lesson.module.course.author %}
+     <p><a href={% url 'courses:update_lesson' lesson_id=lesson.id %}>Изменить урок</a> 
         <a href={% url 'courses:delete_lesson' lesson_id=lesson.id %}>Удалить урок</a></p>
     <p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a>
       <a href={% url 'courses:hidden_tests' lesson_id=lesson.id %}>Скрытые тесты</a></p>

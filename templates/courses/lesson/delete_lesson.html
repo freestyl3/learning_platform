@@ -1,9 +1,0 @@
-{% extends "base.html" %}
-{% block content %}
-  <h3>Вы действительно хотите удалить урок?</h3>
-  <p>{{ lesson.name }} - {{ lesson.content|truncatechars:100 }}</p>
-  <form method='post'>
-    {% csrf_token %}
-    <button type='submit'>Удалить</button>
-  </form>
-{% endblock %}
