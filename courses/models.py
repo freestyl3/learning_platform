@@ -19,13 +19,15 @@ from django.contrib.auth import get_user_model
 #         verbose_name = 'тест'
 #         ordering = ('test_number', )
     
-class QuestionType(models.TextChoices):
-    INPUT = 'input'
-    SINGLE_CHOICE = 'single_choices'
-    MULTIPLE_CHOICE = 'multiple_choice'
-    MATCHING = 'mathcing'
+
 
 class Question(models.Model):
+    class QuestionType(models.TextChoices):
+        INPUT = 'input'
+        SINGLE_CHOICE = 'single_choices'
+        MULTIPLE_CHOICE = 'multiple_choice'
+        MATCHING = 'mathcing'
+        
     text = models.CharField('Текст вопроса', max_length=50, blank=True, null=False)
     test_id = models.ForeignKey(
         Test,

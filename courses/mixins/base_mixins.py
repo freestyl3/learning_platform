@@ -1,4 +1,5 @@
 from django.views.generic import DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 class BaseDeleteMixin(DeleteView):
     template_name = 'courses/delete_form.html'

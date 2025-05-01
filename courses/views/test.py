@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
 
-from ..models import Test, Lesson
+from ..models import Test, Lesson, Question
 from ..forms import TestForm
 from ..mixins import BaseDeleteMixin, TestUpdateDeleteMixin
 
@@ -62,10 +62,11 @@ class TestDetailView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     
 
     ### TODO ###
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     context['questions'] = models.Question.objects.filter(lesson_id=self.kwargs.get('lesson_id'))
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        questions = Question.objects.filter(test=self.kwargs.get('test_id'))
+        context['questions'] = questions
+        return context
     
 
 class TestUpdateView(TestUpdateDeleteMixin, UpdateView):

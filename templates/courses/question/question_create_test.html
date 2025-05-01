@@ -1,0 +1,126 @@
+{# templates/questions/create.html #}
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    
+    <!-- Основные поля -->
+    {{ form.as_p }}
+    
+    <!-- Блок для Input вопроса -->
+    <div id="input-form" style="display: none;">
+        <div class="form-group">
+            <label>Правильный ответ:</label>
+            <input type="text" name="right_answer" maxlength="50" class="form-control" required>
+        </div>
+    </div>
+
+    <!-- Блок для Choice вопроса -->
+    <div id="choices-form" style="display: none;">
+        <h4>Варианты ответов:</h4>
+        <div id="choices-container">
+            {% for i in initial_choices %}
+            <div class="choice-item mb-2">
+                <input type="text" name="choice_text_{{ i }}" 
+                     class="form-control d-inline w-50" placeholder="Текст ответа" required>
+                <label class="ml-2">
+                    <input type="checkbox" name="is_correct_{{ i }}"> Правильный
+                </label>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="addChoice()">
+            + Добавить вариант
+        </button>
+    </div>
+
+    <!-- Блок для Matching вопроса -->
+    <div id="matching-form" style="display: none;">
+        <h4>Пары соответствия:</h4>
+        <div id="match-container">
+            {% for i in initial_matches %}
+            <div class="match-item mb-2">
+                <input type="text" name="match_left_{{ i }}" 
+                     class="form-control d-inline w-45" placeholder="Левая часть" required>
+                <span class="mx-2">→</span>
+                <input type="text" name="match_right_{{ i }}" 
+                     class="form-control d-inline w-45" placeholder="Правая часть" required>
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="addMatch()">
+            + Добавить пару
+        </button>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Создать вопрос</button>
+</form>
+
+<script>
+    let choiceCount = 1;
+    let matchCount = 1;
+
+    function addChoice() {
+        const container = document.getElementById('choices-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'choice-item mb-2';
+        newItem.innerHTML = `
+            <input type="text" name="choice_text_${choiceCount}" 
+                   class="form-control d-inline w-50" placeholder="Текст ответа" required>
+            <label class="ml-2">
+                <input type="checkbox" name="is_correct_${choiceCount}"> Правильный
+            </label>
+        `;
+        container.appendChild(newItem);
+        choiceCount++;
+    }
+    
+    function addMatch() {
+        const container = document.getElementById('match-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'match-item mb-2';
+        newItem.innerHTML = `
+            <input type="text" name="match_left_${matchCount}" 
+                   class="form-control d-inline w-45" placeholder="Левая часть" required>
+            <span class="mx-2">→</span>
+            <input type="text" name="match_right_${matchCount}" 
+                   class="form-control d-inline w-45" placeholder="Правая часть" required>
+        `;
+        container.appendChild(newItem);
+        matchCount++;
+    }
+
+    function showQuestionTypeFields() {
+      // Определяем выбранный тип
+      const selected = document.querySelector('[name="type"]:checked')
+                        ? document.querySelector('[name="type"]:checked').value
+                        : document.querySelector('[name="type"]').value;
+  
+      // Для каждого блока: показываем/скрываем и включаем/отключаем поля
+      ['input','choices','matching'].forEach(key => {
+        const el = document.getElementById(key + '-form');
+        if (!el) return;
+        const show = (key === selected);
+  
+        // Показ/скрытие
+        el.style.display = show ? 'block' : 'none';
+  
+        // Отключаем все поля в скрытом блоке, включаем — в видимом
+        el.querySelectorAll('input, select, textarea').forEach(field => {
+          field.disabled = !show;
+        });
+      });
+    }
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      // Привязываем обработчик
+      document.querySelectorAll('[name="type"]').forEach(el => {
+        el.addEventListener('change', showQuestionTypeFields);
+      });
+      // Инициализация при загрузке
+      showQuestionTypeFields();
+    });
+  </script>
+  
+{% endblock %}

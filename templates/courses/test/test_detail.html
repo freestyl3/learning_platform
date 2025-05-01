@@ -3,7 +3,7 @@
   {% if request.user == test.lesson.module.course.author %}
     <p><a href={% url 'courses:update_test' test_id=test.id %}>Изменить тест</a> 
         <a href={% url 'courses:delete_test' test_id=test.id %}>Удалить тест</a></p>
-    {% comment %}<p><a href={% url 'courses:add_test' lesson_id=lesson.id %}>Добавить тест</a></p> {% endcomment %}
+    <p><a href={% url 'courses:add_question' test_id=test.id %}>Добавить вопрос</a></p>
   {% endif %}
   {% if test.hidden %}
     <i>Этот тест скрыт</i>
@@ -15,7 +15,16 @@
   {% if request.user == test.lesson.module.course.author %}
     {% if questions %}
       {% for question in questions %}
-        <p>{{ question.text }}</p>
+        <p><h4>{{ question.text }}
+            <a href={% url 'courses:update_question' question_id=question.id %}>Изменить</a>
+            <a href={% url 'courses:delete_question' question_id=question.id %}>Удалить</a></h4> </p>
+        {% for answer in question.get_answers %}
+          {% if question.type != 'matching' %}
+            <p>   {{ question.type }} - {{ answer.answer_text }} - {{ answer.is_correct }}</p>
+          {% else %}
+            <p>   {{ question.type }} - {{ answer.answer_text }} - {{ answer.match_pair }}</p>
+          {% endif %}
+        {% endfor %}
       {% endfor %}
     {% endif %}
   {% else %}

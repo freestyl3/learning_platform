@@ -35,5 +35,9 @@ urlpatterns = [
     path('test/<int:test_id>/', TestDetailView.as_view(), name='test_detail'),
     path('test/<int:test_id>/update/', TestUpdateView.as_view(), name='update_test'),
     path('test/<int:test_id>/delete/', TestDeleteView.as_view(), name='delete_test'),
-    path('test/<int:test_id>/toggle_test/', toggle_test, name='toggle_test')
+    path('test/<int:test_id>/toggle_test/', toggle_test, name='toggle_test'),
+    path('test/<int:test_id>/add_question/', QuestionCreateView.as_view(), name='add_question'),
+
+    path('question/<int:question_id>/delete/', QuestionDeleteView.as_view(), name='delete_question'),
+    path('question/<int:question_id>/update/', QuestionUpdateView.as_view(), name='update_question')
 ]
