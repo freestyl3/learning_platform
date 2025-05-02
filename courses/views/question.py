@@ -83,13 +83,21 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Добавляем начальные формы для JS
-        choices_count = self.get_object().get_answers().count()
-        context['initial_choices'] = range(1, choices_count)
-        context['initial_matches'] = range(1, choices_count)
+        answers_count = self.get_object().get_answers().count()
+        q_type = self.get_object().type
+        
+        choices_count = int(q_type == 'choices') * answers_count
+        matches_count = int(q_type == 'matching') * answers_count
+        context['initial_choices'] = range(max(1, choices_count))
+        context['initial_matches'] = range(max(1, matches_count))
+        context['js_choices'] = max(1, choices_count)
+        context['js_matches'] = max(1, matches_count)
         return context
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
+        instance = self.get_object()
+        form.instance = instance
         form.fields['type'].widget.attrs.update({'onchange': 'showQuestionTypeFields()'})
         return form
     
@@ -97,7 +105,7 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         q_type = form.cleaned_data['type']
         test = self.get_object().test
         question = Question.objects.filter(
-            pk=self.kwargs.get('question_id')
+            pk=self.get_object().pk
         )
 
         instance_q_type = self.get_object().type
@@ -106,54 +114,87 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             text=self.request.POST.get('text'),
             type=q_type
         )
+        answers = self.get_object().get_answers()
 
         if q_type != instance_q_type:
-            answers = self.get_object().get_answers()
-
+            Question.objects.filter(
+                pk=self.get_object().pk
+            ).update(
+                type=q_type
+            )
             for answer in answers:
                 answer.delete()
-
-        else:
-            ''' FIX THIS '''
-            if q_type == 'input':
-                # answer = Answer.objects.filter(
-                #     question=self.get_object()
-                # )
-                for answer in self.get_object().get_answers():
-                    answer.delete()
+                answers = []
+        if q_type == 'input':
+            if answers:
+                for answer in answers:
+                    Answer.objects.filter(
+                        pk=answer.pk,
+                    ).update(
+                        answer_text=self.request.POST.get('right_answer')
+                    )
+            else:
                 Answer.objects.create(
                     question=self.get_object(),
                     answer_text=self.request.POST.get('right_answer'),
                     is_correct=True
                 )
-                # answer.update_or_create(
-                #     question=self.get_object(),
-                #     answer_text=self.request.POST.get('right_answer'),
-                #     is_correct=True
-                # )
-            
-            # Обработка Choice вопроса
-            elif q_type == 'choices':
-                i = 0
-                while f'choice_text_{i}' in self.request.POST:
-                    Answer.objects.update_or_create(
-                        question=question,
+        elif q_type == 'choices':
+            i = 0
+            end = False
+            while not end:
+                if answers:
+                    for answer in answers:
+                        Answer.objects.filter(
+                            pk=answer.pk
+                        ).update(
+                            answer_text=self.request.POST.get(f'choice_text_{i}'),
+                            is_correct=bool(self.request.POST.get(f'is_correct_{i}'))
+                        )
+                        i += 1
+                    answers = []
+                if f'choice_text_{i}' in self.request.POST:
+                    Answer.objects.create(
+                        question=self.get_object(),
                         answer_text=self.request.POST.get(f'choice_text_{i}'),
                         is_correct=bool(self.request.POST.get(f'is_correct_{i}'))
                     )
                     i += 1
-            
-            # Обработка Matching вопроса (с учётом опечатки)
-            elif q_type == 'matching':
-                i = 0
-                while f'match_left_{i}' in self.request.POST:
-                    Answer.objects.update_or_create(
-                        question=question,
+                else:
+                    end = True
+        
+        elif q_type == 'matching':
+            i = 0
+            end = False
+            while not end:
+                if answers:
+                    for answer in answers:
+                        Answer.objects.filter(
+                            pk=answer.pk
+                        ).update(
+                            answer_text=self.request.POST.get(f'match_left_{i}'),
+                            match_pair=self.request.POST.get(f'match_right_{i}')
+                        )
+                        i += 1
+                    answers = []
+                if f'match_left_{i}' in self.request.POST:
+                    Answer.objects.create(
+                        question=self.get_object(),
                         answer_text=self.request.POST.get(f'match_left_{i}'),
                         match_pair=self.request.POST.get(f'match_right_{i}'),
                         is_correct=True
                     )
                     i += 1
+                else:
+                    end = True
+            while f'match_left_{i}' in self.request.POST:
+                Answer.objects.update_or_create(
+                    question=question,
+                    answer_text=self.request.POST.get(f'match_left_{i}'),
+                    match_pair=self.request.POST.get(f'match_right_{i}'),
+                    is_correct=True
+                )
+                i += 1
         
         return redirect('courses:test_detail', test_id=test.pk)
     

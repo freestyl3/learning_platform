@@ -58,8 +58,8 @@
 </form>
 
 <script>
-    let choiceCount = 1;
-    let matchCount = 1;
+    let choiceCount = {{ js_choices }};
+    let matchCount = {{ js_matches }};
 
     function addChoice() {
         const container = document.getElementById('choices-container');

@@ -15,14 +15,14 @@
   {% if request.user == test.lesson.module.course.author %}
     {% if questions %}
       {% for question in questions %}
-        <p><h4>{{ question.text }}
+        <p><h4>{{ forloop.counter }}. {{ question.text }} - {{ question.type }}
             <a href={% url 'courses:update_question' question_id=question.id %}>Изменить</a>
             <a href={% url 'courses:delete_question' question_id=question.id %}>Удалить</a></h4> </p>
         {% for answer in question.get_answers %}
           {% if question.type != 'matching' %}
-            <p>   {{ question.type }} - {{ answer.answer_text }} - {{ answer.is_correct }}</p>
+            <p>&nbsp;&nbsp;&nbsp;{{answer.pk}} - {{ answer.answer_text }} - {{ answer.is_correct }}</p>
           {% else %}
-            <p>   {{ question.type }} - {{ answer.answer_text }} - {{ answer.match_pair }}</p>
+            <p>&nbsp;&nbsp;&nbsp;{{answer.pk}} - {{ answer.answer_text }} - {{ answer.match_pair }}</p>
           {% endif %}
         {% endfor %}
       {% endfor %}
