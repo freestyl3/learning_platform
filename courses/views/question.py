@@ -68,6 +68,8 @@ class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
         form.fields['type'].widget.attrs.update({'onchange': 'showQuestionTypeFields()'})
+        form.fields['type'].choices = list(form.fields['type'].choices)[1:]
+        form.initial['type'] = 'input'
         return form
     
 class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
@@ -95,8 +97,7 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-        instance = self.get_object()
-        form.instance = instance
+        form.fields['type'].choices = list(form.fields['type'].choices)[1:]
         form.fields['type'].widget.attrs.update({'onchange': 'showQuestionTypeFields()'})
         return form
     
