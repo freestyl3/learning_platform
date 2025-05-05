@@ -4,7 +4,6 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from ..models import Question, Test, Answer
-from ..forms import QuestionForm
 from ..mixins import BaseDeleteMixin
 
 class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
@@ -19,8 +18,8 @@ class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Добавляем начальные формы для JS
-        context['initial_choices'] = range(1)
-        context['initial_matches'] = range(1)
+        context['js_choices'] = 0
+        context['js_matches'] = 0
         return context
 
     def form_valid(self, form):
@@ -73,7 +72,7 @@ class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     
 class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Question
-    template_name = 'courses/question/question_create_test.html'
+    template_name = 'courses/question/question_update_test.html'
     fields = ['text', 'type']
     pk_url_kwarg = 'question_id'
 
@@ -83,15 +82,15 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Добавляем начальные формы для JS
-        answers_count = self.get_object().get_answers().count()
+        answers = self.get_object().get_answers()
+        answers_count = answers.count()
         q_type = self.get_object().type
         
         choices_count = int(q_type == 'choices') * answers_count
         matches_count = int(q_type == 'matching') * answers_count
-        context['initial_choices'] = range(max(1, choices_count))
-        context['initial_matches'] = range(max(1, matches_count))
-        context['js_choices'] = max(1, choices_count)
-        context['js_matches'] = max(1, matches_count)
+        context['answers'] = answers
+        context['js_choices'] = choices_count
+        context['js_matches'] = matches_count
         return context
     
     def get_form(self, form_class=None):

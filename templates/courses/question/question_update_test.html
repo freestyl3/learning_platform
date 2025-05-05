@@ -1,0 +1,135 @@
+{# templates/questions/create.html #}
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="post">
+    {% csrf_token %}
+    
+    <!-- Основные поля -->
+    {{ form.as_p }}
+
+  
+      <!-- Input Question -->
+      <div id="input-form" style="display: none;">
+          <div class="form-group">
+              <label>Правильный ответ:</label>
+              <input type="text" name="right_answer" 
+                     value="{% if question.type == 'input' %}{{ answers.0.answer_text }}{% endif %}" 
+                     class="form-control" required>
+          </div>
+      </div>
+  
+      <!-- Choices Question -->
+      <div id="choices-form" style="display: none;">
+          <div id="choices-container">
+              {% if question.type == 'choices' %}
+                  {% for answer in answers %}
+                  <div class="choice-item mb-2">
+                      <input type="text" name="choice_text_{{ forloop.counter0 }}" 
+                             value="{{ answer.answer_text }}" 
+                             class="form-control d-inline w-50" required>
+                      <label class="ml-2">
+                          <input type="checkbox" name="is_correct_{{ forloop.counter0 }}" 
+                                 {% if answer.is_correct %}checked{% endif %}> Правильный
+                      </label>
+                  </div>
+                  {% endfor %}
+              {% endif %}
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addChoice()">
+              + Добавить вариант
+          </button>
+      </div>
+  
+      <!-- Matching Question -->
+      <div id="matching-form" style="display: none;">
+          <div id="match-container">
+              {% if question.type == 'matching' %}
+                  {% for answer in answers %}
+                  <div class="match-item mb-2">
+                      <input type="text" name="match_left_{{ forloop.counter0 }}" 
+                             value="{{ answer.answer_text }}" 
+                             class="form-control d-inline w-45" required>
+                      <span class="mx-2">→</span>
+                      <input type="text" name="match_right_{{ forloop.counter0 }}" 
+                             value="{{ answer.match_pair }}" 
+                             class="form-control d-inline w-45" required>
+                  </div>
+                  {% endfor %}
+              {% endif %}
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="addMatch()">
+              + Добавить пару
+          </button>
+      </div>
+  
+      <button type="submit" class="btn btn-primary">Сохранить</button>
+  </form>
+
+<script>
+    let choiceCount = {{ js_choices }};
+    let matchCount = {{ js_matches }};
+
+    function addChoice() {
+        const container = document.getElementById('choices-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'choice-item mb-2';
+        newItem.innerHTML = `
+            <input type="text" name="choice_text_${choiceCount}" 
+                   class="form-control d-inline w-50" placeholder="Текст ответа" required>
+            <label class="ml-2">
+                <input type="checkbox" name="is_correct_${choiceCount}"> Правильный
+            </label>
+        `;
+        container.appendChild(newItem);
+        choiceCount++;
+    }
+    
+    function addMatch() {
+        const container = document.getElementById('match-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'match-item mb-2';
+        newItem.innerHTML = `
+            <input type="text" name="match_left_${matchCount}" 
+                   class="form-control d-inline w-45" placeholder="Левая часть" required>
+            <span class="mx-2">→</span>
+            <input type="text" name="match_right_${matchCount}" 
+                   class="form-control d-inline w-45" placeholder="Правая часть" required>
+        `;
+        container.appendChild(newItem);
+        matchCount++;
+    }
+
+    function showQuestionTypeFields() {
+      // Определяем выбранный тип
+      const selected = document.querySelector('[name="type"]:checked')
+                        ? document.querySelector('[name="type"]:checked').value
+                        : document.querySelector('[name="type"]').value;
+  
+      // Для каждого блока: показываем/скрываем и включаем/отключаем поля
+      ['input','choices','matching'].forEach(key => {
+        const el = document.getElementById(key + '-form');
+        if (!el) return;
+        const show = (key === selected);
+  
+        // Показ/скрытие
+        el.style.display = show ? 'block' : 'none';
+  
+        // Отключаем все поля в скрытом блоке, включаем — в видимом
+        el.querySelectorAll('input, select, textarea').forEach(field => {
+          field.disabled = !show;
+        });
+      });
+    }
+  
+    document.addEventListener('DOMContentLoaded', () => {
+      // Привязываем обработчик
+      document.querySelectorAll('[name="type"]').forEach(el => {
+        el.addEventListener('change', showQuestionTypeFields);
+      });
+      // Инициализация при загрузке
+      showQuestionTypeFields();
+    });
+  </script>
+  
+{% endblock %}
