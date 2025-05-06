@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
+{% block scripts %}
+  <script src="{% static 'js/test.js' %}" defer></script>
+{% endblock %}
 {% block content %}
   {% if request.user == test.lesson.module.course.author %}
     <p><a href={% url 'courses:update_test' test_id=test.id %}>Изменить тест</a> 
@@ -27,6 +31,6 @@
     {% endif %}
   {% else %}
     <p>Take test</p>
-    <!-- TODO take test -->
+    <a href={% url 'courses:take_test' test_id=test.id %}>GO</a>
   {% endif %}
 {% endblock %}

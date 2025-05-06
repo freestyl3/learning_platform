@@ -15,6 +15,9 @@ class Test(models.Model):
     )
     hidden = models.BooleanField('Скрытый', null=False, blank=False, default=True)
 
+    def get_questions(self):
+        return self.questions.all()
+
     class Meta:
         verbose_name = 'тест'
         ordering = ('test_number', )

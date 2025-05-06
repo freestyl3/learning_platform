@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load static %}
+
+<script src="{% static 'static_dev/js/test.js' %}" defer></script>
+
+{% block content %}
+  {% for question in questions %}
+    {{ question.text }}
+  {% endfor %}
+{% endblock %}

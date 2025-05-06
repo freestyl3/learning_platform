@@ -12,7 +12,8 @@ class QuestionForm(forms.ModelForm):
             ('input', 'Ввод текста'), 
             ('choices', 'Выбор ответа'),
             ('matching', 'Соответствие')
-        ]
+        ],
+        label='Тип вопроса'
     )
     class Meta:
         model = Question

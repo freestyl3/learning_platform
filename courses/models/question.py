@@ -15,7 +15,8 @@ class Question(models.Model):
         on_delete=models.CASCADE,
         verbose_name='ID теста',
         blank=False, 
-        null=False
+        null=False,
+        related_name='questions'
     )
     type = models.CharField(
         'Тип вопроса',

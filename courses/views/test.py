@@ -2,7 +2,7 @@ from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 
 from ..models import Test, Lesson, Question
@@ -27,14 +27,6 @@ class TestCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         kwargs = {'test_id': self.object.pk}
         redirect = reverse_lazy('courses:test_detail', kwargs=kwargs)
         return HttpResponseRedirect(redirect)
-    
-    # def form_valid(self, form):
-    #     form.instance.lesson = Lesson.objects.get(pk=self.kwargs.get('lesson_id'))
-    #     return super().form_valid(form)
-    
-    # def get_success_url(self):
-    #     kwargs = {'lesson_id': self.kwargs.get('lesson_id')}
-    #     return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
     
 
 class HiddenTestListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
@@ -97,3 +89,26 @@ def toggle_test(request, test_id):
         test.save()
 
     return redirect('courses:test_detail', test_id=test_id)
+
+@login_required
+def take_test(request, test_id):
+    test = get_object_or_404(Test, pk=test_id)
+    if request.user != test.lesson.module.course.author:
+        questions = []
+        for question in test.get_questions():
+            data = dict()
+            data['type'] = question.type
+            answers = []
+            match_pairs = []
+            for answer in question.get_answers():
+                answers.append(answer.answer_text)
+                if answer.match_pair is not None:
+                    match_pairs.append(answer.match_pair)
+            data['answers'] = answers
+            data['match_pairs'] = match_pairs
+            questions.append(data)
+        return JsonResponse(
+            {
+                'data': questions
+            }
+        )

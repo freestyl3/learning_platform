@@ -32,7 +32,6 @@
                           <input type="checkbox" name="is_correct_{{ forloop.counter0 }}" 
                                  {% if answer.is_correct %}checked{% endif %}> Правильный
                       </label>
-                      <button onclick='deleteChoice(this)'>Delete</button>
                   </div>
                   {% endfor %}
               {% endif %}
@@ -40,6 +39,7 @@
           <button type="button" class="btn btn-secondary btn-sm" onclick="addChoice()">
               + Добавить вариант
           </button>
+          <button type="button" onclick='deleteChoice()'>Удалить вариант</button>
       </div>
   
       <!-- Matching Question -->
@@ -62,6 +62,7 @@
           <button type="button" class="btn btn-secondary btn-sm" onclick="addMatch()">
               + Добавить пару
           </button>
+          <button type="button" onclick='deleteMatch()'>Удалить пару</button>
       </div>
   
       <button type="submit" class="btn btn-primary">Сохранить</button>
@@ -83,16 +84,6 @@
             </label>
         `;
         container.appendChild(newItem);
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function() { deleteChoice(this); }; // Передаём текущую кнопку
-
-        // Добавляем элементы в контейнер
-        newItem.appendChild(deleteButton);
-
-        // Добавляем контейнер в основной блок
-        container.appendChild(newItem);
         choiceCount++;
     }
     
@@ -108,29 +99,21 @@
                    class="form-control d-inline w-45" placeholder="Правая часть" required>
         `;
         container.appendChild(newItem);
-        const deleteButton = document.createElement('button');
-        deleteButton.type = 'button';
-        deleteButton.textContent = 'Delete';
-        deleteButton.onclick = function() { deleteMatch(this); }; // Передаём текущую кнопку
-
-        // Добавляем элементы в контейнер
-        newItem.appendChild(deleteButton);
-
-        // Добавляем контейнер в основной блок
-        container.appendChild(newItem);
         matchCount++;
     }
 
-    function deleteChoice(button) {
-        const choiceElement = button.closest('.choice-item');
+    function deleteChoice() {
+        const button = document.getElementById('choices-container');
+        const choiceElement = button.lastElementChild;
         if (choiceElement) {
             choiceElement.remove();
             choiceCount--;
         }
     }
 
-    function deleteMatch(button) {
-        const matchElement = button.closest('.match-item');
+    function deleteMatch() {
+        const button = document.getElementById('match-container');
+        const matchElement = button.lastElementChild;
         if (matchElement) {
             matchElement.remove();
             matchCount--;

@@ -33,7 +33,7 @@
         <button type="button" class="btn btn-secondary btn-sm" onclick="addChoice()">
             + Добавить вариант
         </button>
-        <button type="button" onclick='deleteChoice()'>Delete</button>
+        <button type="button" onclick='deleteChoice()'>Удалить вариант</button>
     </div>
 
     <!-- Блок для Matching вопроса -->
@@ -53,6 +53,7 @@
         <button type="button" class="btn btn-secondary btn-sm" onclick="addMatch()">
             + Добавить пару
         </button>
+        <button type="button" onclick='deleteMatch()'>Удалить пару</button>
         
     </div>
 
@@ -96,15 +97,15 @@
     function deleteChoice() {
         const button = document.getElementById('choices-container');
         const choiceElement = button.lastElementChild;
-        console.log(choiceElement);
         if (choiceElement) {
             choiceElement.remove();
             choiceCount--;
         }
     }
 
-    function deleteMatch(button) {
-        const matchElement = button.closest('.match-item');
+    function deleteMatch() {
+        const button = document.getElementById('match-container');
+        const matchElement = button.lastElementChild;
         if (matchElement) {
             matchElement.remove();
             matchCount--;
