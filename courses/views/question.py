@@ -4,12 +4,13 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from ..models import Question, Test, Answer
+from ..forms import QuestionForm
 from ..mixins import BaseDeleteMixin
 
 class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Question
     template_name = 'courses/question/question_create_test.html'
-    fields = ['text', 'type']
+    form_class = QuestionForm
 
     def test_func(self):
         author = Test.objects.get(pk=self.kwargs.get('test_id')).lesson.module.course.author
@@ -23,6 +24,17 @@ class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
         return context
 
     def form_valid(self, form):
+        # choices = [choice for choice in self.request.POST if choice.startswith('choice_text') or choice.startswith('is_correct')]
+        # matches = [match for match in self.request.POST if match.startswith('match_left') or match.startswith('match_right')]
+        print(self.request.POST)
+        choices, matches = dict(), dict()
+        for item in self.request.POST:
+            print(item, f'choice_item_{item.split('_')}')
+            # if item.startswith('is_correct') and f'choice_item_{item.split('_')[2]}' in self.request.POST:
+            #     choices[f'choice_item_{item.split('_')[2]}'] = self.request.POST.get(item)
+            # else:
+            #     return self.form_invalid(form)
+        print(choices, matches)
         q_type = form.cleaned_data['type']
         test = Test.objects.get(pk=self.kwargs.get('test_id'))
 
@@ -64,18 +76,11 @@ class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
                 i += 1
         
         return redirect('courses:test_detail', test_id=test.pk)
-
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.fields['type'].widget.attrs.update({'onchange': 'showQuestionTypeFields()'})
-        form.fields['type'].choices = list(form.fields['type'].choices)[1:]
-        form.initial['type'] = 'input'
-        return form
     
 class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Question
     template_name = 'courses/question/question_update_test.html'
-    fields = ['text', 'type']
+    form_class = QuestionForm
     pk_url_kwarg = 'question_id'
 
     def test_func(self):
@@ -94,12 +99,6 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         context['js_choices'] = choices_count
         context['js_matches'] = matches_count
         return context
-    
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.fields['type'].choices = list(form.fields['type'].choices)[1:]
-        form.fields['type'].widget.attrs.update({'onchange': 'showQuestionTypeFields()'})
-        return form
     
     def form_valid(self, form):
         q_type = form.cleaned_data['type']

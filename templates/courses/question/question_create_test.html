@@ -33,6 +33,7 @@
         <button type="button" class="btn btn-secondary btn-sm" onclick="addChoice()">
             + Добавить вариант
         </button>
+        <button type="button" onclick='deleteChoice(this)'>Delete</button>
     </div>
 
     <!-- Блок для Matching вопроса -->
@@ -52,6 +53,7 @@
         <button type="button" class="btn btn-secondary btn-sm" onclick="addMatch()">
             + Добавить пару
         </button>
+        
     </div>
 
     <button type="submit" class="btn btn-primary">Создать вопрос</button>
@@ -72,7 +74,7 @@
                 <input type="checkbox" name="is_correct_${choiceCount}"> Правильный
             </label>
         `;
-        container.appendChild(newItem);
+        container.appendChild(newItem)
         choiceCount++;
     }
     
@@ -89,6 +91,23 @@
         `;
         container.appendChild(newItem);
         matchCount++;
+    }
+
+    function deleteChoice(button) {
+        const choiceElement = button.closest('.choice-item');
+        if (choiceElement) {
+            choiceElement.remove();
+            choiceCount--;
+        }
+    }
+
+    function deleteMatch(button) {
+        const matchElement = button.closest('.match-item');
+        if (matchElement) {
+            matchElement.remove();
+            matchCount--;
+        }
+
     }
 
     function showQuestionTypeFields() {

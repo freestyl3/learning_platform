@@ -4,12 +4,24 @@ from ..models import Question
 
 
 class QuestionForm(forms.ModelForm):
+    type = forms.ChoiceField(
+        widget=forms.Select(
+            {'onchange': 'showQuestionTypeFields()'}
+        ), 
+        choices=[
+            ('input', 'Ввод текста'), 
+            ('choices', 'Выбор ответа'),
+            ('matching', 'Соответствие')
+        ]
+    )
     class Meta:
         model = Question
         fields = ['text', 'type']
-        widgets = {
-            'type': forms.RadioSelect(attrs={'onchange': 'showQuestionTypeFields()', 'class': 'type-radio'})
-        }
+        # widgets = {
+        #     'type': forms.ModelChoiceField(widget=forms.Select(
+        #         {'onchange': 'showQuestionTypeFields()'}
+        #         ), queryset=Question.objects.all())
+        # }
 
 # class ChoiceForm(forms.ModelForm):
 #     class Meta:

@@ -9,7 +9,7 @@ class Question(models.Model):
         CHOICES = 'choices'
         MATCHING = 'matching'
         
-    text = models.CharField('Текст вопроса', max_length=50, blank=True, null=False)
+    text = models.CharField('Текст вопроса', max_length=50, blank=False, null=False)
     test= models.ForeignKey(
         Test,
         on_delete=models.CASCADE,
