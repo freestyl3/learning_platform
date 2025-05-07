@@ -2,18 +2,19 @@
 {% load static %}
 {% block scripts %}
   <script src="{% static 'js/test.js' %}" defer></script>
+  <script src="{% static 'js/start.js' %}" defer></script>
 {% endblock %}
 {% block content %}
   {% if request.user == test.lesson.module.course.author %}
     <p><a href={% url 'courses:update_test' test_id=test.id %}>Изменить тест</a> 
         <a href={% url 'courses:delete_test' test_id=test.id %}>Удалить тест</a></p>
     <p><a href={% url 'courses:add_question' test_id=test.id %}>Добавить вопрос</a></p>
-  {% endif %}
-  {% if test.hidden %}
-    <i>Этот тест скрыт</i>
-    <a href={% url 'courses:toggle_test' test_id=test.id %}>Опубликовать</a>
-  {% else %}
-    <a href={% url 'courses:toggle_test' test_id=test.id %}>Скрыть</a>
+    {% if test.hidden %}
+      <i>Этот тест скрыт</i>
+      <a href={% url 'courses:toggle_test' test_id=test.id %}>Опубликовать</a>
+    {% else %}
+      <a href={% url 'courses:toggle_test' test_id=test.id %}>Скрыть</a>
+    {% endif %}
   {% endif %}
   <h3>{{ test.name }}</h3>
   {% if request.user == test.lesson.module.course.author %}
@@ -30,7 +31,6 @@
       {% endfor %}
     {% endif %}
   {% else %}
-    <p>Take test</p>
-    <a href={% url 'courses:take_test' test_id=test.id %}>GO</a>
+    <button type='button' id='start-button' class='btn btn-primary'>Пройти тестирование</button>
   {% endif %}
 {% endblock %}
