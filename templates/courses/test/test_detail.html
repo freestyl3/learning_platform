@@ -2,7 +2,6 @@
 {% load static %}
 {% block scripts %}
   <script src="{% static 'js/test.js' %}" defer></script>
-  <script src="{% static 'js/start.js' %}" defer></script>
 {% endblock %}
 {% block content %}
   {% if request.user == test.lesson.module.course.author %}
@@ -31,6 +30,10 @@
       {% endfor %}
     {% endif %}
   {% else %}
-    <button type='button' id='start-button' class='btn btn-primary'>Пройти тестирование</button>
+    <form id="test-form" class="mt-3 mb-3">
+      {% csrf_token %}
+      <div id="test-box"></div>
+      <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+    </form>
   {% endif %}
 {% endblock %}

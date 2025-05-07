@@ -1,4 +1,8 @@
 {% extends "base.html" %}
+{% load static %}
+{% block scripts %}
+  <script src="{% static 'js/start.js' %}" defer></script>
+{% endblock %}
 {% block content %}
   {% if request.user == lesson.module.course.author %}
      <p><a href={% url 'courses:update_lesson' lesson_id=lesson.id %}>Изменить урок</a> 
@@ -17,7 +21,11 @@
   {% if tests %}
     <h4>Тесты</h4>
     {% for test in tests %}
-      <p><a href={% url 'courses:test_detail' test_id=test.id %}>{{ test.name }}</a></p>
+      {% if request.user == lesson.module.course.author %}
+        <p><a href={% url 'courses:test_detail' test_id=test.id %}>{{ test.name }}</a></p>
+      {% else %}
+        <p>{{ test.name }} - {{test.pk}}</p> <button type='button' id='start-button' class='btn btn-primary' data-test-id="{{test.pk}}">Начать тест</button>
+      {% endif %}
     {% endfor %}
   {% endif %}
 {% endblock %}

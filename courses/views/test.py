@@ -1,3 +1,5 @@
+from random import shuffle
+
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
@@ -97,15 +99,21 @@ def take_test(request, test_id):
         questions = []
         for question in test.get_questions():
             data = dict()
-            data['type'] = question.type
+            question_data = dict()
+            question_data['type'] = question.type
             answers = []
             match_pairs = []
             for answer in question.get_answers():
                 answers.append(answer.answer_text)
                 if answer.match_pair is not None:
                     match_pairs.append(answer.match_pair)
-            data['answers'] = answers
-            data['match_pairs'] = match_pairs
+            if match_pairs:
+                shuffle(match_pairs)
+            else:
+                shuffle(answers)
+            question_data['answers'] = answers
+            question_data['match_pairs'] = match_pairs
+            data[question.text] = question_data
             questions.append(data)
         return JsonResponse(
             {
