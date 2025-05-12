@@ -83,6 +83,22 @@ class TestDeleteView(TestUpdateDeleteMixin, BaseDeleteMixin):
         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
     
 
+class TakeTestView(ListView):
+    model = Question
+    template_name = 'courses/test/take_test.html'
+
+    def get_queryset(self):
+        return Question.objects.filter(test=self.kwargs.get('test_id'))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        answers = {}
+        for question in self.get_queryset():
+            answers[question] = question.get_answers()
+        context['data'] = answers
+        return context
+    
+
 @login_required
 def toggle_test(request, test_id):
     test = get_object_or_404(Test, pk=test_id)

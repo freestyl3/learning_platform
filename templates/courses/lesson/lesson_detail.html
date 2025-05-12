@@ -24,7 +24,8 @@
       {% if request.user == lesson.module.course.author %}
         <p><a href={% url 'courses:test_detail' test_id=test.id %}>{{ test.name }}</a></p>
       {% else %}
-        <p>{{ test.name }} - {{test.pk}}</p> <button type='button' id='start-button' class='btn btn-primary' data-test-id="{{test.pk}}">Начать тест</button>
+        <p><a href={% url 'courses:take_test' test_id=test.id %}>{{ test.name }}</a></p>
+        {% comment %} <p>{{ test.name }} - {{test.pk}}</p> <button type='button' id='start-button' class='btn btn-primary' data-test-id="{{test.pk}}">Начать тест</button> {% endcomment %}
       {% endif %}
     {% endfor %}
   {% endif %}

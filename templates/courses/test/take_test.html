@@ -1,10 +1,158 @@
 {% extends 'base.html' %}
-{% load static %}
+{% load static shuffle %}
+{% block scripts %}
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+{% endblock %}
 
-<script src="{% static 'static_dev/js/test.js' %}" defer></script>
+{% comment %} <script src="{% static 'static_dev/js/test.js' %}" defer></script> {% endcomment %}
+{% block styles %}
+<style>
+  .quiz-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    row-gap: 0.5rem;
+    column-gap: 1rem;
+    align-items: center;
+    max-width: 800px;
+    width: auto;         /* убираем full width */
+    margin: 0; 
+  }
+  .term, .definition {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    position: relative;
+  }
+  .term {
+    justify-content: flex-start;
+  }
+  .definition {
+    justify-content: space-between;
+    padding-left: 2rem; /* пространство для рукоятки */
+  }
+  .move-handle {
+    cursor: grab;
+    position: absolute;
+    left: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .arrows {
+    margin-left: 1rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+  .arrows button {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+</style>
+{% endblock %}
 
 {% block content %}
-  {% for question in questions %}
-    {{ question.text }}
-  {% endfor %}
+  <form id="test-form" class="mt-3 mb-3">
+    {% csrf_token %}
+    <div id="test-box">
+      {% for question, answers in data.items %}
+        <hr>
+        <p><b>{{ question.text }}</b></p>
+          {% if question.type == 'choices' %}
+            {% for answer in answers %}
+              <div>
+                <input type="checkbox" class="choice-answer" id="{{question.text}}-{{answer.answer_text}}" name="{{question.text}}" value="{{answer.answer_text}}">
+                <label for="{{question.text}}">{{answer.answer_text}}</label>
+              </div>
+            {% endfor %}
+          {% elif question.type == 'input' %}
+            <div>
+              <input type="text" class="input-answer" id="{{question.text}}" name="{{question.text}}">
+            </div>
+          {% elif question.type == 'matching' %}
+            {% comment %} <p>TODO: Matching tests</p> {% endcomment %}
+            {% comment %} <div class="drag-and-drop-draggable ember-view dnd-quiz__item dnd-quiz__has-controls matching-quiz__item">
+            <span id="{{question.text}}-{{answer.answer_text}}" class=".dnd-quiz__item-handle">{{answer.match_pair}}</span>
+            </div> {% endcomment %}
+            {% comment %} <div class="pair">
+              <div class="term">{{ answer.answer_text }}</div>
+              <div class="definition" data-id="{{ answer.id }}">
+                <span class="text">{{ answer.match_pair }}</span>
+                <span class="move-handle">☰</span>
+                <div class="arrows">
+                  <button type="button" class="up">↑</button>
+                  <button type="button" class="down">↓</button>
+                </div>
+              </div>
+            </div> {% endcomment %}
+            <div class="quiz-container">
+              <div class="terms">
+                {% for answer in answers %}
+                  <div class="term">{{ answer.answer_text }}</div>
+                {% endfor %}
+              </div>
+              <div class="definitions" id="defs-{{ forloop.counter }}">
+              {% with answers|shuffle as shuffled %}
+                {% for answer in shuffled %}
+                  <div class="definition" data-id="{{ answer.id }}">
+                    <span class="text">{{ answer.match_pair }}</span>
+                    <span class="move-handle">☰</span>
+                    <div class="arrows">
+                      <button type="button" class="up">↑</button>
+                      <button type="button" class="down">↓</button>
+                    </div>
+                  </div>
+                {% endfor %}
+              {% endwith %}
+              </div>
+            </div>
+          {% endif %}
+      {% endfor %}
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Сохранить</button>
+  </form>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('.definitions').forEach(defs => {
+        // Инициализация перетаскивания только определений
+        new Sortable(defs, {
+          handle: '.move-handle',
+          animation: 150,
+          ghostClass: 'sortable-ghost',
+          onEnd: () => renderArrows(defs)
+        });
+        renderArrows(defs);
+      });
+  
+      function renderArrows(defs) {
+        const items = Array.from(defs.children);
+        items.forEach((el, i) => {
+          const upBtn = el.querySelector('.up');
+          const downBtn = el.querySelector('.down');
+          // Показываем/скрываем стрелки
+          upBtn.style.display = i === 0 ? 'none' : 'inline-block';
+          downBtn.style.display = i === items.length - 1 ? 'none' : 'inline-block';
+          // Обработчики
+          upBtn.onclick = () => move(defs, i, i - 1);
+          downBtn.onclick = () => move(defs, i, i + 1);
+        });
+      }
+  
+      function move(defs, from, to) {
+        const items = Array.from(defs.children);
+        if (to < 0 || to >= items.length) return;
+        const current = items[from];
+        const target = items[to];
+        // Если двигаемся вверх
+        if (to < from) {
+          defs.insertBefore(current, target);
+        } else {
+          // вниз: вставить следующий за target
+          defs.insertBefore(target, current);
+        }
+        renderArrows(defs);
+      }
+    });
+</script>
 {% endblock %}
