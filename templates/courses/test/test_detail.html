@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% block scripts %}
-  <script src="{% static 'js/test.js' %}" defer></script>
+  {% comment %} <script src="{% static 'js/test.js' %}" defer></script> {% endcomment %}
 {% endblock %}
 {% block content %}
   {% if request.user == test.lesson.module.course.author %}

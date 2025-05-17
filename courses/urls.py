@@ -39,6 +39,7 @@ urlpatterns = [
     path('test/<int:test_id>/add_question/', QuestionCreateView.as_view(), name='add_question'),
     # path('test/<int:test_id>/take_test', take_test, name='take_test'),
     path('test/<int:test_id>/take_test', TakeTestView.as_view(), name='take_test'),
+    path('test/<int:test_id>/save/', AttemptCreateView.as_view(), name='save_attempt'),
 
     path('question/<int:question_id>/delete/', QuestionDeleteView.as_view(), name='delete_question'),
     path('question/<int:question_id>/update/', QuestionUpdateView.as_view(), name='update_question')

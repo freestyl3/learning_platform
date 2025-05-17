@@ -3,6 +3,7 @@ from .module import *
 from .lesson import *
 from .test import *
 from .question import *
+from .attempt import *
 
 # __all__ = ['CourseCreateView', 'AllCourseListView', 'CourseDetailView',
 #            'CourseUpdateView', 'CourseDeleteView',

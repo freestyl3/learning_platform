@@ -4,6 +4,7 @@ register = template.Library()
 
 @register.filter
 def shuffle(arg):
-    tmp = list(arg)[:]
-    random.shuffle(tmp)
+    tmp = list(arg)
+    while tmp == list(arg):
+        random.shuffle(tmp)
     return tmp

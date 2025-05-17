@@ -9,7 +9,7 @@ from ..mixins import BaseDeleteMixin
 
 class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Question
-    template_name = 'courses/question/question_create_test.html'
+    template_name = 'courses/question/question_update_test.html'
     form_class = QuestionForm
 
     def test_func(self):

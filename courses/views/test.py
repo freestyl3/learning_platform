@@ -96,6 +96,7 @@ class TakeTestView(ListView):
         for question in self.get_queryset():
             answers[question] = question.get_answers()
         context['data'] = answers
+        context['test'] = get_object_or_404(Test, pk=self.kwargs.get('test_id'))
         return context
     
 
