@@ -3,6 +3,7 @@ import json
 from django.views.generic import CreateView
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 
 from ..models import Attempt, Question, Answer
 
@@ -47,4 +48,4 @@ class AttemptCreateView(CreateView):
                         # print(f'{elem1} - {elem2}')
                 score += (c / len(right_answers))
         # return redirect('courses:test_detail', test_id=test_id)
-        return HttpResponse(f'Ваш результат - {score / len(self.get_queryset()) * 100}%\n{json.dumps({k: request.POST.getlist(k) for k in request.POST.keys()})}')
+        return HttpResponse(f'Time start - {request.POST.get('time_start')}<br>Time end - {timezone.now()}<br>Ваш результат - {score / len(self.get_queryset()) * 100}%<br>{json.dumps({k: request.POST.getlist(k) for k in request.POST.keys()})}')

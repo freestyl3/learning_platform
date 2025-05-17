@@ -58,7 +58,14 @@ class LessonUpdateView(LessonUpdateDeleteMixin, UpdateView):
 
 
 class LessonDeleteView(LessonUpdateDeleteMixin, BaseDeleteMixin):
-    # form_class = LessonForm
+
+    def post(self, request, *args, **kwargs):
+        lesson_number = self.get_object().lesson_number
+        updating_lessons = Lesson.objects.filter(lesson_number__gt=lesson_number)
+        for lesson in updating_lessons:
+            lesson.lesson_number -= 1
+            lesson.save()
+        return super().post(request, *args, **kwargs)
 
     def get_delete_name(self):
         return self.get_object().name

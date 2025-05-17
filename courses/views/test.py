@@ -6,6 +6,7 @@ from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.utils import timezone
 
 from ..models import Test, Lesson, Question
 from ..forms import TestForm
@@ -73,7 +74,13 @@ class TestUpdateView(TestUpdateDeleteMixin, UpdateView):
     
 
 class TestDeleteView(TestUpdateDeleteMixin, BaseDeleteMixin):
-    # form_class = TestForm
+    def post(self, request, *args, **kwargs):
+        test_number = self.get_object().test_number
+        updating_tests = Test.objects.filter(test_number__gt=test_number)
+        for test in updating_tests:
+            test.test_number -= 1
+            test.save()
+        return super().post(request, *args, **kwargs)
 
     def get_delete_name(self):
         return self.get_object().name
@@ -95,6 +102,7 @@ class TakeTestView(ListView):
         answers = {}
         for question in self.get_queryset():
             answers[question] = question.get_answers()
+        context['time_start'] = timezone.now().isoformat
         context['data'] = answers
         context['test'] = get_object_or_404(Test, pk=self.kwargs.get('test_id'))
         return context

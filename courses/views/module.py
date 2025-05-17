@@ -60,7 +60,14 @@ class ModuleUpdateView(ModuleUpdateDeleteMixin, UpdateView):
 
 
 class ModuleDeleteView(ModuleUpdateDeleteMixin, BaseDeleteMixin):
-    # form_class = ModuleForm
+
+    def post(self, request, *args, **kwargs):
+        module_number = self.get_object().module_number
+        updating_modules = Module.objects.filter(module_number__gt=module_number)
+        for module in updating_modules:
+            module.module_number -= 1
+            module.save()
+        return super().post(request, *args, **kwargs)
 
     def get_delete_name(self):
         return self.get_object().name
@@ -73,7 +80,7 @@ class ModuleDeleteView(ModuleUpdateDeleteMixin, BaseDeleteMixin):
 class HiddenModuleListView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Module
     template_name = 'courses/module/hidden_module_list.html'
-
+    
     def test_func(self):
         author = Course.objects.get(pk=self.kwargs.get('course_id')).author
         return self.request.user == author
