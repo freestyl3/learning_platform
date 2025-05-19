@@ -60,8 +60,15 @@
       {% for question, answers in data.items %}
         <hr>
         <p><b>{{ question.text }}</b></p>
-          {% if question.type == 'choices' %}
-            {% for answer in answers %}
+          {% if question.type == 'single' %}
+            {% for answer in answers|shuffle %}
+              <div>
+                <input type="radio" class="single-choice-answer" id="{{question.text}}-{{answer.answer_text}}" name="{{question.text}}" value="{{answer.answer_text}}">
+                <label for="{{question.text}}">{{answer.answer_text}}</label>
+              </div>
+            {% endfor %}
+          {% elif question.type == 'choices' %}
+            {% for answer in answers|shuffle %}
               <div>
                 <input type="checkbox" class="choice-answer" id="{{question.text}}-{{answer.answer_text}}" name="{{question.text}}" value="{{answer.answer_text}}">
                 <label for="{{question.text}}">{{answer.answer_text}}</label>
@@ -79,19 +86,17 @@
                 {% endfor %}
               </div>
               <div class="definitions" id="defs-{{ forloop.counter }}">
-              {% with answers|shuffle as shuffled %}
-                {% for answer in shuffled %}
-                  <div class="definition" data-id="{{ answer.id }}">
-                    <span class="text">{{ answer.match_pair }}</span>
-                    <span class="move-handle">☰</span>
-                    <div class="arrows">
-                      <button type="button" class="up">↑</button>
-                      <button type="button" class="down">↓</button>
-                    </div>
-                    <input type="hidden" name="{{question.text}}" class="matching-order-input" value="{{answer.match_pair}}">
+              {% for answer in answers|shuffle %}
+                <div class="definition" data-id="{{ answer.id }}">
+                  <span class="text">{{ answer.match_pair }}</span>
+                  <span class="move-handle">☰</span>
+                  <div class="arrows">
+                    <button type="button" class="up">↑</button>
+                    <button type="button" class="down">↓</button>
                   </div>
-                {% endfor %}
-              {% endwith %}
+                  <input type="hidden" name="{{question.text}}" class="matching-order-input" value="{{answer.match_pair}}">
+                </div>
+              {% endfor %}
               </div>
             </div>
           {% endif %}

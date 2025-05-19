@@ -33,6 +33,13 @@ class AttemptCreateView(CreateView):
                     score += 1
                 else:
                     question_data['is_correct'] = False
+            elif question.type == 'single':
+                right_answer = Answer.objects.get(question=question, is_correct=True).answer_text
+                if answers and (answers[0] == right_answer):
+                    question_data['is_correct'] = True
+                    score += 1
+                else:
+                    question_data['is_correct'] = False
             elif question.type == 'choices':
                 right_answers = set([answer.answer_text for answer in Answer.objects.filter(question=question, is_correct=True)])
                 if right_answers == set(answers):

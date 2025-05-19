@@ -19,22 +19,13 @@ class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Добавляем начальные формы для JS
+        context['js_single'] = 0
         context['js_choices'] = 0
         context['js_matches'] = 0
         return context
 
     def form_valid(self, form):
-        # choices = [choice for choice in self.request.POST if choice.startswith('choice_text') or choice.startswith('is_correct')]
-        # matches = [match for match in self.request.POST if match.startswith('match_left') or match.startswith('match_right')]
         print(self.request.POST)
-        choices, matches = dict(), dict()
-        for item in self.request.POST:
-            print(item, f'choice_item_{item.split('_')}')
-            # if item.startswith('is_correct') and f'choice_item_{item.split('_')[2]}' in self.request.POST:
-            #     choices[f'choice_item_{item.split('_')[2]}'] = self.request.POST.get(item)
-            # else:
-            #     return self.form_invalid(form)
-        print(choices, matches)
         q_type = form.cleaned_data['type']
         test = Test.objects.get(pk=self.kwargs.get('test_id'))
 
@@ -52,16 +43,20 @@ class QuestionCreateView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
                 is_correct=True
             )
         
-        # Обработка Choice вопроса
-        elif q_type == 'choices':
+        elif q_type == 'single':
             i = 0
-            while f'choice_text_{i}' in self.request.POST:
+            correct = self.request.POST.get('single_is_correct')
+            while f'single_choice_text_{i}' in self.request.POST:
                 Answer.objects.create(
                     question=question,
-                    answer_text=self.request.POST.get(f'choice_text_{i}'),
-                    is_correct=bool(self.request.POST.get(f'is_correct_{i}'))
+                    answer_text=self.request.POST.get(f'single_choice_text_{i}'),
+                    is_correct=bool(str(i) == correct)
                 )
                 i += 1
+        
+        # Обработка Choice вопроса
+        elif q_type == 'choices':
+            pass
         
         # Обработка Matching вопроса (с учётом опечатки)
         elif q_type == 'matching':
@@ -93,14 +88,17 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
         answers_count = answers.count()
         q_type = self.get_object().type
         
+        single_count = int(q_type == 'single') * answers_count
         choices_count = int(q_type == 'choices') * answers_count
         matches_count = int(q_type == 'matching') * answers_count
         context['answers'] = answers
+        context['js_single'] = single_count
         context['js_choices'] = choices_count
         context['js_matches'] = matches_count
         return context
     
     def form_valid(self, form):
+        print(self.request.POST)
         q_type = form.cleaned_data['type']
         test = self.get_object().test
         question = Question.objects.filter(
@@ -138,6 +136,32 @@ class QuestionUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
                     answer_text=self.request.POST.get('right_answer'),
                     is_correct=True
                 )
+        elif q_type == 'single':
+            i = 0
+            end = False
+            correct = self.request.POST.get('single_is_correct')
+            while not end:
+                if answers:
+                    for answer in answers:
+                        Answer.objects.filter(
+                            pk=answer.pk
+                        ).update(
+                            answer_text=self.request.POST.get(f'single_choice_text_{i}'),
+                            is_correct=bool(str(i) == correct)
+                        )
+                        i += 1
+                    answers = []
+                if f'single_choice_text_{i}' in self.request.POST:
+                    print(self.request.POST.get(f'single_choice_text_{i}'))
+                    Answer.objects.create(
+                        question=self.get_object(),
+                        answer_text=self.request.POST.get(f'single_choice_text_{i}'),
+                        is_correct=bool(str(i) == correct)
+                    )
+                    i += 1
+                else:
+                    end = True
+        
         elif q_type == 'choices':
             i = 0
             end = False

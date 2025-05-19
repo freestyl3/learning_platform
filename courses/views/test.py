@@ -90,9 +90,12 @@ class TestDeleteView(TestUpdateDeleteMixin, BaseDeleteMixin):
         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
     
 
-class TakeTestView(ListView):
+class TakeTestView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Question
     template_name = 'courses/test/take_test.html'
+
+    def test_func(self):
+        return self.request.user != Test.objects.get(pk=self.kwargs.get('test_id')).lesson.module.course.author
 
     def get_queryset(self):
         return Question.objects.filter(test=self.kwargs.get('test_id'))
@@ -116,32 +119,3 @@ def toggle_test(request, test_id):
         test.save()
 
     return redirect('courses:test_detail', test_id=test_id)
-
-@login_required
-def take_test(request, test_id):
-    test = get_object_or_404(Test, pk=test_id)
-    if request.user != test.lesson.module.course.author:
-        questions = []
-        for question in test.get_questions():
-            data = dict()
-            question_data = dict()
-            question_data['type'] = question.type
-            answers = []
-            match_pairs = []
-            for answer in question.get_answers():
-                answers.append(answer.answer_text)
-                if answer.match_pair is not None:
-                    match_pairs.append(answer.match_pair)
-            if match_pairs:
-                shuffle(match_pairs)
-            else:
-                shuffle(answers)
-            question_data['answers'] = answers
-            question_data['match_pairs'] = match_pairs
-            data[question.text] = question_data
-            questions.append(data)
-        return JsonResponse(
-            {
-                'data': questions
-            }
-        )
