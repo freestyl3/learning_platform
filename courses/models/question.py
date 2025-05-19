@@ -8,6 +8,7 @@ class Question(models.Model):
         INPUT = 'input'
         CHOICES = 'choices'
         MATCHING = 'matching'
+        SINGLE_CHOICE = 'single'
         
     text = models.CharField('Текст вопроса', max_length=50, blank=False, null=False)
     test= models.ForeignKey(

@@ -18,6 +18,28 @@
                      class="form-control" required>
           </div>
       </div>
+
+      <!-- Single choice (radio) -->
+        <div id="single-form" style="display: none;">
+        <div id="single-container">
+            {% if question.type == 'single' %}
+            {% for answer in answers %}
+                <div class="choice-item mb-2">
+                <input type="text" name="single_choice_text_{{ forloop.counter0 }}" 
+                        value="{{ answer.answer_text }}" 
+                        class="form-control d-inline w-50" required>
+                <label class="ml-2">
+                    <input type="radio" name="single_is_correct" value="{{ forloop.counter0 }}"
+                        {% if answer.is_correct %}checked{% endif %}
+                        onclick="toggleRadio(this)"> Правильный
+                </label>
+                </div>
+            {% endfor %}
+            {% endif %}
+        </div>
+        <button type="button" class="btn btn-secondary btn-sm" onclick="addSingleChoice()">+ Добавить вариант</button>
+        <button type="button" onclick="deleteSingleChoice()">Удалить вариант</button>
+        </div>
   
       <!-- Choices Question -->
       <div id="choices-form" style="display: none;">
@@ -69,8 +91,41 @@
   </form>
 
 <script>
+    let singleChoiceCount = 0;
     let choiceCount = {{ js_choices }};
     let matchCount = {{ js_matches }};
+
+    function toggleRadio(radio) {
+        if (radio.checked && radio.wasChecked) {
+        radio.checked = false;
+        }
+        document.querySelectorAll('input[type="radio"][name="' + radio.name + '"]').forEach(r => r.wasChecked = false);
+        radio.wasChecked = radio.checked;
+    }
+
+    function addSingleChoice() {
+        const container = document.getElementById('single-container');
+        const newItem = document.createElement('div');
+        newItem.className = 'choice-item mb-2';
+        newItem.innerHTML = `
+            <input type="text" name="single_choice_text_${singleChoiceCount}" 
+                class="form-control d-inline w-50" placeholder="Текст ответа" required>
+            <label class="ml-2">
+            <input type="radio" name="single_is_correct" value="${singleChoiceCount}" onclick="toggleRadio(this)"> Правильный
+            </label>
+        `;
+        container.appendChild(newItem);
+        singleChoiceCount++;
+    }
+
+        function deleteSingleChoice() {
+        const container = document.getElementById('single-container');
+        const last = container.lastElementChild;
+        if (last) {
+            container.removeChild(last);
+            singleChoiceCount--;
+        }
+    }
 
     function addChoice() {
         const container = document.getElementById('choices-container');
@@ -128,19 +183,15 @@
                         : document.querySelector('[name="type"]').value;
   
       // Для каждого блока: показываем/скрываем и включаем/отключаем поля
-      ['input','choices','matching'].forEach(key => {
+      ['input','choices','matching', 'single'].forEach(key => {
         const el = document.getElementById(key + '-form');
         if (!el) return;
         const show = (key === selected);
-  
-        // Показ/скрытие
         el.style.display = show ? 'block' : 'none';
-  
-        // Отключаем все поля в скрытом блоке, включаем — в видимом
         el.querySelectorAll('input, select, textarea').forEach(field => {
-          field.disabled = !show;
+            field.disabled = !show;
         });
-      });
+    });
     }
   
     document.addEventListener('DOMContentLoaded', () => {

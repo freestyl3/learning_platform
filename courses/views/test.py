@@ -102,7 +102,7 @@ class TakeTestView(ListView):
         answers = {}
         for question in self.get_queryset():
             answers[question] = question.get_answers()
-        context['time_start'] = timezone.now().isoformat
+        context['time_start'] = timezone.now().isoformat()
         context['data'] = answers
         context['test'] = get_object_or_404(Test, pk=self.kwargs.get('test_id'))
         return context

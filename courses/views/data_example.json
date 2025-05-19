@@ -1,0 +1,19 @@
+{
+    "questions": [
+        {
+            "text": "question.text",
+            "question_answers": "question.answers",
+            "user_answers": "user_answers",
+            "is_correct": "bool"
+        },
+        {
+            "text": "question.text",
+            "question_answers": "question.answers",
+            "user_answers": "user_answers",
+            "is_correct": "bool"
+        }
+    ],
+    "start_time": "start",
+    "end_time": "end",
+    "score": "score"
+}

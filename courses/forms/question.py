@@ -11,7 +11,8 @@ class QuestionForm(forms.ModelForm):
         choices=[
             ('input', 'Ввод текста'), 
             ('choices', 'Выбор ответа'),
-            ('matching', 'Соответствие')
+            ('matching', 'Соответствие'),
+            ('single', 'Один ответ')
         ],
         label='Тип вопроса'
     )

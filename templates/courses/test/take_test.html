@@ -88,7 +88,7 @@
                       <button type="button" class="up">↑</button>
                       <button type="button" class="down">↓</button>
                     </div>
-                    <input type="hidden" name="{{question.text}}" class="matching-order-input" value="{{answer.id}}">
+                    <input type="hidden" name="{{question.text}}" class="matching-order-input" value="{{answer.match_pair}}">
                   </div>
                 {% endfor %}
               {% endwith %}
@@ -110,17 +110,6 @@
         });
         renderArrows(defs);
       });
-  
-      function syncInputs(defs) {
-        const inputs = defs.querySelectorAll('input[type="hidden"]');
-        const definitions = defs.querySelectorAll('.definition');
-        definitions.forEach((def, idx) => {
-          const input = inputs[idx];
-          if (input) {
-            input.value = def.dataset.id;
-          }
-        });
-      }
 
       function renderArrows(defs) {
         const items = Array.from(defs.children).filter(el => el.classList.contains('definition'));
@@ -136,7 +125,6 @@
             move(defs, i, i + 1);
           };
         });
-        syncInputs(defs);
       }
 
       function move(defs, from, to) {
