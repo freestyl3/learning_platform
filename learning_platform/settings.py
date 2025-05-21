@@ -83,8 +83,12 @@ WSGI_APPLICATION = 'learning_platform.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'learning_platform_database',
+        'USER': 'learning_platform_user',
+        'PASSWORD': 'qwerty123456',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

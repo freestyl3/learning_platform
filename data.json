@@ -1,0 +1,1646 @@
+[
+{
+  "model": "courses.module",
+  "pk": 2,
+  "fields": {
+    "module_number": 1,
+    "name": "sdfsf",
+    "course": 6,
+    "hidden": false
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 3,
+  "fields": {
+    "module_number": 1,
+    "name": "1st module",
+    "course": 5,
+    "hidden": false
+  }
+},
+{
+  "model": "courses.module",
+  "pk": 4,
+  "fields": {
+    "module_number": 2,
+    "name": "hidden module",
+    "course": 5,
+    "hidden": true
+  }
+},
+{
+  "model": "courses.lesson",
+  "pk": 1,
+  "fields": {
+    "lesson_number": 1,
+    "name": "1st lesson",
+    "content": "description",
+    "module": 3,
+    "hidden": false
+  }
+},
+{
+  "model": "courses.lesson",
+  "pk": 3,
+  "fields": {
+    "lesson_number": 2,
+    "name": "2nd lesson",
+    "content": "description\r\ntralalero tralala",
+    "module": 3,
+    "hidden": false
+  }
+},
+{
+  "model": "courses.lesson",
+  "pk": 4,
+  "fields": {
+    "lesson_number": 3,
+    "name": "3rd lesson",
+    "content": "hidden",
+    "module": 3,
+    "hidden": true
+  }
+},
+{
+  "model": "courses.lesson",
+  "pk": 7,
+  "fields": {
+    "lesson_number": 1,
+    "name": "валдповап",
+    "content": "лывадыва",
+    "module": 2,
+    "hidden": false
+  }
+},
+{
+  "model": "courses.test",
+  "pk": 1,
+  "fields": {
+    "name": "1st test",
+    "test_number": 1,
+    "lesson": 1,
+    "hidden": false
+  }
+},
+{
+  "model": "courses.test",
+  "pk": 2,
+  "fields": {
+    "name": "ыбваыва",
+    "test_number": 1,
+    "lesson": 7,
+    "hidden": false
+  }
+},
+{
+  "model": "courses.question",
+  "pk": 6,
+  "fields": {
+    "text": "bombardiro",
+    "test": 1,
+    "type": "input"
+  }
+},
+{
+  "model": "courses.question",
+  "pk": 7,
+  "fields": {
+    "text": "brainrot",
+    "test": 1,
+    "type": "matching"
+  }
+},
+{
+  "model": "courses.question",
+  "pk": 8,
+  "fields": {
+    "text": "tralalero...",
+    "test": 1,
+    "type": "choices"
+  }
+},
+{
+  "model": "courses.question",
+  "pk": 26,
+  "fields": {
+    "text": "shimpanzini",
+    "test": 1,
+    "type": "single"
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 31,
+  "fields": {
+    "question": 8,
+    "answer_text": "tralala",
+    "is_correct": true,
+    "match_pair": null
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 32,
+  "fields": {
+    "question": 8,
+    "answer_text": "bombardiro",
+    "is_correct": false,
+    "match_pair": null
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 33,
+  "fields": {
+    "question": 8,
+    "answer_text": "cappuccino",
+    "is_correct": false,
+    "match_pair": null
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 41,
+  "fields": {
+    "question": 7,
+    "answer_text": "tralalero",
+    "is_correct": true,
+    "match_pair": "tralala"
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 42,
+  "fields": {
+    "question": 7,
+    "answer_text": "bombardiro",
+    "is_correct": true,
+    "match_pair": "crocodilo"
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 43,
+  "fields": {
+    "question": 7,
+    "answer_text": "tung tung tung tung tung tung tung tung",
+    "is_correct": true,
+    "match_pair": "sahur"
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 54,
+  "fields": {
+    "question": 6,
+    "answer_text": "crocodilo",
+    "is_correct": true,
+    "match_pair": null
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 92,
+  "fields": {
+    "question": 26,
+    "answer_text": "sahur",
+    "is_correct": false,
+    "match_pair": null
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 93,
+  "fields": {
+    "question": 26,
+    "answer_text": "cappuccini",
+    "is_correct": false,
+    "match_pair": null
+  }
+},
+{
+  "model": "courses.answer",
+  "pk": 94,
+  "fields": {
+    "question": 26,
+    "answer_text": "bananini",
+    "is_correct": true,
+    "match_pair": null
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "admin",
+    "model": "logentry"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "permission"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "group"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "auth",
+    "model": "user"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "contenttypes",
+    "model": "contenttype"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "sessions",
+    "model": "session"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "test"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "question"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "inputquestion"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "choicequestion"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "matchquestion"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "course"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "paragraph"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "lesson"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "userscourses"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "module"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "testresults"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "answer"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "testresult"
+  }
+},
+{
+  "model": "contenttypes.contenttype",
+  "fields": {
+    "app_label": "courses",
+    "model": "attempt"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "geeeepdbv8bc5kuxspb3nmlipp7jf8tu",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBaphRcuu8ZyMwAUjWQlHZlvLtt0oVu_3vvv4XHbc1-a3HxcxBX0YvL70bIz1gOEB5Y7lVyLesykzwUedImpxri63a6fwcZW95r1qNVjlBZZbsBmJw11g1OO6UDR-4cEhvgBERgcDcMJq17gBgTwSg-X8-FN94:1uCd55:lRXgB1r_Dtnu7cswAFGYdZFtlPYWzoA8XcuOaiPNVn0",
+    "expire_date": "2025-05-21T11:36:55.423Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "klxw0c92jx1uf97rkuc07rxxivp69641",
+  "fields": {
+    "session_data": ".eJxVjEEOwiAQRe_C2hBaphRcuu8ZyMwAUjWQlHZlvLtt0oVu_3vvv4XHbc1-a3HxcxBX0YvL70bIz1gOEB5Y7lVyLesykzwUedImpxri63a6fwcZW95r1qNVjlBZZbsBmJw11g1OO6UDR-4cEhvgBERgcDcMJq17gBgTwSg-X8-FN94:1uCgNp:qqehpN6JbTsM4hApdDTkfqosDDpWzoerVMSW7jbeJNw",
+    "expire_date": "2025-05-21T15:08:29.763Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "lbgnmirfqqaszngn0x3vg7kgzboh2at1",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlm7xJusKelzBsufNQ4gR4qTCnF3iJQC2jcz76Wc39bitiaLm5K6KFSn3y34-JC6g3T39TbrONd1mYLeFX3Qpsc5yfN6uH8Hxbfyrc9ikGwYBPpMTJnZEkXyEmxCiD1GRtthBwyJzADZsoUcQQyABGT1_gDEmTbu:1u76mc:I4BZvt10nxsjaO_I3_U32felil4q07KCys5GQ6T1BQw",
+    "expire_date": "2025-05-06T06:07:02.910Z"
+  }
+},
+{
+  "model": "sessions.session",
+  "pk": "lknf7akek3t0ol6zsvfb5d4q2jfy0k9e",
+  "fields": {
+    "session_data": ".eJxVjDsOwjAQBe_iGlm7xJusKelzBsufNQ4gR4qTCnF3iJQC2jcz76Wc39bitiaLm5K6KFSn3y34-JC6g3T39TbrONd1mYLeFX3Qpsc5yfN6uH8Hxbfyrc9ikGwYBPpMTJnZEkXyEmxCiD1GRtthBwyJzADZsoUcQQyABGT1_gDEmTbu:1uEk5a:CB8HsN7f5osaB-Kttfhn-UQxGDtVSU0Z-pNCc7Z7IzE",
+    "expire_date": "2025-05-27T07:30:10.926Z"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "add_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "change_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "delete_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view log entry",
+    "content_type": [
+      "admin",
+      "logentry"
+    ],
+    "codename": "view_logentry"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "add_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "change_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "delete_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view permission",
+    "content_type": [
+      "auth",
+      "permission"
+    ],
+    "codename": "view_permission"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "add_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "change_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "delete_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view group",
+    "content_type": [
+      "auth",
+      "group"
+    ],
+    "codename": "view_group"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "add_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "change_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "delete_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view user",
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "codename": "view_user"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "add_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "change_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "delete_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view content type",
+    "content_type": [
+      "contenttypes",
+      "contenttype"
+    ],
+    "codename": "view_contenttype"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "add_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "change_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "delete_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view session",
+    "content_type": [
+      "sessions",
+      "session"
+    ],
+    "codename": "view_session"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add test",
+    "content_type": [
+      "courses",
+      "test"
+    ],
+    "codename": "add_test"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change test",
+    "content_type": [
+      "courses",
+      "test"
+    ],
+    "codename": "change_test"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete test",
+    "content_type": [
+      "courses",
+      "test"
+    ],
+    "codename": "delete_test"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view test",
+    "content_type": [
+      "courses",
+      "test"
+    ],
+    "codename": "view_test"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add question",
+    "content_type": [
+      "courses",
+      "question"
+    ],
+    "codename": "add_question"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change question",
+    "content_type": [
+      "courses",
+      "question"
+    ],
+    "codename": "change_question"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete question",
+    "content_type": [
+      "courses",
+      "question"
+    ],
+    "codename": "delete_question"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view question",
+    "content_type": [
+      "courses",
+      "question"
+    ],
+    "codename": "view_question"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add input question",
+    "content_type": [
+      "courses",
+      "inputquestion"
+    ],
+    "codename": "add_inputquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change input question",
+    "content_type": [
+      "courses",
+      "inputquestion"
+    ],
+    "codename": "change_inputquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete input question",
+    "content_type": [
+      "courses",
+      "inputquestion"
+    ],
+    "codename": "delete_inputquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view input question",
+    "content_type": [
+      "courses",
+      "inputquestion"
+    ],
+    "codename": "view_inputquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add choice question",
+    "content_type": [
+      "courses",
+      "choicequestion"
+    ],
+    "codename": "add_choicequestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change choice question",
+    "content_type": [
+      "courses",
+      "choicequestion"
+    ],
+    "codename": "change_choicequestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete choice question",
+    "content_type": [
+      "courses",
+      "choicequestion"
+    ],
+    "codename": "delete_choicequestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view choice question",
+    "content_type": [
+      "courses",
+      "choicequestion"
+    ],
+    "codename": "view_choicequestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add match question",
+    "content_type": [
+      "courses",
+      "matchquestion"
+    ],
+    "codename": "add_matchquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change match question",
+    "content_type": [
+      "courses",
+      "matchquestion"
+    ],
+    "codename": "change_matchquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete match question",
+    "content_type": [
+      "courses",
+      "matchquestion"
+    ],
+    "codename": "delete_matchquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view match question",
+    "content_type": [
+      "courses",
+      "matchquestion"
+    ],
+    "codename": "view_matchquestion"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add course",
+    "content_type": [
+      "courses",
+      "course"
+    ],
+    "codename": "add_course"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change course",
+    "content_type": [
+      "courses",
+      "course"
+    ],
+    "codename": "change_course"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete course",
+    "content_type": [
+      "courses",
+      "course"
+    ],
+    "codename": "delete_course"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view course",
+    "content_type": [
+      "courses",
+      "course"
+    ],
+    "codename": "view_course"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add paragraph",
+    "content_type": [
+      "courses",
+      "paragraph"
+    ],
+    "codename": "add_paragraph"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change paragraph",
+    "content_type": [
+      "courses",
+      "paragraph"
+    ],
+    "codename": "change_paragraph"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete paragraph",
+    "content_type": [
+      "courses",
+      "paragraph"
+    ],
+    "codename": "delete_paragraph"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view paragraph",
+    "content_type": [
+      "courses",
+      "paragraph"
+    ],
+    "codename": "view_paragraph"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add lesson",
+    "content_type": [
+      "courses",
+      "lesson"
+    ],
+    "codename": "add_lesson"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change lesson",
+    "content_type": [
+      "courses",
+      "lesson"
+    ],
+    "codename": "change_lesson"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete lesson",
+    "content_type": [
+      "courses",
+      "lesson"
+    ],
+    "codename": "delete_lesson"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view lesson",
+    "content_type": [
+      "courses",
+      "lesson"
+    ],
+    "codename": "view_lesson"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add users courses",
+    "content_type": [
+      "courses",
+      "userscourses"
+    ],
+    "codename": "add_userscourses"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change users courses",
+    "content_type": [
+      "courses",
+      "userscourses"
+    ],
+    "codename": "change_userscourses"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete users courses",
+    "content_type": [
+      "courses",
+      "userscourses"
+    ],
+    "codename": "delete_userscourses"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view users courses",
+    "content_type": [
+      "courses",
+      "userscourses"
+    ],
+    "codename": "view_userscourses"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add модуль",
+    "content_type": [
+      "courses",
+      "module"
+    ],
+    "codename": "add_module"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change модуль",
+    "content_type": [
+      "courses",
+      "module"
+    ],
+    "codename": "change_module"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete модуль",
+    "content_type": [
+      "courses",
+      "module"
+    ],
+    "codename": "delete_module"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view модуль",
+    "content_type": [
+      "courses",
+      "module"
+    ],
+    "codename": "view_module"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add test results",
+    "content_type": [
+      "courses",
+      "testresults"
+    ],
+    "codename": "add_testresults"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change test results",
+    "content_type": [
+      "courses",
+      "testresults"
+    ],
+    "codename": "change_testresults"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete test results",
+    "content_type": [
+      "courses",
+      "testresults"
+    ],
+    "codename": "delete_testresults"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view test results",
+    "content_type": [
+      "courses",
+      "testresults"
+    ],
+    "codename": "view_testresults"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add answer",
+    "content_type": [
+      "courses",
+      "answer"
+    ],
+    "codename": "add_answer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change answer",
+    "content_type": [
+      "courses",
+      "answer"
+    ],
+    "codename": "change_answer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete answer",
+    "content_type": [
+      "courses",
+      "answer"
+    ],
+    "codename": "delete_answer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view answer",
+    "content_type": [
+      "courses",
+      "answer"
+    ],
+    "codename": "view_answer"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add test result",
+    "content_type": [
+      "courses",
+      "testresult"
+    ],
+    "codename": "add_testresult"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change test result",
+    "content_type": [
+      "courses",
+      "testresult"
+    ],
+    "codename": "change_testresult"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete test result",
+    "content_type": [
+      "courses",
+      "testresult"
+    ],
+    "codename": "delete_testresult"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view test result",
+    "content_type": [
+      "courses",
+      "testresult"
+    ],
+    "codename": "view_testresult"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can add attempt",
+    "content_type": [
+      "courses",
+      "attempt"
+    ],
+    "codename": "add_attempt"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can change attempt",
+    "content_type": [
+      "courses",
+      "attempt"
+    ],
+    "codename": "change_attempt"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can delete attempt",
+    "content_type": [
+      "courses",
+      "attempt"
+    ],
+    "codename": "delete_attempt"
+  }
+},
+{
+  "model": "auth.permission",
+  "fields": {
+    "name": "Can view attempt",
+    "content_type": [
+      "courses",
+      "attempt"
+    ],
+    "codename": "view_attempt"
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$870000$a9Szat4DBu7l4O8zYPlrsJ$/5RkQipFWBibscALfrcrtdRINvYTjJvgOHyw7prKMds=",
+    "last_login": "2025-05-13T07:30:10.917Z",
+    "is_superuser": true,
+    "username": "root",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2025-04-22T06:06:49.643Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$870000$NV0tcbARYZHr1a5xmzYTAn$UJ+Od/IluqzXHkaiv7WQbdknesXoujpOeyhiqhUXXd0=",
+    "last_login": "2025-05-07T15:08:29.756Z",
+    "is_superuser": false,
+    "username": "user",
+    "first_name": "",
+    "last_name": "",
+    "email": "",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2025-04-23T15:15:02.899Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "admin.logentry",
+  "pk": 1,
+  "fields": {
+    "action_time": "2025-04-23T15:15:04.210Z",
+    "user": [
+      "root"
+    ],
+    "content_type": [
+      "auth",
+      "user"
+    ],
+    "object_id": "2",
+    "object_repr": "user",
+    "action_flag": 1,
+    "change_message": "[{\"added\": {}}]"
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 1,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T11:31:36.956Z",
+    "ended_at": "2025-05-19T11:37:10.253Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': ['answer'], 'user_answers': ['answer'], 'is_correct': True}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': ['sdfsdf'], 'is_correct': True}], 'time_start': '2025-05-19T11:31:36.956327+00:00', 'time_end': '2025-05-19T11:37:10.253846+00:00', 'score': 4.0}",
+    "score": 4
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 2,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T11:31:36.956Z",
+    "ended_at": "2025-05-19T11:38:17.379Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': ['answer'], 'user_answers': ['answer'], 'is_correct': True}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': ['sdfsdf'], 'is_correct': True}], 'time_start': '2025-05-19T11:31:36.956327+00:00', 'time_end': '2025-05-19T11:38:17.379217+00:00', 'score': 100.0}",
+    "score": 100
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T11:39:29.964Z",
+    "ended_at": "2025-05-19T11:39:58.593Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': ['answer'], 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': True}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': ['sdfsdf'], 'is_correct': True}], 'time_start': '2025-05-19T11:39:29.964299+00:00', 'time_end': '2025-05-19T11:39:58.593797+00:00', 'score': 75.0}",
+    "score": 75
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 4,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T11:39:29.964Z",
+    "ended_at": "2025-05-19T11:43:04.016Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': ['answer'], 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': 'input', 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': True}, {'text': 'tralalero...', 'type': 'choices', 'answers': 'input', 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'sdfsdf', 'type': 'choices', 'answers': 'input', 'user_answers': ['sdfsdf'], 'is_correct': True}], 'time_start': '2025-05-19T11:39:29.964299+00:00', 'time_end': '2025-05-19T11:43:04.016282+00:00', 'score': 75.0}",
+    "score": 75
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T11:39:29.964Z",
+    "ended_at": "2025-05-19T11:43:16.648Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'input', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': True}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': ['sdfsdf'], 'is_correct': True}], 'time_start': '2025-05-19T11:39:29.964299+00:00', 'time_end': '2025-05-19T11:43:16.648471+00:00', 'score': 75.0}",
+    "score": 75
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 6,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T11:39:29.964Z",
+    "ended_at": "2025-05-19T11:45:33.635Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': True}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': ['sdfsdf'], 'is_correct': True}], 'time_start': '2025-05-19T11:39:29.964299+00:00', 'time_end': '2025-05-19T11:45:33.635295+00:00', 'score': 75.0}",
+    "score": 75
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 7,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T12:37:36.170Z",
+    "ended_at": "2025-05-19T12:37:44.848Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['sahur', 'crocodilo', 'tralala'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala', 'bombardiro'], 'is_correct': False}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': [], 'is_correct': False}, {'text': 'tralalero', 'type': 'single', 'answers': ['bombardiro', 'tralala', 'sahur'], 'user_answers': []}], 'time_start': '2025-05-19T12:37:36.170184+00:00', 'time_end': '2025-05-19T12:37:44.848828+00:00', 'score': 6.666666666666667}",
+    "score": 6
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 8,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T12:40:13.184Z",
+    "ended_at": "2025-05-19T12:42:31.659Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['crocodilo', 'tralala', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': [], 'is_correct': False}, {'text': 'tralalero', 'type': 'single', 'answers': ['bombardiro', 'tralala', 'sahur'], 'user_answers': [], 'is_correct': False}], 'time_start': '2025-05-19T12:40:13.184525+00:00', 'time_end': '2025-05-19T12:42:31.659042+00:00', 'score': 6.666666666666667}",
+    "score": 6
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 9,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T12:40:13.184Z",
+    "ended_at": "2025-05-19T12:42:49.716Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['crocodilo', 'tralala', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': [], 'is_correct': False}, {'text': 'tralalero', 'type': 'single', 'answers': ['bombardiro', 'tralala', 'sahur'], 'user_answers': [], 'is_correct': False}], 'time_start': '2025-05-19T12:40:13.184525+00:00', 'time_end': '2025-05-19T12:42:49.716965+00:00', 'score': 6.666666666666667}",
+    "score": 6
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 10,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T12:40:13.184Z",
+    "ended_at": "2025-05-19T12:43:36.171Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['crocodilo', 'tralala', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': [], 'is_correct': False}, {'text': 'tralalero', 'type': 'single', 'answers': ['bombardiro', 'tralala', 'sahur'], 'user_answers': [], 'is_correct': False}], 'time_start': '2025-05-19T12:40:13.184525+00:00', 'time_end': '2025-05-19T12:43:36.171162+00:00', 'score': 6.666666666666667}",
+    "score": 6
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 11,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T12:44:53.031Z",
+    "ended_at": "2025-05-19T12:44:56.697Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['crocodilo', 'sahur', 'tralala'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': [], 'is_correct': False}, {'text': 'tralalero', 'type': 'single', 'answers': ['bombardiro', 'tralala', 'sahur'], 'user_answers': ['tralala'], 'is_correct': False}], 'time_start': '2025-05-19T12:44:53.031453+00:00', 'time_end': '2025-05-19T12:44:56.697451+00:00', 'score': 0.0}",
+    "score": 0
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 12,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T12:44:53.031Z",
+    "ended_at": "2025-05-19T12:45:26.814Z",
+    "data": "{'questions': [{'text': 'ques', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['crocodilo', 'sahur', 'tralala'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'sdfsdf', 'type': 'choices', 'answers': ['sdfsdf'], 'user_answers': [], 'is_correct': False}, {'text': 'tralalero', 'type': 'single', 'answers': ['bombardiro', 'tralala', 'sahur'], 'user_answers': ['tralala'], 'is_correct': True}], 'time_start': '2025-05-19T12:44:53.031453+00:00', 'time_end': '2025-05-19T12:45:26.814691+00:00', 'score': 20.0}",
+    "score": 20
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 13,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T13:01:38.748Z",
+    "ended_at": "2025-05-19T13:01:48.941Z",
+    "data": "{'questions': [{'text': 'bombardiro', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': ['crocodilo'], 'is_correct': True}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'shimpanzini', 'type': 'single', 'answers': ['sahur', 'cappuccini', 'bananini'], 'user_answers': ['bananini'], 'is_correct': True}], 'time_start': '2025-05-19T13:01:38.748495+00:00', 'time_end': '2025-05-19T13:01:48.941716+00:00', 'score': 100.0}",
+    "score": 100
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 14,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T13:03:46.053Z",
+    "ended_at": "2025-05-19T13:04:06.121Z",
+    "data": "{'questions': [{'text': 'bombardiro', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': ['crocodilo'], 'is_correct': True}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['crocodilo', 'tralala', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'shimpanzini', 'type': 'single', 'answers': ['sahur', 'cappuccini', 'bananini'], 'user_answers': ['bananini'], 'is_correct': True}], 'time_start': '2025-05-19T13:03:46.053156+00:00', 'time_end': '2025-05-19T13:04:06.121760+00:00', 'score': 83.33333333333333}",
+    "score": 83
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 15,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T13:05:57.644Z",
+    "ended_at": "2025-05-19T13:05:58.738Z",
+    "data": "{'questions': [{'text': 'bombardiro', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['sahur', 'crocodilo', 'tralala'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'shimpanzini', 'type': 'single', 'answers': ['sahur', 'cappuccini', 'bananini'], 'user_answers': [], 'is_correct': False}], 'time_start': '2025-05-19T13:05:57.644828+00:00', 'time_end': '2025-05-19T13:05:58.738538+00:00', 'score': 8.333333333333332}",
+    "score": 8
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 16,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T13:06:35.522Z",
+    "ended_at": "2025-05-19T13:06:37.916Z",
+    "data": "{'questions': [{'text': 'bombardiro', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['sahur', 'tralala', 'crocodilo'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'shimpanzini', 'type': 'single', 'answers': ['sahur', 'cappuccini', 'bananini'], 'user_answers': [], 'is_correct': False}], 'time_start': '2025-05-19T13:06:35.522727+00:00', 'time_end': '2025-05-19T13:06:37.916797+00:00', 'score': 0.0}",
+    "score": 0
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 17,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T13:06:35.522Z",
+    "ended_at": "2025-05-19T13:08:10.233Z",
+    "data": "{'questions': [{'text': 'bombardiro', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['sahur', 'tralala', 'crocodilo'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'shimpanzini', 'type': 'single', 'answers': ['sahur', 'cappuccini', 'bananini'], 'user_answers': [], 'is_correct': False}], 'time_start': '2025-05-19T13:06:35.522727+00:00', 'time_end': '2025-05-19T13:08:10.233942+00:00', 'score': 0.0}",
+    "score": 0
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 18,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T13:06:35.522Z",
+    "ended_at": "2025-05-19T13:09:30.683Z",
+    "data": "{'questions': [{'text': 'bombardiro', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': [''], 'is_correct': False}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['sahur', 'tralala', 'crocodilo'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': [], 'is_correct': False}, {'text': 'shimpanzini', 'type': 'single', 'answers': ['sahur', 'cappuccini', 'bananini'], 'user_answers': [], 'is_correct': False}], 'time_start': '2025-05-19T13:06:35.522727+00:00', 'time_end': '2025-05-19T13:09:30.683721+00:00', 'score': 0.0}",
+    "score": 0
+  }
+},
+{
+  "model": "courses.attempt",
+  "pk": 19,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "test": 1,
+    "started_at": "2025-05-19T13:06:35.522Z",
+    "ended_at": "2025-05-20T11:04:58.788Z",
+    "data": "{'questions': [{'text': 'bombardiro', 'type': 'input', 'answers': 'Ответ: ', 'user_answers': ['crocodilo'], 'is_correct': True}, {'text': 'brainrot', 'type': 'matching', 'answers': ['tralalero', 'bombardiro', 'tung tung tung tung tung tung tung tung'], 'user_answers': ['tralala', 'crocodilo', 'sahur'], 'is_correct': False}, {'text': 'tralalero...', 'type': 'choices', 'answers': ['tralala', 'bombardiro', 'cappuccino'], 'user_answers': ['tralala'], 'is_correct': True}, {'text': 'shimpanzini', 'type': 'single', 'answers': ['sahur', 'cappuccini', 'bananini'], 'user_answers': ['bananini'], 'is_correct': True}], 'time_start': '2025-05-19T13:06:35.522727+00:00', 'time_end': '2025-05-20T11:04:58.788647+00:00', 'score': 100.0}",
+    "score": 100
+  }
+},
+{
+  "model": "courses.userscourses",
+  "pk": 3,
+  "fields": {
+    "user": [
+      "user"
+    ],
+    "course": 5
+  }
+},
+{
+  "model": "courses.userscourses",
+  "pk": 5,
+  "fields": {
+    "user": [
+      "root"
+    ],
+    "course": 6
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 5,
+  "fields": {
+    "name": "root_course",
+    "description": "desc",
+    "author": [
+      "root"
+    ],
+    "rating": 0
+  }
+},
+{
+  "model": "courses.course",
+  "pk": 6,
+  "fields": {
+    "name": "user_course",
+    "description": "desc",
+    "author": [
+      "user"
+    ],
+    "rating": 0
+  }
+}
+]

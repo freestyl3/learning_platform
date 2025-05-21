@@ -1,11 +1,13 @@
 from random import shuffle
 
+from django.views.decorators.cache import never_cache
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.http import HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.utils import timezone
 
 from ..models import Test, Lesson, Question
@@ -89,7 +91,8 @@ class TestDeleteView(TestUpdateDeleteMixin, BaseDeleteMixin):
         kwargs = {'lesson_id': self.get_object().lesson.pk}
         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
     
-
+    
+@method_decorator(never_cache, name='dispatch')
 class TakeTestView(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = Question
     template_name = 'courses/test/take_test.html'

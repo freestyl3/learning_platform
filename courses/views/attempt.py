@@ -1,12 +1,18 @@
 import json
 
-from django.views.generic import CreateView
+from django.views.decorators.cache import never_cache
+from django.views.generic import CreateView, DetailView
 from django.http import HttpResponse
 from django.utils import timezone
+from django.utils.decorators import method_decorator
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth import get_user_model
 
 from ..models import Attempt, Question, Answer, Test
 
-class AttemptCreateView(CreateView):
+@method_decorator(never_cache, name='dispatch')
+class AttemptCreateView(LoginRequiredMixin, CreateView):
+    ##TODO## userpassestestmixin
     model = Attempt
     fields: list[str] = []
     template_name = 'courses/test/take_test.html'
@@ -92,3 +98,32 @@ class AttemptCreateView(CreateView):
         )
 
         return HttpResponse(f'Ваш результат - {score}%<br>{json.dumps(data)}')
+    
+class AttemptListView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
+    model = Attempt
+    pk_url_kwarg = 'test_id'
+    template_name = 'courses/test/attempt_list.html'
+
+    def get_test(self):
+        return Test.objects.get(pk=self.kwargs.get(self.pk_url_kwarg))
+
+    def test_func(self):
+        return self.request.user == self.get_test().lesson.module.course.author
+    
+    def get_queryset(self): ###TODO###
+        args = Attempt.objects.filter(test=self.get_test())
+
+        args = args.order_by('user', '-score', '-ended_at')
+        args = args.distinct('user')
+        args = args.order_by('user', '-score', '-ended_at')
+        print(args[:1])
+        # args = Attempt.objects.filter(test=self.get_test()).order_by('-score')
+        # args.aggregate(Max('score'))
+        return args
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['attempts'] = self.get_queryset()
+        context['test'] = self.get_test()
+        return context
+        
