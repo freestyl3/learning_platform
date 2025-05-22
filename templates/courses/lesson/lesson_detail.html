@@ -19,12 +19,29 @@
   <h3>{{ lesson.name }}</h3>
   <p>{{ lesson.content|linebreaks }}</p>
   {% if tests %}
-    <h4>Тесты</h4>
+    <h4>Тесты</h4>    
     {% for test in tests %}
       {% if request.user == lesson.module.course.author %}
+      
         <p><a href={% url 'courses:test_detail' test_id=test.id %}>{{ test.name }}</a></p>
       {% else %}
-        <p><a href={% url 'courses:take_test' test_id=test.id %}>{{ test.name }}</a></p>
+        <div class="accordion" id="accordionExample">
+          <div class="accordion-item col-6 col-md-4">
+            <h2 class="accordion-header">
+              <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                {{ test.name }}
+              </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+              <div class="accordion-body">
+                <form mehtod="GET" action={% url 'courses:take_test' test_id=test.id %}>
+                  {{ test.name }}<br><button type="submit" class="btn btn-primary">Начать тест</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% comment %} <p><a href={% url 'courses:take_test' test_id=test.id %}>{{ test.name }}</a></p> {% endcomment %}
         {% comment %} <p>{{ test.name }} - {{test.pk}}</p> <button type='button' id='start-button' class='btn btn-primary' data-test-id="{{test.pk}}">Начать тест</button> {% endcomment %}
       {% endif %}
     {% endfor %}

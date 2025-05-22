@@ -2,7 +2,7 @@ import json
 
 from django.views.decorators.cache import never_cache
 from django.views.generic import CreateView, DetailView
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -85,6 +85,14 @@ class AttemptCreateView(LoginRequiredMixin, CreateView):
         return context
     
     def post(self, request, test_id):
+        session_token = request.session.pop('attempt_token', None)
+        form_token = request.POST.get('attempt_token')
+
+        print(session_token, form_token, sep='\n')
+
+        if not session_token or session_token != form_token:
+            return HttpResponseForbidden('Нельзя повторно отправить форму!')
+
         data = self.validate_answers(request.POST)
         score = data['score']
 

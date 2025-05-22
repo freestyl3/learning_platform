@@ -1,4 +1,4 @@
-from random import shuffle
+import uuid
 
 from django.views.decorators.cache import never_cache
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
