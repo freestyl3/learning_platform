@@ -20,11 +20,13 @@ class Attempt(models.Model):
     )
     started_at = models.DateTimeField(
         verbose_name='Начало',
+        auto_now_add=True,
         blank=False, 
         null=False
     )
     ended_at = models.DateTimeField(
         verbose_name='Конец',
+        auto_now=True,
         blank=False, 
         null=True
     )
@@ -39,3 +41,6 @@ class Attempt(models.Model):
         null=False,
         default=0
     )
+
+    class Meta:
+        ordering = ('-ended_at', )

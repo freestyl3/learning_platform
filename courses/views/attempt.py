@@ -1,25 +1,62 @@
 import json
 
 from django.views.decorators.cache import never_cache
-from django.views.generic import CreateView, DetailView
-from django.http import HttpResponse, HttpResponseForbidden
+from django.views.generic import CreateView, DetailView, ListView, UpdateView
+from django.http import HttpResponse, HttpResponseForbidden, HttpResponseRedirect
 from django.utils import timezone
 from django.utils.decorators import method_decorator
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib.auth import get_user_model
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy
 
 from ..models import Attempt, Question, Answer, Test
 
 @method_decorator(never_cache, name='dispatch')
-class AttemptCreateView(LoginRequiredMixin, CreateView):
-    ##TODO## userpassestestmixin
+class TakeTestView(LoginRequiredMixin, UserPassesTestMixin, CreateView):
     model = Attempt
     fields: list[str] = []
     template_name = 'courses/test/take_test.html'
+    pk_url_kwarg = 'test_id'
+
+    def post(self, request, test_id):
+        if not self.request.session.get('attempt_id'):
+            attempt = Attempt(
+                user=self.request.user, 
+                test=Test.objects.get(pk=test_id)
+            )
+            attempt.save()
+            self.request.session['attempt_id'] = attempt.id
+        else:
+            attempt = self.request.session.get('attempt_id')
+        context = self.get_context_data()
+        return render(request, self.template_name, context=context)
+        
+
+    def test_func(self):
+        return self.request.user != Test.objects.get(pk=self.kwargs.get('test_id')).lesson.module.course.author
+
+    def get_queryset(self):
+        return Question.objects.filter(test=self.kwargs.get(self.pk_url_kwarg))
+
+    def get_context_data(self):
+        context = dict()
+        answers = {}
+        for question in self.get_queryset():
+            answers[question] = question.get_answers()
+        context['data'] = answers
+        context['test'] = get_object_or_404(Test, pk=self.kwargs.get('test_id'))
+        return context
+
+
+@method_decorator(never_cache, name='dispatch')
+class AttemptUpdateView(LoginRequiredMixin, UpdateView):
+    model = Attempt
+    fields: list[str] = []
+    template_name = 'courses/test/take_test.html'
+    pk_url_kwarg = 'test_id'
 
     def validate_answers(self, user_data):
         score = 0
-        time_end = timezone.now().isoformat()
         data = dict()
         question_list = []
 
@@ -67,8 +104,6 @@ class AttemptCreateView(LoginRequiredMixin, CreateView):
             question_list.append(question_data)
         
         data['questions'] = question_list
-        data['time_start'] = user_data.get('time_start')
-        data['time_end'] = time_end
         data['score'] = score / len(self.get_queryset()) * 100
 
         return data
@@ -85,32 +120,20 @@ class AttemptCreateView(LoginRequiredMixin, CreateView):
         return context
     
     def post(self, request, test_id):
-        session_token = request.session.pop('attempt_token', None)
-        form_token = request.POST.get('attempt_token')
-
-        print(session_token, form_token, sep='\n')
-
-        if not session_token or session_token != form_token:
-            return HttpResponseForbidden('Нельзя повторно отправить форму!')
+        attempt = Attempt.objects.get(pk=request.session.pop('attempt_id', None))
 
         data = self.validate_answers(request.POST)
-        score = data['score']
+        attempt.data = data
+        attempt.score = data['score']
 
-        Attempt.objects.create(
-            user=self.request.user,
-            test=Test.objects.get(pk=test_id),
-            started_at=data['time_start'],
-            ended_at=data['time_end'],
-            data=data,
-            score=data['score']
-        )
+        attempt.save()
 
-        return HttpResponse(f'Ваш результат - {score}%<br>{json.dumps(data)}')
+        return HttpResponse(f'Ваш результат - {data['score']}%')
     
 class AttemptListView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = Attempt
     pk_url_kwarg = 'test_id'
-    template_name = 'courses/test/attempt_list.html'
+    template_name = 'courses/attempt/attempt_list.html'
 
     def get_test(self):
         return Test.objects.get(pk=self.kwargs.get(self.pk_url_kwarg))
@@ -118,20 +141,26 @@ class AttemptListView(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     def test_func(self):
         return self.request.user == self.get_test().lesson.module.course.author
     
-    def get_queryset(self): ###TODO###
+    def get_queryset(self):
         args = Attempt.objects.filter(test=self.get_test())
 
         args = args.order_by('user', '-score', '-ended_at')
         args = args.distinct('user')
         args = args.order_by('user', '-score', '-ended_at')
-        print(args[:1])
-        # args = Attempt.objects.filter(test=self.get_test()).order_by('-score')
-        # args.aggregate(Max('score'))
         return args
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['attempts'] = self.get_queryset()
+        context['attempt_list'] = self.get_queryset()
+        context['author'] = True
         context['test'] = self.get_test()
         return context
         
+
+class UserAttemptsListView(LoginRequiredMixin, ListView):
+    model = Attempt
+    template_name = 'courses/attempt/attempt_list.html'
+    pk_url_kwarg = 'test_id'
+    
+    def get_queryset(self):
+        return Attempt.objects.filter(user=self.request.user, test=self.kwargs.get(self.pk_url_kwarg))

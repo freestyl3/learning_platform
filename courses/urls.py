@@ -23,7 +23,7 @@ urlpatterns = [
     path('module/<int:module_id>/delete/', ModuleDeleteView.as_view(), name='delete_module'),
     path('module/<int:module_id>/toggle_module/', toggle_module, name='toggle_module'),
     path('module/<int:module_id>/add_lesson/', LessonCreateView.as_view(), name='add_lesson'),
-    path('module/<int:module_id>/hidden', HiddenLessonListView.as_view(), name='hidden_lessons'),
+    path('module/<int:module_id>/hidden/', HiddenLessonListView.as_view(), name='hidden_lessons'),
 
     path('lesson/<int:lesson_id>/', LessonDetailView.as_view(), name='lesson_detail'),
     path('lesson/<int:lesson_id>/update/', LessonUpdateView.as_view(), name='update_lesson'),
@@ -37,11 +37,12 @@ urlpatterns = [
     path('test/<int:test_id>/delete/', TestDeleteView.as_view(), name='delete_test'),
     path('test/<int:test_id>/toggle_test/', toggle_test, name='toggle_test'),
     path('test/<int:test_id>/add_question/', QuestionCreateView.as_view(), name='add_question'),
-    # path('test/<int:test_id>/take_test', take_test, name='take_test'),
-    path('test/<int:test_id>/take_test', TakeTestView.as_view(), name='take_test'),
-    path('test/<int:test_id>/save/', AttemptCreateView.as_view(), name='save_attempt'),
+    path('test/<int:test_id>/take_test/', TakeTestView.as_view(), name='take_test'),
+    path('test/<int:test_id>/save/', AttemptUpdateView.as_view(), name='save_attempt'),
     path('test/<int:test_id>/attempts/', AttemptListView.as_view(), name='attempt_list'),
 
     path('question/<int:question_id>/delete/', QuestionDeleteView.as_view(), name='delete_question'),
-    path('question/<int:question_id>/update/', QuestionUpdateView.as_view(), name='update_question')
+    path('question/<int:question_id>/update/', QuestionUpdateView.as_view(), name='update_question'),
+
+    path('attempts/<int:test_id>/show_attempts/', UserAttemptsListView.as_view(), name='user_attempts')
 ]

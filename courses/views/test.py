@@ -91,28 +91,6 @@ class TestDeleteView(TestUpdateDeleteMixin, BaseDeleteMixin):
         kwargs = {'lesson_id': self.get_object().lesson.pk}
         return reverse_lazy('courses:lesson_detail', kwargs=kwargs)
     
-    
-@method_decorator(never_cache, name='dispatch')
-class TakeTestView(LoginRequiredMixin, UserPassesTestMixin, ListView):
-    model = Question
-    template_name = 'courses/test/take_test.html'
-
-    def test_func(self):
-        return self.request.user != Test.objects.get(pk=self.kwargs.get('test_id')).lesson.module.course.author
-
-    def get_queryset(self):
-        return Question.objects.filter(test=self.kwargs.get('test_id'))
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        answers = {}
-        for question in self.get_queryset():
-            answers[question] = question.get_answers()
-        context['time_start'] = timezone.now().isoformat()
-        context['data'] = answers
-        context['test'] = get_object_or_404(Test, pk=self.kwargs.get('test_id'))
-        return context
-    
 
 @login_required
 def toggle_test(request, test_id):

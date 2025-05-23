@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+{% load count_duration %}
+<h3>{{test.name}}</h3>
+{% if attempt_list %}
+  <table class="table table-striped">
+  {% if author %}
+    <tr><td>Пользователь</td><td>Начало</td><td>Конец</td><td>Длительность</td><td>Результат</td></tr>
+      {% for attempt in attempt_list %}
+        <tr>
+          <td>{{attempt.user}}</td>
+          <td>{{attempt.started_at|date:"d.m.Y"}} {{attempt.started_at|time:"H:i.s"}}</td>
+          <td>{{attempt.ended_at|date:"d.m.Y"}} {{attempt.ended_at|time:"H:i.s"}}</td>
+          <td>{{attempt.ended_at|count_duration:attempt.started_at}}</td>
+          <td>{{attempt.score}}%</td>
+        </tr>
+      {% endfor %}
+  {% else %}
+    <tr class="table-light"><td>Попытка</td><td>Начало</td><td>Конец</td><td>Длительность</td><td>Результат</td></tr>
+      {% for attempt in attempt_list %}
+        <tr>
+          <td>{{forloop.counter}}</td>
+          <td>{{attempt.started_at|date:"d.m.Y"}} {{attempt.started_at|time:"H:i.s"}}</td>
+          <td>{{attempt.ended_at|date:"d.m.Y"}} {{attempt.ended_at|time:"H:i.s"}}</td>
+          <td>{{attempt.ended_at|count_duration:attempt.started_at}}</td>
+          <td>{{attempt.score}}%</td>
+        </tr>
+      {% endfor %}
+    {% endif %}
+  </table>
+{% else %}
+  <p>Вы еще не проходили этот тест</p>
+{% endif %}
+{% endblock %}
